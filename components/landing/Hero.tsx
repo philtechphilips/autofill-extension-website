@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Button from '../ui/Button';
-import { Chrome, ArrowRight, Shield, Zap, Sparkles } from 'lucide-react';
+import { motion } from "framer-motion";
+import Button from "../ui/Button";
+import { Chrome, ArrowRight, Shield, Zap, Sparkles } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -14,16 +14,17 @@ export default function Hero() {
 
       {/* Content Layer */}
       <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center">
-
         {/* Release Status Badge */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.08] rounded-full px-4 py-1.5 mb-12 backdrop-blur-xl"
         >
           <div className="w-2 h-2 bg-brand-accent rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-          <span className="text-[11px] font-medium tracking-[0.1em] text-white/80">AUTOFILL V2.4 IS LIVE</span>
+          <span className="text-[11px] font-medium tracking-[0.1em] text-white/80">
+            AUTOFILL V1.0 IS LIVE
+          </span>
           <ArrowRight className="w-3 h-3 text-white/80" />
         </motion.div>
 
@@ -35,13 +36,14 @@ export default function Hero() {
           className="space-y-10"
         >
           <h1 className="text-5xl sm:text-7xl lg:text-[100px] leading-[0.9] font-bold tracking-[-0.05em] text-gradient">
-            Accelerate every <br className="hidden sm:block" />
-            interaction.
+            Fill any form <br className="hidden sm:block" />
+            instantly.
           </h1>
 
           <p className="text-lg md:text-xl text-brand-secondary leading-relaxed max-w-5xl mx-auto font-light tracking-tight">
-            Stop the repetitive cycle of manual data entry. Our intelligent AI engine <br className="hidden md:block" />
-            bridges your data and any interface instantly.
+            Stop wasting time on repetitive typing. Our smart AI engine{" "}
+            <br className="hidden md:block" />
+            fills your information into any website in seconds.
           </p>
         </motion.div>
 
@@ -50,17 +52,30 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-6"
+          className="mt-14 flex flex-col items-center gap-6"
         >
-          <Button variant="primary" size="lg" className="px-10 h-14 text-sm tracking-wide">
-            Install for Chrome
-          </Button>
-          <button className="flex items-center gap-2 group text-white/80 hover:text-white transition-all text-sm font-medium h-14">
-            Browse use cases
-            <div className="w-5 h-5 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/20 transition-all">
-              <ArrowRight className="w-3 h-3" />
-            </div>
-          </button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <Button
+              variant="primary"
+              size="lg"
+              className="px-10 h-14 text-sm tracking-wide"
+            >
+              Install for Chrome
+            </Button>
+            <button className="flex items-center gap-2 group text-white/80 hover:text-white transition-all text-sm font-medium h-14">
+              Browse use cases
+              <div className="w-5 h-5 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/20 transition-all">
+                <ArrowRight className="w-3 h-3" />
+              </div>
+            </button>
+          </div>
+          <p className="text-xs text-white/50 flex items-center gap-4">
+            <span>No credit card required</span>
+            <span className="w-1 h-1 rounded-full bg-white/30" />
+            <span>50 Free credits for new users</span>
+            <span className="w-1 h-1 rounded-full bg-white/30" />
+            <span>Pay only for what you use</span>
+          </p>
         </motion.div>
 
         {/* The "Masterpiece" Mockup */}
@@ -83,7 +98,9 @@ export default function Hero() {
               </div>
               <div className="flex-1 h-5 bg-white/[0.02] border border-white/[0.05] rounded-md flex items-center px-3 gap-2">
                 <Shield className="w-2 h-2 text-white/70" />
-                <div className="text-[10px] text-white/70 font-mono tracking-tighter">https://vanguard.ai/careers/apply</div>
+                <div className="text-[10px] text-white/70 font-mono tracking-tighter">
+                  https://vanguard.ai/careers/apply
+                </div>
               </div>
             </div>
 
@@ -94,30 +111,46 @@ export default function Hero() {
                   <div className="h-3 w-32 bg-white/5 rounded-full" />
                   <div className="h-12 w-full bg-white/[0.02] border border-white/[0.05] rounded-lg relative overflow-hidden">
                     <motion.div
-                      animate={{ x: ['100%', '-100%'] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                      animate={{ x: ["100%", "-100%"] }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                       className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-accent/5 to-transparent"
                     />
                     <div className="absolute inset-0 flex items-center px-4">
-                      <span className="text-white/70 text-sm font-mono tracking-widest">DETECTING...</span>
+                      <span className="text-white/70 text-sm font-mono tracking-widest">
+                        DETECTING...
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-6">
                   {[
-                    { l: 'Identity', v: 'Alex Sterling', state: 'filled' },
-                    { l: 'Global Email', v: 'a.sterling@vanguard.io', state: 'filled' },
-                    { l: 'Resume Source', v: 'alex_sterling_2026.pdf', state: 'active' }
+                    { l: "Identity", v: "Alex Sterling", state: "filled" },
+                    {
+                      l: "Global Email",
+                      v: "a.sterling@vanguard.io",
+                      state: "filled",
+                    },
+                    {
+                      l: "Resume Source",
+                      v: "alex_sterling_2026.pdf",
+                      state: "active",
+                    },
                   ].map((field, i) => (
                     <div key={i} className="flex gap-6 items-center">
                       <div className="w-24 h-2 bg-white/10 rounded-full" />
                       <div className="flex-1 h-1 bg-white/5 rounded-full relative">
                         <motion.div
                           initial={{ width: 0 }}
-                          animate={{ width: field.state === 'filled' ? '100%' : '60%' }}
-                          transition={{ delay: 1 + (i * 0.4), duration: 0.8 }}
-                          className={`absolute inset-0 ${field.state === 'filled' ? 'bg-white/40' : 'bg-brand-accent/50'}`}
+                          animate={{
+                            width: field.state === "filled" ? "100%" : "60%",
+                          }}
+                          transition={{ delay: 1 + i * 0.4, duration: 0.8 }}
+                          className={`absolute inset-0 ${field.state === "filled" ? "bg-white/40" : "bg-brand-accent/50"}`}
                         />
                       </div>
                     </div>
@@ -128,7 +161,11 @@ export default function Hero() {
               {/* The Mini Extension Floating Box */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="w-full sm:w-64 bg-white/[0.03] border border-white/[0.1] rounded-xl p-6 backdrop-blur-2xl shadow-xl flex flex-col gap-5"
               >
                 <div className="flex items-center gap-3">
@@ -136,8 +173,12 @@ export default function Hero() {
                     <Chrome className="w-4 h-4 text-black" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[11px] font-bold text-white tracking-wide">AutoFill AI</span>
-                    <span className="text-[9px] text-white/80 uppercase tracking-[0.15em] font-bold">Engine active</span>
+                    <span className="text-[11px] font-bold text-white tracking-wide">
+                      AutoFill AI
+                    </span>
+                    <span className="text-[9px] text-white/80 uppercase tracking-[0.15em] font-bold">
+                      Engine active
+                    </span>
                   </div>
                 </div>
 
@@ -151,7 +192,7 @@ export default function Hero() {
                   <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
-                      animate={{ width: '99%' }}
+                      animate={{ width: "99%" }}
                       transition={{ delay: 2, duration: 1.5 }}
                       className="h-full bg-brand-accent shadow-[0_0_10px_#3b82f6]"
                     />
@@ -174,11 +215,15 @@ export default function Hero() {
           transition={{ delay: 1.5 }}
           className="mt-24 flex items-center gap-12"
         >
-          {['llama-3', 'chrome-web-store', 'aes-256'].map((tech) => (
-            <span key={tech} className="text-[10px] font-mono tracking-[0.3em] uppercase">{tech}</span>
+          {["DeepSeek-V3", "chrome-web-store", "aes-256"].map((tech) => (
+            <span
+              key={tech}
+              className="text-[10px] font-mono tracking-[0.3em] uppercase"
+            >
+              {tech}
+            </span>
           ))}
         </motion.div>
-
       </div>
     </section>
   );

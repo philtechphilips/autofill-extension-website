@@ -1,51 +1,69 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import FeatureCard from '../ui/FeatureCard';
-import { Users, Brain, Zap, Shield, Globe, Settings, UsersRound } from 'lucide-react';
+import { motion } from "framer-motion";
+import FeatureCard from "../ui/FeatureCard";
+import {
+  Users,
+  Brain,
+  Zap,
+  Shield,
+  Globe,
+  Settings,
+  UsersRound,
+} from "lucide-react";
 
 export default function Features() {
   const features = [
     {
-      icon: <Users className="w-5 h-5" />,
-      title: 'Smart Identity Engine',
-      description: 'Orchestrate hundreds of profiles across multiple ecosystems with zero friction.',
+      icon: <Brain className="w-5 h-5" />,
+      title: "Advanced AI Engine",
+      description:
+        "Smart AI that actually understands what a form is asking for, not just labels.",
       large: true,
     },
     {
-      icon: <Brain className="w-5 h-5" />,
-      title: 'Neural Detection',
-      description: 'Llama-powered field analysis that understands context, not just labels.',
+      icon: <Users className="w-5 h-5" />,
+      title: "Resume to Profile",
+      description:
+        "Upload your resume and we will instantly build a profile you can use to fill forms.",
     },
     {
       icon: <Zap className="w-5 h-5" />,
-      title: 'Single-Cycle Fill',
-      description: '0.24ms execution speed from detection to deployment.',
+      title: "Fill with Confidence",
+      description:
+        "One click to fill any form. If anything looks wrong, you can undo it instantly.",
     },
     {
       icon: <Shield className="w-5 h-5" />,
-      title: 'Local Residency',
-      description: 'AES-256 encryption at rest. Your data remains on your hardware.',
+      title: "Smart Form Matching",
+      description:
+        "Automatically matches your saved info to any web form with incredible accuracy.",
     },
     {
       icon: <Globe className="w-5 h-5" />,
-      title: 'Universal Logic',
-      description: 'Built to dominate 99% of web schemas, including shadow DOMs.',
+      title: "Works Everywhere",
+      description:
+        "Built to work on even the most complex websites and private company portals.",
     },
     {
       icon: <Settings className="w-5 h-5" />,
-      title: 'Pattern Mapping',
-      description: 'Override any field logic with custom regex and manual overrides.',
+      title: "Privacy Modes",
+      description:
+        "Generate unique, realistic info to protect your privacy when testing or signing up.",
     },
     {
       icon: <UsersRound className="w-5 h-5" />,
-      title: 'Team Sync',
-      description: 'Collaborative identity management for high-growth organizations.',
+      title: "Secure Cloud Sync",
+      description:
+        "Sync your profiles across devices with military-grade encryption.",
     },
   ];
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-onyx">
+    <section
+      id="features"
+      className="relative py-32 px-6 overflow-hidden bg-onyx"
+    >
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-24"
@@ -55,15 +73,17 @@ export default function Features() {
         >
           <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
             <Zap className="w-3 h-3 text-white/80" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">Capabilities</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
+              Capabilities
+            </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">
-            Engineered for precision.
+            Everything you need to work faster.
           </h2>
           <p className="text-lg text-white/80 max-w-5xl mx-auto font-light leading-relaxed">
-            Every feature is fine-tuned to remove technical debt from your daily workflows.
-            Automate with confidence using our most advanced logic engine yet.
+            Every feature is designed to save you hours of boring work every
+            day. Automate with confidence using our most advanced AI engine yet.
           </p>
         </motion.div>
 

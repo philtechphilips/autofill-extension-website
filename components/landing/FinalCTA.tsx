@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Button from '../ui/Button';
-import { Chrome, ArrowRight, Sparkles } from 'lucide-react';
+import { motion } from "framer-motion";
+import Button from "../ui/Button";
+import { Chrome, ArrowRight, Sparkles } from "lucide-react";
 
 export default function FinalCTA() {
   return (
@@ -20,7 +20,9 @@ export default function FinalCTA() {
         >
           <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-10">
             <Sparkles className="w-3 h-3 text-brand-accent" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">Ready to accelerate?</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
+              Ready to accelerate?
+            </span>
           </div>
 
           <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tighter mb-8 leading-[0.95]">
@@ -29,8 +31,8 @@ export default function FinalCTA() {
           </h2>
 
           <p className="text-lg text-white/80 mb-14 max-w-5xl mx-auto font-light leading-relaxed">
-            Join 12,000+ power users who save 10+ hours every week.
-            Open source, secure, and ready for your workflow.
+            Join 12,000+ power users who save 10+ hours every week. Open source,
+            secure, and ready for your workflow.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">

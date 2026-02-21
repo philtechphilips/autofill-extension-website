@@ -1,30 +1,34 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import FAQItem from '../ui/FAQItem';
+import { motion } from "framer-motion";
+import FAQItem from "../ui/FAQItem";
 
 export default function FAQ() {
   const faqs = [
     {
-      question: 'Compatibility with complex forms',
-      answer: 'AutoFill AI is engineered to handle multi-step interfaces, React-based state management, and custom field identifiers that standard browsers miss.',
+      question: "Compatibility with complex forms",
+      answer:
+        "AutoFill AI is engineered to handle multi-step interfaces, React-based state management, and custom field identifiers that standard browsers miss.",
     },
     {
-      question: 'Data residency and sovereignty',
-      answer: 'Your data stays in your browser. We zero-log your profiles and utilize local compute for all AI operations.',
+      question: "Data residency and sovereignty",
+      answer:
+        "Your data stays in your browser. We zero-log your profiles and utilize local compute for all AI operations.",
     },
     {
-      question: 'Multi-profile management',
-      answer: 'Yes. Switch between professional, personal, and project-specific identities with a single key command.',
+      question: "Multi-profile management",
+      answer:
+        "Yes. Switch between professional, personal, and project-specific identities with a single key command.",
     },
     {
-      question: 'Open source transparency',
-      answer: 'Our core engine is open source on GitHub. We believe security equals transparency.',
+      question: "Open source transparency",
+      answer:
+        "Our core engine is open source on GitHub. We believe security equals transparency.",
     },
   ];
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-onyx">
+    <section id="faq" className="relative py-32 px-6 overflow-hidden bg-onyx">
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-24"
@@ -47,11 +51,13 @@ export default function FAQ() {
           viewport={{ once: true }}
         >
           {faqs.map((faq, index) => (
-            <div key={index} className={index % 2 === 0 ? "md:border-r md:border-white/[0.05]" : ""}>
-              <FAQItem
-                question={faq.question}
-                answer={faq.answer}
-              />
+            <div
+              key={index}
+              className={
+                index % 2 === 0 ? "md:border-r md:border-white/[0.05]" : ""
+              }
+            >
+              <FAQItem question={faq.question} answer={faq.answer} />
             </div>
           ))}
         </motion.div>
@@ -63,8 +69,13 @@ export default function FAQ() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <p className="text-[12px] font-mono tracking-widest text-white/70 uppercase mb-4">Support</p>
-          <a href="mailto:support@autofillai.com" className="text-white hover:text-brand-accent transition-colors text-sm font-medium">
+          <p className="text-[12px] font-mono tracking-widest text-white/70 uppercase mb-4">
+            Support
+          </p>
+          <a
+            href="mailto:support@autofillai.com"
+            className="text-white hover:text-brand-accent transition-colors text-sm font-medium"
+          >
             Contact the engineering team →
           </a>
         </motion.div>

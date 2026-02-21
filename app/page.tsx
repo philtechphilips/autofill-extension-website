@@ -1,15 +1,15 @@
-import Navbar from '@/components/landing/Navbar';
-import Hero from '@/components/landing/Hero';
-import Problem from '@/components/landing/Problem';
-import Features from '@/components/landing/Features';
-import HowItWorks from '@/components/landing/HowItWorks';
-import Pricing from '@/components/landing/Pricing';
-import Security from '@/components/landing/Security';
-import Testimonials from '@/components/landing/Testimonials';
-import Demo from '@/components/landing/Demo';
-import FAQ from '@/components/landing/FAQ';
-import FinalCTA from '@/components/landing/FinalCTA';
-import Footer from '@/components/landing/Footer';
+import Navbar from "@/components/landing/Navbar";
+import Hero from "@/components/landing/Hero";
+import Problem from "@/components/landing/Problem";
+import Features from "@/components/landing/Features";
+import HowItWorks from "@/components/landing/HowItWorks";
+import Pricing from "@/components/landing/Pricing";
+import Security from "@/components/landing/Security";
+import Testimonials from "@/components/landing/Testimonials";
+import Demo from "@/components/landing/Demo";
+import FAQ from "@/components/landing/FAQ";
+import FinalCTA from "@/components/landing/FinalCTA";
+import Footer from "@/components/landing/Footer";
 
 export default function Home() {
   return (
@@ -21,7 +21,7 @@ export default function Home() {
       <HowItWorks />
       <Pricing />
       <Security />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <Demo />
       <FAQ />
       <FinalCTA />

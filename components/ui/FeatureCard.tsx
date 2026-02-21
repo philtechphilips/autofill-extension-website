@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { ReactNode } from "react";
+import { motion } from "framer-motion";
 
 interface FeatureCardProps {
   icon: ReactNode;
@@ -10,11 +10,17 @@ interface FeatureCardProps {
   large?: boolean;
 }
 
-export default function FeatureCard({ icon, title, description, large = false }: FeatureCardProps) {
+export default function FeatureCard({
+  icon,
+  title,
+  description,
+  large = false,
+}: FeatureCardProps) {
   return (
     <motion.div
-      className={`glassmorphic rounded-xl p-8 border border-white/[0.03] group hover:border-white/[0.08] transition-all duration-500 ${large ? 'md:col-span-2' : ''
-        }`}
+      className={`glassmorphic rounded-xl p-8 border border-white/[0.03] group hover:border-white/[0.08] transition-all duration-500 ${
+        large ? "md:col-span-2" : ""
+      }`}
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -24,8 +30,12 @@ export default function FeatureCard({ icon, title, description, large = false }:
           {icon}
         </div>
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-white tracking-tight">{title}</h3>
-          <p className="text-[13px] text-white/80 leading-relaxed font-light">{description}</p>
+          <h3 className="text-sm font-semibold text-white tracking-tight">
+            {title}
+          </h3>
+          <p className="text-[13px] text-white/80 leading-relaxed font-light">
+            {description}
+          </p>
         </div>
       </div>
     </motion.div>

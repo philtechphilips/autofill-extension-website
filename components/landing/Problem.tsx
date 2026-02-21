@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Minus, Clock, TrendingDown } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Minus, Clock, TrendingDown } from "lucide-react";
 
 export default function Problem() {
   const frictionPoints = [
-    'Redundant identity verification',
-    'Structural copy-paste latency',
-    'Schema identification failure',
-    'Manual field reconciliation',
+    "Typing the same info over and over",
+    "Wasting time with copy and paste",
+    "Browsers forgetting your details",
+    "Fixing mistakes after autofill",
   ];
 
   return (
@@ -22,15 +22,17 @@ export default function Problem() {
         >
           <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
             <TrendingDown className="w-3 h-3 text-white/80" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">The Friction Gap</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
+              The Problem
+            </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">
-            Manual entry is technical debt.
+            Stop wasting time typing.
           </h2>
           <p className="text-lg text-white/80 max-w-4xl mx-auto font-light leading-relaxed">
-            The modern web is built on complex schemas that standard autofill cannot parse.
-            This creates a systemic bottleneck for high-velocity professionals who interact
-            with hundreds of unique interfaces every week.
+            Most websites are too complex for standard browsers to understand.
+            This forces you to manually type or copy-paste the same information
+            over and over, slowing you down every single day.
           </p>
         </motion.div>
 
@@ -43,9 +45,14 @@ export default function Problem() {
             viewport={{ once: true }}
           >
             {frictionPoints.map((point, index) => (
-              <div key={index} className="flex items-center gap-6 p-6 border border-white/[0.03] rounded-xl hover:bg-white/[0.01] transition-colors group">
+              <div
+                key={index}
+                className="flex items-center gap-6 p-6 border border-white/[0.03] rounded-xl hover:bg-white/[0.01] transition-colors group"
+              >
                 <Minus className="w-4 h-4 text-white/70 group-hover:text-white/80 transition-colors" />
-                <span className="text-[13px] font-medium text-white/80 tracking-wide uppercase">{point}</span>
+                <span className="text-[13px] font-medium text-white/80 tracking-wide uppercase">
+                  {point}
+                </span>
               </div>
             ))}
           </motion.div>
@@ -62,27 +69,39 @@ export default function Problem() {
 
             <div className="relative space-y-12">
               <div className="space-y-4">
-                <p className="text-[10px] font-mono tracking-[0.2em] text-white/70 uppercase">Baseline Latency</p>
+                <p className="text-[10px] font-mono tracking-[0.2em] text-white/70 uppercase">
+                  Manual Job Application Time
+                </p>
                 <div className="flex items-baseline gap-4">
-                  <span className="text-6xl font-bold text-white/70 tracking-tighter italic">18.4m</span>
-                  <span className="text-sm text-white/60 font-light">avg / human iteration</span>
+                  <span className="text-6xl font-bold text-white/70 tracking-tighter italic">
+                    15m
+                  </span>
+                  <span className="text-sm text-white/60 font-light">
+                    average per form
+                  </span>
                 </div>
               </div>
 
               <div className="w-full h-px bg-white/[0.05]" />
 
               <div className="space-y-4">
-                <p className="text-[10px] font-mono tracking-[0.2em] text-brand-accent uppercase">AutoFill Optimized</p>
+                <p className="text-[10px] font-mono tracking-[0.2em] text-brand-accent uppercase">
+                  AutoFill AI Speed
+                </p>
                 <div className="flex items-baseline gap-4">
-                  <span className="text-7xl font-bold text-white tracking-tighter animate-pulse">0.4s</span>
-                  <span className="text-sm text-white/80 font-light">verified deployment</span>
+                  <span className="text-7xl font-bold text-white tracking-tighter animate-pulse">
+                    1m
+                  </span>
+                  <span className="text-sm text-white/80 font-light">
+                    average per form
+                  </span>
                 </div>
               </div>
 
               <div className="pt-6">
                 <div className="inline-flex items-center gap-2 text-white/80 text-[11px] font-medium tracking-widest uppercase">
                   <Clock className="w-3 h-3" />
-                  <span>98% Efficiency Recovery</span>
+                  <span>15x Faster Workday</span>
                 </div>
               </div>
             </div>

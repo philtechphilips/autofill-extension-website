@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, X } from 'lucide-react';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, X } from "lucide-react";
 
 interface FAQItemProps {
   question: string;
@@ -18,7 +18,9 @@ export default function FAQItem({ question, answer }: FAQItemProps) {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between py-8 text-left group"
       >
-        <span className="text-lg md:text-xl font-medium text-white tracking-tight group-hover:text-white/80 transition-colors uppercase tracking-[0.05em]">{question}</span>
+        <span className="text-lg md:text-xl font-medium text-white tracking-tight group-hover:text-white/80 transition-colors uppercase tracking-[0.05em]">
+          {question}
+        </span>
         <motion.div
           animate={{ rotate: isOpen ? 135 : 0 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -32,12 +34,14 @@ export default function FAQItem({ question, answer }: FAQItemProps) {
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
+            animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <p className="pb-8 text-base text-white/80 leading-relaxed font-light">{answer}</p>
+            <p className="pb-8 text-base text-white/80 leading-relaxed font-light">
+              {answer}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>

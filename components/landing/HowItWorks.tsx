@@ -1,24 +1,27 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Save, MousePointerClick, Sparkles } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Save, MousePointerClick, Sparkles } from "lucide-react";
 
 export default function HowItWorks() {
   const steps = [
     {
-      number: '01',
-      title: 'Define your identity',
-      description: 'Centralize your data once. Securely mapped and ready for deployment.',
+      number: "01",
+      title: "Build your Profile",
+      description:
+        "Upload your resume once. Our AI builds a complete profile you can use anywhere.",
     },
     {
-      number: '02',
-      title: 'Contextual Detection',
-      description: 'Our engine identifies field schemas in real-time as you navigate.',
+      number: "02",
+      title: "Open any Form",
+      description:
+        "Navigate to any website; the extension automatically understands what info is needed.",
     },
     {
-      number: '03',
-      title: 'Instant Execution',
-      description: 'One command fills any form with 99.8% precision. Review and go.',
+      number: "03",
+      title: "One-Click Fill",
+      description:
+        "Click fill and watch the form complete itself. You can always undo or edit the results.",
     },
   ];
 
@@ -32,7 +35,9 @@ export default function HowItWorks() {
           viewport={{ once: true }}
         >
           <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">The Workflow</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
+              The Workflow
+            </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
             Designed for high-speed <br />
@@ -54,8 +59,12 @@ export default function HowItWorks() {
                 {step.number}
               </div>
               <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-white tracking-tight">{step.title}</h3>
-                <p className="text-[13px] text-white/80 leading-relaxed font-light">{step.description}</p>
+                <h3 className="text-sm font-semibold text-white tracking-tight">
+                  {step.title}
+                </h3>
+                <p className="text-[13px] text-white/80 leading-relaxed font-light">
+                  {step.description}
+                </p>
               </div>
             </motion.div>
           ))}

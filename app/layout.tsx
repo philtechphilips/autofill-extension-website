@@ -16,18 +16,24 @@ export const metadata: Metadata = {
     "AI",
   ],
   authors: [{ name: "AutoFill AI Team" }],
+  icons: {
+    icon: "/favicon.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "AutoFill AI – Stop Filling Forms, Start Moving Faster",
     description:
       "AutoFill AI completes repetitive online forms in seconds — securely, accurately, and automatically.",
     type: "website",
     url: "https://autofillai.com",
+    images: ["/logo.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "AutoFill AI – Smart Chrome Extension for Instant Form Filling",
     description:
       "Automatically fill online forms in seconds. Save time on job applications, signups, and checkout forms.",
+    images: ["/logo.png"],
   },
   viewport: "width=device-width, initial-scale=1",
   themeColor: "#1560BD",

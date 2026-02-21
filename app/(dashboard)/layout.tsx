@@ -13,8 +13,8 @@ import {
   Menu,
   X,
   User,
-  Chrome,
 } from "lucide-react";
+import Image from "next/image";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -90,8 +90,14 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <aside className="hidden lg:flex flex-col w-72 border-r border-white/[0.05] bg-deep-navy/50 backdrop-blur-xl fixed inset-y-0">
         <div className="p-8">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center transition-transform group-hover:scale-110 shadow-lg shadow-white/10">
-              <Chrome className="w-5 h-5 text-black" />
+            <div className="w-10 h-10 rounded-full overflow-hidden transition-transform group-hover:scale-110 shadow-lg shadow-white/10">
+              <Image
+                src="/logo.png"
+                alt="AutoFill AI"
+                width={40}
+                height={40}
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="text-xl font-bold text-white tracking-tighter">
               AutoFill
@@ -141,7 +147,15 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       {/* Mobile Header */}
       <header className="lg:hidden fixed top-0 w-full h-16 border-b border-white/[0.05] bg-deep-navy/80 backdrop-blur-xl z-50 flex items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2">
-          <Chrome className="w-6 h-6 text-white" />
+          <div className="w-8 h-8 rounded-full overflow-hidden">
+            <Image
+              src="/logo.png"
+              alt="AutoFill AI"
+              width={32}
+              height={32}
+              className="w-full h-full object-cover"
+            />
+          </div>
           <span className="font-bold text-white tracking-tighter text-lg">
             AutoFill
           </span>

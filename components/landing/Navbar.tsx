@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Chrome, ArrowRight, Github } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import Button from "../ui/Button";
 import { useAuthStore } from "@/store/authStore";
 
@@ -19,8 +20,14 @@ export default function Navbar() {
       <div className="max-w-6xl w-full flex items-center justify-between glassmorphic px-5 py-2 rounded-full border border-white/[0.05] shadow-2xl pointer-events-auto">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 group cursor-pointer">
-          <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center transition-transform group-hover:scale-110">
-            <Chrome className="w-3.5 h-3.5 text-black" />
+          <div className="w-8 h-8 rounded-full overflow-hidden transition-transform group-hover:scale-110 shadow-lg shadow-white/10">
+            <Image
+              src="/logo.png"
+              alt="AutoFill AI"
+              width={32}
+              height={32}
+              className="w-full h-full object-cover"
+            />
           </div>
           <span className="text-white font-semibold text-sm tracking-tight">
             AutoFill AI

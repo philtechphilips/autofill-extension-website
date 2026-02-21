@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Chrome } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
@@ -49,8 +49,14 @@ export default function AuthLayout({
         {/* Logo Section */}
         <div className="flex flex-col items-center mb-8 md:mb-12">
           <Link href="/" className="group mb-6 md:mb-8">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-full flex items-center justify-center transition-transform group-hover:scale-110 shadow-2xl shadow-white/10">
-              <Chrome className="w-8 h-8 md:w-10 md:h-10 text-black" />
+            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden transition-transform group-hover:scale-110 shadow-2xl shadow-white/10">
+              <Image
+                src="/logo.png"
+                alt="AutoFill AI"
+                width={80}
+                height={80}
+                className="w-full h-full object-cover"
+              />
             </div>
           </Link>
           <div className="text-center space-y-2 md:space-y-4">

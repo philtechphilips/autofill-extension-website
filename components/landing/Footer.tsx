@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Chrome } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -41,8 +41,14 @@ export default function Footer() {
               className="flex flex-col gap-8"
             >
               <h3 className="text-2xl font-bold text-white tracking-tighter flex items-center gap-3">
-                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                  <Chrome className="w-5 h-5 text-black" />
+                <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg shadow-white/10">
+                  <Image
+                    src="/logo.png"
+                    alt="AutoFill AI"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 AutoFill AI
               </h3>

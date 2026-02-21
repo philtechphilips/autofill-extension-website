@@ -49,7 +49,7 @@ export default function HowItWorks() {
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              className="relative group p-8 border border-white/[0.03] rounded-2xl hover:bg-white/[0.02] transition-all duration-500"
+              className="relative group p-8 border border-white/30 rounded-2xl hover:bg-white/20 transition-all duration-500"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

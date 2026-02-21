@@ -8,21 +8,21 @@ export default function Footer() {
 
   const footerLinks = {
     Product: [
-      { name: "Features", href: "#features" },
-      { name: "Pricing", href: "#pricing" },
-      { name: "Demo", href: "#demo" },
-      { name: "FAQ", href: "#faq" },
+      { name: "Features", href: "/#features" },
+      { name: "Pricing", href: "/#pricing" },
+      { name: "Demo", href: "/#demo" },
+      { name: "FAQ", href: "/#faq" },
     ],
     Company: [
-      { name: "About", href: "#about" },
-      { name: "Blog", href: "#blog" },
-      { name: "Careers", href: "#careers" },
-      { name: "Contact", href: "#contact" },
+      { name: "About", href: "/#about" },
+      { name: "Blog", href: "/#blog" },
+      { name: "Careers", href: "/#careers" },
+      { name: "Contact", href: "/#contact" },
     ],
     Legal: [
-      { name: "Privacy Policy", href: "#privacy" },
-      { name: "Terms of Service", href: "#terms" },
-      { name: "Security", href: "#security" },
+      { name: "Privacy Policy", href: "/privacy" },
+      { name: "Terms of Service", href: "/terms" },
+      { name: "Security", href: "/#security" },
     ],
   };
 

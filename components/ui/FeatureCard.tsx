@@ -20,12 +20,12 @@ export default function FeatureCard({ icon, title, description, large = false }:
       viewport={{ once: true }}
     >
       <div className="flex flex-col gap-6">
-        <div className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-white/50 group-hover:text-white transition-colors duration-500">
+        <div className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-white/80 group-hover:text-white transition-colors duration-500">
           {icon}
         </div>
         <div className="space-y-3">
           <h3 className="text-sm font-semibold text-white tracking-tight">{title}</h3>
-          <p className="text-[13px] text-white/40 leading-relaxed font-light">{description}</p>
+          <p className="text-[13px] text-white/80 leading-relaxed font-light">{description}</p>
         </div>
       </div>
     </motion.div>

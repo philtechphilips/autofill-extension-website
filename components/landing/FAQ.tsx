@@ -35,7 +35,7 @@ export default function FAQ() {
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
             Everything you need to know.
           </h2>
-          <p className="text-lg text-white/40 font-light">
+          <p className="text-lg text-white/80 font-light">
             Simple answers to common questions about the platform.
           </p>
         </motion.div>
@@ -63,7 +63,7 @@ export default function FAQ() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <p className="text-[12px] font-mono tracking-widest text-white/20 uppercase mb-4">Support</p>
+          <p className="text-[12px] font-mono tracking-widest text-white/70 uppercase mb-4">Support</p>
           <a href="mailto:support@autofillai.com" className="text-white hover:text-brand-accent transition-colors text-sm font-medium">
             Contact the engineering team →
           </a>

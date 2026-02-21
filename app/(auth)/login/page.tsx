@@ -26,7 +26,7 @@ export default function LoginPage() {
             const response = await api.post('/auth/login', { email, password });
             const { user, accessToken } = response.data.data;
             setAuth(user, accessToken);
-            router.push('/');
+            router.push('/dashboard');
         } catch (err: any) {
             setError(err.response?.data?.message || 'Failed to sign in');
         } finally {
@@ -38,7 +38,7 @@ export default function LoginPage() {
         <div className="space-y-12">
             <div className="space-y-4 text-center">
                 <h2 className="text-3xl font-semibold text-white tracking-tight">Sign in to your account</h2>
-                <p className="text-lg text-white/40 font-light">Enter your credentials to continue.</p>
+                <p className="text-lg text-white/80 font-light">Enter your credentials to continue.</p>
             </div>
 
             <form className="space-y-8" onSubmit={handleSubmit}>
@@ -49,7 +49,7 @@ export default function LoginPage() {
                 )}
                 <div className="space-y-3">
                     <div className="flex justify-between items-center px-1">
-                        <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em]">
+                        <label className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em]">
                             Email Address
                         </label>
                     </div>
@@ -59,14 +59,14 @@ export default function LoginPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
                     />
                 </div>
 
                 <div className="space-y-2">
                     <div className="space-y-3">
                         <div className="flex justify-between items-center px-1">
-                            <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em]">
+                            <label className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em]">
                                 Password
                             </label>
                         </div>
@@ -76,13 +76,13 @@ export default function LoginPage() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
                         />
                     </div>
                     <div className="flex justify-end px-1">
                         <Link
                             href="/forgot-password"
-                            className="text-[11px] text-white/20 hover:text-white transition-colors uppercase tracking-[0.2em] font-bold"
+                            className="text-[11px] text-white/70 hover:text-white transition-colors uppercase tracking-[0.2em] font-bold"
                         >
                             Forgot password?
                         </Link>
@@ -100,7 +100,7 @@ export default function LoginPage() {
             </form>
 
             <div className="pt-8 border-t border-white/[0.05] text-center">
-                <p className="text-sm text-white/30 font-light">
+                <p className="text-sm text-white/80 font-light">
                     Don't have an account?{' '}
                     <Link href="/register" className="text-white hover:text-brand-accent transition-colors font-medium">
                         Create an account

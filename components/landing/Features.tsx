@@ -54,14 +54,14 @@ export default function Features() {
           viewport={{ once: true }}
         >
           <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
-            <Zap className="w-3 h-3 text-white/40" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Capabilities</span>
+            <Zap className="w-3 h-3 text-white/80" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">Capabilities</span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">
             Engineered for precision.
           </h2>
-          <p className="text-lg text-white/40 max-w-5xl mx-auto font-light leading-relaxed">
+          <p className="text-lg text-white/80 max-w-5xl mx-auto font-light leading-relaxed">
             Every feature is fine-tuned to remove technical debt from your daily workflows.
             Automate with confidence using our most advanced logic engine yet.
           </p>

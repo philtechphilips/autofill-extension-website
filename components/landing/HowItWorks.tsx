@@ -32,7 +32,7 @@ export default function HowItWorks() {
           viewport={{ once: true }}
         >
           <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">The Workflow</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">The Workflow</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
             Designed for high-speed <br />
@@ -55,7 +55,7 @@ export default function HowItWorks() {
               </div>
               <div className="space-y-4">
                 <h3 className="text-sm font-semibold text-white tracking-tight">{step.title}</h3>
-                <p className="text-[13px] text-white/30 leading-relaxed font-light">{step.description}</p>
+                <p className="text-[13px] text-white/80 leading-relaxed font-light">{step.description}</p>
               </div>
             </motion.div>
           ))}

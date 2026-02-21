@@ -46,7 +46,7 @@ export default function Footer() {
                                 </div>
                                 AutoFill AI
                             </h3>
-                            <p className="text-xl md:text-2xl text-white/50 font-light leading-tight tracking-tight">
+                            <p className="text-xl md:text-2xl text-white/80 font-light leading-tight tracking-tight">
                                 The standard for precision-driven form automation.
                                 Built by engineers, for the technical elite.
                             </p>
@@ -59,7 +59,7 @@ export default function Footer() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: i * 0.1 }}
-                                        className="w-11 h-11 rounded-full border border-white/[0.05] bg-white/[0.02] flex items-center justify-center text-white/20 hover:text-white hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 group"
+                                        className="w-11 h-11 rounded-full border border-white/[0.05] bg-white/[0.02] flex items-center justify-center text-white/70 hover:text-white hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 group"
                                     >
                                         <span className="sr-only">{social}</span>
                                         <div className="w-1.5 h-1.5 rounded-full bg-current transition-transform group-hover:scale-150" />
@@ -77,7 +77,7 @@ export default function Footer() {
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 + (i * 0.1) }}
                         >
-                            <h4 className="text-[11px] font-bold text-white/20 uppercase tracking-[0.25em] mb-8">
+                            <h4 className="text-[11px] font-bold text-white/70 uppercase tracking-[0.25em] mb-8">
                                 {category}
                             </h4>
                             <ul className="space-y-4">
@@ -85,7 +85,7 @@ export default function Footer() {
                                     <li key={link.name}>
                                         <a
                                             href={link.href}
-                                            className="text-[15px] text-white/30 hover:text-white transition-all duration-300 font-light hover:translate-x-1 inline-block"
+                                            className="text-[15px] text-white/80 hover:text-white transition-all duration-300 font-light hover:translate-x-1 inline-block"
                                         >
                                             {link.name}
                                         </a>
@@ -98,11 +98,11 @@ export default function Footer() {
 
                 <div className="pt-12 border-t border-white/[0.03] flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
-                        <p className="text-[11px] font-mono text-white/10 tracking-[0.2em] uppercase">
+                        <p className="text-[11px] font-mono text-white/60 tracking-[0.2em] uppercase">
                             © {currentYear} AutoFill Labs Inc.
                         </p>
                         <div className="h-4 w-px bg-white/[0.05] hidden md:block" />
-                        <p className="text-[11px] font-mono text-white/10 tracking-[0.2em] uppercase italic">
+                        <p className="text-[11px] font-mono text-white/60 tracking-[0.2em] uppercase italic">
                             Built for speed.
                         </p>
                     </div>
@@ -110,8 +110,8 @@ export default function Footer() {
                     <div className="flex items-center gap-10">
                         <div className="flex items-center gap-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            <p className="text-[10px] text-white/20 font-medium tracking-[0.15em] uppercase">
-                                Systems status: <span className="text-white/40">Nominal</span>
+                            <p className="text-[10px] text-white/70 font-medium tracking-[0.15em] uppercase">
+                                Systems status: <span className="text-white/80">Nominal</span>
                             </p>
                         </div>
                     </div>

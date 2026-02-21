@@ -22,7 +22,7 @@ export default function FAQItem({ question, answer }: FAQItemProps) {
         <motion.div
           animate={{ rotate: isOpen ? 135 : 0 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="text-white/20 group-hover:text-white transition-colors"
+          className="text-white/70 group-hover:text-white transition-colors"
         >
           <Plus className="w-6 h-6" />
         </motion.div>
@@ -37,7 +37,7 @@ export default function FAQItem({ question, answer }: FAQItemProps) {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <p className="pb-8 text-base text-white/50 leading-relaxed font-light">{answer}</p>
+            <p className="pb-8 text-base text-white/80 leading-relaxed font-light">{answer}</p>
           </motion.div>
         )}
       </AnimatePresence>

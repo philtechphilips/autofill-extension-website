@@ -23,8 +23,8 @@ export default function Hero() {
           className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.08] rounded-full px-4 py-1.5 mb-12 backdrop-blur-xl"
         >
           <div className="w-2 h-2 bg-brand-accent rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-          <span className="text-[11px] font-medium tracking-[0.1em] text-white/60">AUTOFILL V2.4 IS LIVE</span>
-          <ArrowRight className="w-3 h-3 text-white/30" />
+          <span className="text-[11px] font-medium tracking-[0.1em] text-white/80">AUTOFILL V2.4 IS LIVE</span>
+          <ArrowRight className="w-3 h-3 text-white/80" />
         </motion.div>
 
         {/* Hero Headline */}
@@ -55,7 +55,7 @@ export default function Hero() {
           <Button variant="primary" size="lg" className="px-10 h-14 text-sm tracking-wide">
             Install for Chrome
           </Button>
-          <button className="flex items-center gap-2 group text-white/50 hover:text-white transition-all text-sm font-medium h-14">
+          <button className="flex items-center gap-2 group text-white/80 hover:text-white transition-all text-sm font-medium h-14">
             Browse use cases
             <div className="w-5 h-5 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/20 transition-all">
               <ArrowRight className="w-3 h-3" />
@@ -82,8 +82,8 @@ export default function Hero() {
                 <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
               </div>
               <div className="flex-1 h-5 bg-white/[0.02] border border-white/[0.05] rounded-md flex items-center px-3 gap-2">
-                <Shield className="w-2 h-2 text-white/20" />
-                <div className="text-[10px] text-white/20 font-mono tracking-tighter">https://vanguard.ai/careers/apply</div>
+                <Shield className="w-2 h-2 text-white/70" />
+                <div className="text-[10px] text-white/70 font-mono tracking-tighter">https://vanguard.ai/careers/apply</div>
               </div>
             </div>
 
@@ -99,7 +99,7 @@ export default function Hero() {
                       className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-accent/5 to-transparent"
                     />
                     <div className="absolute inset-0 flex items-center px-4">
-                      <span className="text-white/20 text-sm font-mono tracking-widest">DETECTING...</span>
+                      <span className="text-white/70 text-sm font-mono tracking-widest">DETECTING...</span>
                     </div>
                   </div>
                 </div>
@@ -137,14 +137,14 @@ export default function Hero() {
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[11px] font-bold text-white tracking-wide">AutoFill AI</span>
-                    <span className="text-[9px] text-white/40 uppercase tracking-[0.15em] font-bold">Engine active</span>
+                    <span className="text-[9px] text-white/80 uppercase tracking-[0.15em] font-bold">Engine active</span>
                   </div>
                 </div>
 
                 <div className="h-px bg-white/10 w-full" />
 
                 <div className="space-y-3">
-                  <div className="flex justify-between text-[10px] text-white/60">
+                  <div className="flex justify-between text-[10px] text-white/80">
                     <span>Efficiency</span>
                     <span className="text-white">99.8%</span>
                   </div>

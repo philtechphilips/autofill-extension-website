@@ -14,13 +14,13 @@ export default function Demo() {
           viewport={{ once: true }}
         >
           <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
-            <Play className="w-3 h-3 text-white/40" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Interface Demo</span>
+            <Play className="w-3 h-3 text-white/80" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">Interface Demo</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">
             Efficiency in motion.
           </h2>
-          <p className="text-lg text-white/40 max-w-5xl mx-auto font-light leading-relaxed">
+          <p className="text-lg text-white/80 max-w-5xl mx-auto font-light leading-relaxed">
             Experience the fluidity of our high-speed engine. Witness how AutoFill AI navigates
             complex data schemas and deploys information with millisecond precision.
           </p>
@@ -61,9 +61,9 @@ export default function Demo() {
             <div className="flex justify-between items-center">
               <div className="space-y-1">
                 <h3 className="text-sm font-semibold text-white tracking-tight">Full Lifecycle Form Deployment</h3>
-                <p className="text-[12px] text-white/20 font-light uppercase tracking-widest font-mono">2 min 30 sec • 4K Engine Capture</p>
+                <p className="text-[12px] text-white/70 font-light uppercase tracking-widest font-mono">2 min 30 sec • 4K Engine Capture</p>
               </div>
-              <Square className="w-4 h-4 text-white/10" />
+              <Square className="w-4 h-4 text-white/60" />
             </div>
           </div>
         </motion.div>

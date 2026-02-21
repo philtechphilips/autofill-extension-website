@@ -20,7 +20,7 @@ export default function FinalCTA() {
         >
           <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-10">
             <Sparkles className="w-3 h-3 text-brand-accent" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Ready to accelerate?</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">Ready to accelerate?</span>
           </div>
 
           <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tighter mb-8 leading-[0.95]">
@@ -28,7 +28,7 @@ export default function FinalCTA() {
             of form filling.
           </h2>
 
-          <p className="text-lg text-white/40 mb-14 max-w-5xl mx-auto font-light leading-relaxed">
+          <p className="text-lg text-white/80 mb-14 max-w-5xl mx-auto font-light leading-relaxed">
             Join 12,000+ power users who save 10+ hours every week.
             Open source, secure, and ready for your workflow.
           </p>
@@ -37,13 +37,13 @@ export default function FinalCTA() {
             <Button variant="primary" size="lg" className="px-12 h-14">
               Download extension
             </Button>
-            <button className="text-white/40 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">
+            <button className="text-white/80 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">
               View lifetime plans
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
 
-          <div className="mt-20 flex flex-wrap justify-center gap-x-12 gap-y-6 text-[10px] font-mono tracking-[0.2em] text-white/20 uppercase">
+          <div className="mt-20 flex flex-wrap justify-center gap-x-12 gap-y-6 text-[10px] font-mono tracking-[0.2em] text-white/70 uppercase">
             <span>No credit card required</span>
             <span>14-day pro trial</span>
             <span>Cancel anytime</span>

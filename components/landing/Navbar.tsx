@@ -4,8 +4,11 @@ import { motion } from 'framer-motion';
 import { Chrome, ArrowRight, Github } from 'lucide-react';
 import Link from 'next/link';
 import Button from '../ui/Button';
+import { useAuthStore } from '@/store/authStore';
 
 export default function Navbar() {
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
     return (
         <motion.nav
             initial={{ y: -20, opacity: 0 }}
@@ -15,15 +18,15 @@ export default function Navbar() {
         >
             <div className="max-w-6xl w-full flex items-center justify-between glassmorphic px-5 py-2 rounded-full border border-white/[0.05] shadow-2xl pointer-events-auto">
                 {/* Brand */}
-                <div className="flex items-center gap-3 group cursor-pointer">
+                <Link href="/" className="flex items-center gap-3 group cursor-pointer">
                     <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center transition-transform group-hover:scale-110">
                         <Chrome className="w-3.5 h-3.5 text-black" />
                     </div>
                     <span className="text-white font-semibold text-sm tracking-tight">AutoFill AI</span>
-                </div>
+                </Link>
 
                 {/* Navigation - Ultra Minimal */}
-                <div className="hidden md:flex items-center gap-10 text-[11px] font-medium tracking-[0.1em] text-white/40 uppercase">
+                <div className="hidden md:flex items-center gap-10 text-[11px] font-medium tracking-[0.1em] text-white/80 uppercase">
                     <a href="#features" className="hover:text-white transition-colors">Platform</a>
                     <a href="#security" className="hover:text-white transition-colors">Security</a>
                     <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
@@ -32,16 +35,24 @@ export default function Navbar() {
 
                 {/* Right Actions */}
                 <div className="flex items-center gap-6">
-                    <a href="https://github.com" className="text-white/40 hover:text-white transition-colors hidden sm:block">
+                    <a href="https://github.com" className="text-white/80 hover:text-white transition-colors hidden sm:block">
                         <Github className="w-4 h-4" />
                     </a>
                     <div className="w-px h-4 bg-white/10 hidden sm:block" />
-                    <Link href="/login" className="text-[11px] font-bold tracking-widest text-white/40 hover:text-white uppercase transition-colors">
-                        Sign In
-                    </Link>
-                    <Button href="/register" variant="primary" size="sm" className="text-[10px] px-5 h-8 font-bold tracking-wider uppercase">
-                        Get Started
-                    </Button>
+                    {isAuthenticated ? (
+                        <Button href="/dashboard" variant="primary" size="sm" className="text-[10px] px-5 h-8 font-bold tracking-wider uppercase">
+                            Dashboard
+                        </Button>
+                    ) : (
+                        <>
+                            <Link href="/login" className="text-[11px] font-bold tracking-widest text-white/80 hover:text-white uppercase transition-colors">
+                                Sign In
+                            </Link>
+                            <Button href="/register" variant="primary" size="sm" className="text-[10px] px-5 h-8 font-bold tracking-wider uppercase">
+                                Get Started
+                            </Button>
+                        </>
+                    )}
                 </div>
             </div>
         </motion.nav>

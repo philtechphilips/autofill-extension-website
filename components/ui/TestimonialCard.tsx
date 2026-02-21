@@ -29,7 +29,7 @@ export default function TestimonialCard({ quote, author, role, avatar }: Testimo
           </div>
           <div className="space-y-0.5">
             <p className="text-base font-semibold text-white tracking-tight">{author}</p>
-            <p className="text-xs text-white/40 font-medium uppercase tracking-widest">{role}</p>
+            <p className="text-xs text-white/80 font-medium uppercase tracking-widest">{role}</p>
           </div>
         </div>
       </div>

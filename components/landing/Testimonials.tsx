@@ -36,13 +36,13 @@ export default function Testimonials() {
           viewport={{ once: true }}
         >
           <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
-            <Star className="w-3 h-3 text-white/40" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Trusted by Professionals</span>
+            <Star className="w-3 h-3 text-white/80" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">Trusted by Professionals</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">
             Standard for high-speed talent.
           </h2>
-          <p className="text-lg md:text-xl text-white/60 max-w-5xl mx-auto font-light leading-relaxed">
+          <p className="text-lg md:text-xl text-white/80 max-w-5xl mx-auto font-light leading-relaxed">
             Joined by 12,000+ engineers, designers, and founders who demand precision
             and speed in their daily technical interactions.
           </p>

@@ -33,7 +33,7 @@ export default function RegisterPage() {
             });
             const { user, accessToken } = response.data.data;
             setAuth(user, accessToken);
-            router.push('/');
+            router.push('/dashboard');
         } catch (err: any) {
             setError(err.response?.data?.message || 'Failed to create account');
         } finally {
@@ -45,7 +45,7 @@ export default function RegisterPage() {
         <div className="space-y-12">
             <div className="space-y-4 text-center">
                 <h2 className="text-3xl font-semibold text-white tracking-tight">Create your account</h2>
-                <p className="text-lg text-white/40 font-light">Join thousands of professionals saving time.</p>
+                <p className="text-lg text-white/80 font-light">Join thousands of professionals saving time.</p>
             </div>
 
             <form className="space-y-8" onSubmit={handleSubmit}>
@@ -56,7 +56,7 @@ export default function RegisterPage() {
                 )}
                 <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-3">
-                        <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                        <label className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em] px-1">
                             First name
                         </label>
                         <input
@@ -65,11 +65,11 @@ export default function RegisterPage() {
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                             required
-                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
                         />
                     </div>
                     <div className="space-y-3">
-                        <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                        <label className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em] px-1">
                             Last name
                         </label>
                         <input
@@ -78,12 +78,12 @@ export default function RegisterPage() {
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                             required
-                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
                         />
                     </div>
                 </div>
                 <div className="space-y-3">
-                    <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                    <label className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em] px-1">
                         Email Address
                     </label>
                     <input
@@ -92,11 +92,11 @@ export default function RegisterPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
                     />
                 </div>
                 <div className="space-y-3">
-                    <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                    <label className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em] px-1">
                         Password
                     </label>
                     <input
@@ -105,7 +105,7 @@ export default function RegisterPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
                     />
                 </div>
 
@@ -118,14 +118,14 @@ export default function RegisterPage() {
                     >
                         Create Account
                     </Button>
-                    <p className="text-[11px] text-white/20 leading-relaxed uppercase tracking-[0.2em] text-center">
+                    <p className="text-[11px] text-white/70 leading-relaxed uppercase tracking-[0.2em] text-center">
                         By signing up, you agree to our <Link href="/terms" className="underline hover:text-white transition-colors">terms of service</Link>.
                     </p>
                 </div>
             </form>
 
             <div className="pt-8 border-t border-white/[0.05] text-center">
-                <p className="text-sm text-white/30 font-light">
+                <p className="text-sm text-white/80 font-light">
                     Already have an account?{' '}
                     <Link href="/login" className="text-white hover:text-brand-accent transition-colors font-medium">
                         Sign in

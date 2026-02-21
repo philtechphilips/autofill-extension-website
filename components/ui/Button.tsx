@@ -34,7 +34,7 @@ export default function Button({
   const variantStyles = {
     primary: 'bg-white text-black hover:bg-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.1)]',
     secondary: 'bg-white/[0.03] text-white/90 hover:bg-white/[0.08] border border-white/[0.05] backdrop-blur-sm',
-    ghost: 'text-white/40 hover:text-white transition-colors',
+    ghost: 'text-white/80 hover:text-white transition-colors',
   };
 
   const sizeStyles = {

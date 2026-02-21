@@ -14,7 +14,7 @@ export default function AuthInput({ label, type, placeholder, name, required = f
     return (
         <div className="space-y-3">
             <div className="flex justify-between items-center px-1">
-                <label htmlFor={name} className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em]">
+                <label htmlFor={name} className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em]">
                     {label}
                 </label>
             </div>
@@ -25,7 +25,7 @@ export default function AuthInput({ label, type, placeholder, name, required = f
                     type={type}
                     placeholder={placeholder}
                     required={required}
-                    className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                    className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
                 />
             </div>
         </div>

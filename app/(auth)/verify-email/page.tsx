@@ -49,9 +49,9 @@ function VerifyEmailContent() {
         <div className="space-y-8 text-center py-10">
             {status === 'loading' && (
                 <div className="flex flex-col items-center space-y-4">
-                    <Loader2 className="w-12 h-12 text-white/20 animate-spin" />
+                    <Loader2 className="w-12 h-12 text-white/70 animate-spin" />
                     <h2 className="text-xl font-medium text-white">Verifying your identity</h2>
-                    <p className="text-white/40 font-light">Please wait while we secure your account...</p>
+                    <p className="text-white/80 font-light">Please wait while we secure your account...</p>
                 </div>
             )}
 
@@ -64,12 +64,12 @@ function VerifyEmailContent() {
                     </div>
                     <div className="space-y-2">
                         <h2 className="text-2xl font-semibold text-white tracking-tight">Email Verified</h2>
-                        <p className="text-lg text-white/40 font-light leading-relaxed">
+                        <p className="text-lg text-white/80 font-light leading-relaxed">
                             {message}
                         </p>
                     </div>
                     <Button
-                        href="/login"
+                        href="/dashboard"
                         variant="primary"
                         className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight"
                     >
@@ -87,7 +87,7 @@ function VerifyEmailContent() {
                     </div>
                     <div className="space-y-2">
                         <h2 className="text-2xl font-semibold text-white tracking-tight">Verification Failed</h2>
-                        <p className="text-lg text-white/40 font-light leading-relaxed">
+                        <p className="text-lg text-white/80 font-light leading-relaxed">
                             {message}
                         </p>
                     </div>

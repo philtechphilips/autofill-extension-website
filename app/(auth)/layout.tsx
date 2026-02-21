@@ -35,7 +35,7 @@ export default function AuthLayout({
                         <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tighter leading-tight">
                             AutoFill AI
                         </h1>
-                        <p className="text-white/40 text-base md:text-xl font-light tracking-tight mx-auto px-4">
+                        <p className="text-white/80 text-base md:text-xl font-light tracking-tight mx-auto px-4">
                             Stop filling forms. Start moving faster.
                         </p>
                     </div>
@@ -50,7 +50,7 @@ export default function AuthLayout({
                 </div>
 
                 {/* Footer Link */}
-                <div className="mt-8 md:mt-12 text-center text-[10px] font-mono tracking-[0.2em] text-white/10 uppercase italic">
+                <div className="mt-8 md:mt-12 text-center text-[10px] font-mono tracking-[0.2em] text-white/60 uppercase italic">
                     Built for the technical elite.
                 </div>
             </motion.div>

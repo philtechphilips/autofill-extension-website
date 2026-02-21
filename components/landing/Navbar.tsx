@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Chrome, ArrowRight, Github } from 'lucide-react';
+import Link from 'next/link';
 import Button from '../ui/Button';
 
 export default function Navbar() {
@@ -30,13 +31,16 @@ export default function Navbar() {
                 </div>
 
                 {/* Right Actions */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-6">
                     <a href="https://github.com" className="text-white/40 hover:text-white transition-colors hidden sm:block">
                         <Github className="w-4 h-4" />
                     </a>
                     <div className="w-px h-4 bg-white/10 hidden sm:block" />
-                    <Button variant="primary" size="sm" className="text-[10px] px-5 h-8 font-bold tracking-wider uppercase">
-                        Get Project
+                    <Link href="/login" className="text-[11px] font-bold tracking-widest text-white/40 hover:text-white uppercase transition-colors">
+                        Sign In
+                    </Link>
+                    <Button href="/register" variant="primary" size="sm" className="text-[10px] px-5 h-8 font-bold tracking-wider uppercase">
+                        Get Started
                     </Button>
                 </div>
             </div>

@@ -13,7 +13,7 @@ export default function Hero() {
       <div className="absolute inset-0 gradient-mesh opacity-100" />
 
       {/* Content Layer */}
-      <div className="relative z-10 max-w-5xl mx-auto w-full flex flex-col items-center text-center">
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center">
 
         {/* Release Status Badge */}
         <motion.div

@@ -55,7 +55,7 @@ export default function HowItWorks() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <div className="text-[40px] font-bold text-white/5 group-hover:text-brand-accent/20 transition-colors duration-500 mb-6">
+              <div className="text-[40px] font-bold text-white group-hover:text-brand-accent/80 transition-colors duration-500 mb-6">
                 {step.number}
               </div>
               <div className="space-y-4">

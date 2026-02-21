@@ -3,6 +3,7 @@ import Hero from "@/components/landing/Hero";
 import Problem from "@/components/landing/Problem";
 import Features from "@/components/landing/Features";
 import HowItWorks from "@/components/landing/HowItWorks";
+import Shortcuts from "@/components/landing/Shortcuts";
 import Pricing from "@/components/landing/Pricing";
 import Security from "@/components/landing/Security";
 import Testimonials from "@/components/landing/Testimonials";
@@ -19,6 +20,7 @@ export default function Home() {
       <Problem />
       <Features />
       <HowItWorks />
+      <Shortcuts />
       <Pricing />
       <Security />
       {/* <Testimonials /> */}

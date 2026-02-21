@@ -2,10 +2,38 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import AuthInput from '@/components/auth/AuthInput';
 import Button from '@/components/ui/Button';
+import api from '@/lib/api';
+import { useAuthStore } from '@/store/authStore';
 
 export default function LoginPage() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
+    const setAuth = useAuthStore((state) => state.setAuth);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const response = await api.post('/auth/login', { email, password });
+            const { user, accessToken } = response.data.data;
+            setAuth(user, accessToken);
+            router.push('/');
+        } catch (err: any) {
+            setError(err.response?.data?.message || 'Failed to sign in');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className="space-y-12">
             <div className="space-y-4 text-center">
@@ -13,22 +41,44 @@ export default function LoginPage() {
                 <p className="text-lg text-white/40 font-light">Enter your credentials to continue.</p>
             </div>
 
-            <form className="space-y-8">
-                <AuthInput
-                    label="Email Address"
-                    type="email"
-                    placeholder="name@company.com"
-                    name="email"
-                    required
-                />
-                <div className="space-y-2">
-                    <AuthInput
-                        label="Password"
-                        type="password"
-                        placeholder="••••••••"
-                        name="password"
+            <form className="space-y-8" onSubmit={handleSubmit}>
+                {error && (
+                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center">
+                        {error}
+                    </div>
+                )}
+                <div className="space-y-3">
+                    <div className="flex justify-between items-center px-1">
+                        <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em]">
+                            Email Address
+                        </label>
+                    </div>
+                    <input
+                        type="email"
+                        placeholder="name@company.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
+                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
                     />
+                </div>
+
+                <div className="space-y-2">
+                    <div className="space-y-3">
+                        <div className="flex justify-between items-center px-1">
+                            <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em]">
+                                Password
+                            </label>
+                        </div>
+                        <input
+                            type="password"
+                            placeholder="••••••••"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                        />
+                    </div>
                     <div className="flex justify-end px-1">
                         <Link
                             href="/forgot-password"
@@ -39,7 +89,12 @@ export default function LoginPage() {
                     </div>
                 </div>
 
-                <Button variant="primary" className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight shadow-xl shadow-white/5">
+                <Button
+                    variant="primary"
+                    type="submit"
+                    className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight shadow-xl shadow-white/5"
+                    isLoading={isLoading}
+                >
                     Sign In
                 </Button>
             </form>
@@ -55,3 +110,4 @@ export default function LoginPage() {
         </div>
     );
 }
+

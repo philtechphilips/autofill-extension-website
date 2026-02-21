@@ -2,10 +2,45 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import AuthInput from '@/components/auth/AuthInput';
 import Button from '@/components/ui/Button';
+import api from '@/lib/api';
+import { useAuthStore } from '@/store/authStore';
 
 export default function RegisterPage() {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
+    const setAuth = useAuthStore((state) => state.setAuth);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            // Backend expects 'name', so we combine firstName and lastName
+            const response = await api.post('/auth/register', {
+                email,
+                password,
+                name: `${firstName} ${lastName}`.trim()
+            });
+            const { user, accessToken } = response.data.data;
+            setAuth(user, accessToken);
+            router.push('/');
+        } catch (err: any) {
+            setError(err.response?.data?.message || 'Failed to create account');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className="space-y-12">
             <div className="space-y-4 text-center">
@@ -13,40 +48,74 @@ export default function RegisterPage() {
                 <p className="text-lg text-white/40 font-light">Join thousands of professionals saving time.</p>
             </div>
 
-            <form className="space-y-8">
+            <form className="space-y-8" onSubmit={handleSubmit}>
+                {error && (
+                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center">
+                        {error}
+                    </div>
+                )}
                 <div className="grid grid-cols-2 gap-6">
-                    <AuthInput
-                        label="First name"
-                        type="text"
-                        placeholder="Alex"
-                        name="firstName"
+                    <div className="space-y-3">
+                        <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                            First name
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Alex"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            required
+                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                        />
+                    </div>
+                    <div className="space-y-3">
+                        <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                            Last name
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Sterling"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            required
+                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                        />
+                    </div>
+                </div>
+                <div className="space-y-3">
+                    <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                        Email Address
+                    </label>
+                    <input
+                        type="email"
+                        placeholder="name@company.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
-                    />
-                    <AuthInput
-                        label="Last name"
-                        type="text"
-                        placeholder="Sterling"
-                        name="lastName"
-                        required
+                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
                     />
                 </div>
-                <AuthInput
-                    label="Email Address"
-                    type="email"
-                    placeholder="name@company.com"
-                    name="email"
-                    required
-                />
-                <AuthInput
-                    label="Password"
-                    type="password"
-                    placeholder="••••••••"
-                    name="password"
-                    required
-                />
+                <div className="space-y-3">
+                    <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                        Password
+                    </label>
+                    <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                    />
+                </div>
 
                 <div className="space-y-6">
-                    <Button variant="primary" className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight">
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight"
+                        isLoading={isLoading}
+                    >
                         Create Account
                     </Button>
                     <p className="text-[11px] text-white/20 leading-relaxed uppercase tracking-[0.2em] text-center">
@@ -66,3 +135,4 @@ export default function RegisterPage() {
         </div>
     );
 }
+

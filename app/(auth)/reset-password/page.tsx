@@ -1,13 +1,49 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
 import AuthInput from '@/components/auth/AuthInput';
 import Button from '@/components/ui/Button';
+import api from '@/lib/api';
 import { CheckCircle2 } from 'lucide-react';
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [isSuccess, setIsSuccess] = useState(false);
+
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const token = searchParams.get('token');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
+
+        if (!token) {
+            setError('Reset token is missing from the URL');
+            return;
+        }
+
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            await api.post('/auth/reset-password', { token, password });
+            setIsSuccess(true);
+        } catch (err: any) {
+            setError(err.response?.data?.message || 'Failed to reset password');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     if (isSuccess) {
         return (
@@ -43,32 +79,63 @@ export default function ResetPasswordPage() {
                 </p>
             </div>
 
-            <form
-                className="space-y-6"
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    setIsSuccess(true);
-                }}
-            >
-                <AuthInput
-                    label="New Password"
-                    type="password"
-                    placeholder="••••••••"
-                    name="password"
-                    required
-                />
-                <AuthInput
-                    label="Confirm Password"
-                    type="password"
-                    placeholder="••••••••"
-                    name="confirmPassword"
-                    required
-                />
+            <form className="space-y-6" onSubmit={handleSubmit}>
+                {error && (
+                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center">
+                        {error}
+                    </div>
+                )}
 
-                <Button variant="primary" className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight">
+                <div className="space-y-3">
+                    <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                        New Password
+                    </label>
+                    <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                    />
+                </div>
+
+                <div className="space-y-3">
+                    <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                        Confirm Password
+                    </label>
+                    <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                    />
+                </div>
+
+                <Button
+                    variant="primary"
+                    type="submit"
+                    className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight"
+                    isLoading={isLoading}
+                >
                     Reset Password
                 </Button>
             </form>
         </div>
     );
 }
+
+export default function ResetPasswordPage() {
+    return (
+        <Suspense fallback={
+            <div className="flex justify-center py-20">
+                <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+            </div>
+        }>
+            <ResetPasswordForm />
+        </Suspense>
+    );
+}
+

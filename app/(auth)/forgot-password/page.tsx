@@ -4,10 +4,29 @@ import { useState } from 'react';
 import Link from 'next/link';
 import AuthInput from '@/components/auth/AuthInput';
 import Button from '@/components/ui/Button';
+import api from '@/lib/api';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 export default function ForgotPasswordPage() {
+    const [email, setEmail] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            await api.post('/auth/forgot-password', { email });
+            setIsSubmitted(true);
+        } catch (err: any) {
+            setError(err.response?.data?.message || 'Failed to send reset link');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     if (isSubmitted) {
         return (
@@ -50,25 +69,37 @@ export default function ForgotPasswordPage() {
                 </p>
             </div>
 
-            <form
-                className="space-y-6"
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    setIsSubmitted(true);
-                }}
-            >
-                <AuthInput
-                    label="Email Address"
-                    type="email"
-                    placeholder="name@company.com"
-                    name="email"
-                    required
-                />
+            <form className="space-y-6" onSubmit={handleSubmit}>
+                {error && (
+                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center">
+                        {error}
+                    </div>
+                )}
 
-                <Button variant="primary" className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight">
+                <div className="space-y-3">
+                    <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.25em] px-1">
+                        Email Address
+                    </label>
+                    <input
+                        type="email"
+                        placeholder="name@company.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+                    />
+                </div>
+
+                <Button
+                    variant="primary"
+                    type="submit"
+                    className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight"
+                    isLoading={isLoading}
+                >
                     Send Reset Link
                 </Button>
             </form>
         </div>
     );
 }
+

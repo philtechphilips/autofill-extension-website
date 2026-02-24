@@ -62,7 +62,7 @@ export default function Features() {
   return (
     <section
       id="features"
-      className="relative py-32 px-6 overflow-hidden bg-onyx"
+      className="relative py-32 px-6 overflow-hidden bg-white dark:bg-onyx"
     >
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
@@ -71,17 +71,17 @@ export default function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
-            <Zap className="w-3 h-3 text-white/80" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
+          <div className="inline-flex items-center gap-2 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
+            <Zap className="w-3 h-3 text-black/80 dark:text-white/80" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-black/80 dark:text-white/80">
               Capabilities
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight mb-6">
             Everything you need to work faster.
           </h2>
-          <p className="text-lg text-white/80 max-w-5xl mx-auto font-light leading-relaxed">
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-5xl mx-auto font-light leading-relaxed">
             Every feature is designed to save you hours of boring work every
             day. Automate with confidence using our most advanced AI engine yet.
           </p>

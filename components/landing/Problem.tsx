@@ -12,7 +12,7 @@ export default function Problem() {
   ];
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-onyx">
+    <section className="relative py-32 px-6 overflow-hidden bg-white dark:bg-onyx">
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-24"
@@ -20,16 +20,16 @@ export default function Problem() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
-            <TrendingDown className="w-3 h-3 text-white/80" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
+          <div className="inline-flex items-center gap-2 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
+            <TrendingDown className="w-3 h-3 text-black/80 dark:text-white/80" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-black/80 dark:text-white/80">
               The Problem
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight mb-6">
             Stop wasting time typing.
           </h2>
-          <p className="text-lg text-white/80 max-w-4xl mx-auto font-light leading-relaxed">
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-4xl mx-auto font-light leading-relaxed">
             Most websites are too complex for standard browsers to understand.
             This forces you to manually type or copy-paste the same information
             over and over, slowing you down every single day.
@@ -47,10 +47,10 @@ export default function Problem() {
             {frictionPoints.map((point, index) => (
               <div
                 key={index}
-                className="flex items-center gap-6 p-6 border border-white/[0.03] rounded-xl hover:bg-white/[0.01] transition-colors group"
+                className="flex items-center gap-6 p-6 border border-black/[0.03] dark:border-white/[0.03] rounded-xl hover:bg-white/[0.01] transition-colors group"
               >
-                <Minus className="w-4 h-4 text-white/70 group-hover:text-white/80 transition-colors" />
-                <span className="text-[13px] font-medium text-white/80 tracking-wide uppercase">
+                <Minus className="w-4 h-4 text-black/70 dark:text-white/70 group-hover:text-white/80 transition-colors" />
+                <span className="text-[13px] font-medium text-black/80 dark:text-white/80 tracking-wide uppercase">
                   {point}
                 </span>
               </div>
@@ -59,7 +59,7 @@ export default function Problem() {
 
           {/* Metric View */}
           <motion.div
-            className="p-12 border border-white/[0.05] rounded-3xl bg-gradient-to-br from-white/[0.02] to-transparent relative overflow-hidden"
+            className="p-12 border border-black/[0.05] dark:border-white/[0.05] rounded-3xl bg-gradient-to-br from-white/[0.02] to-transparent relative overflow-hidden"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -69,37 +69,37 @@ export default function Problem() {
 
             <div className="relative space-y-12">
               <div className="space-y-4">
-                <p className="text-[10px] font-mono tracking-[0.2em] text-white/70 uppercase">
+                <p className="text-[10px] font-mono tracking-[0.2em] text-black/70 dark:text-white/70 uppercase">
                   Manual Job Application Time
                 </p>
                 <div className="flex items-baseline gap-4">
-                  <span className="text-6xl font-bold text-white/70 tracking-tighter italic">
+                  <span className="text-6xl font-bold text-black/70 dark:text-white/70 tracking-tighter italic">
                     15m
                   </span>
-                  <span className="text-sm text-white/60 font-light">
+                  <span className="text-sm text-black/60 dark:text-white/60 font-light">
                     average per form
                   </span>
                 </div>
               </div>
 
-              <div className="w-full h-px bg-white/[0.05]" />
+              <div className="w-full h-px bg-black/[0.05] dark:bg-white/[0.05]" />
 
               <div className="space-y-4">
                 <p className="text-[10px] font-mono tracking-[0.2em] text-brand-accent uppercase">
                   AutoFill AI Speed
                 </p>
                 <div className="flex items-baseline gap-4">
-                  <span className="text-7xl font-bold text-white tracking-tighter animate-pulse">
+                  <span className="text-7xl font-bold text-black dark:text-white tracking-tighter animate-pulse">
                     1m
                   </span>
-                  <span className="text-sm text-white/80 font-light">
+                  <span className="text-sm text-black/80 dark:text-white/80 font-light">
                     average per form
                   </span>
                 </div>
               </div>
 
               <div className="pt-6">
-                <div className="inline-flex items-center gap-2 text-white/80 text-[11px] font-medium tracking-widest uppercase">
+                <div className="inline-flex items-center gap-2 text-black/80 dark:text-white/80 text-[11px] font-medium tracking-widest uppercase">
                   <Clock className="w-3 h-3" />
                   <span>15x Faster Workday</span>
                 </div>

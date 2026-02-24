@@ -148,17 +148,17 @@ export default function HistoryPage() {
           <History className="w-4 h-4" />
           Data Archives
         </div>
-        <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tighter leading-none">
-          Form History<span className="text-white/70">.</span>
+        <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">
+          Form History<span className="text-black/70 dark:text-white/70">.</span>
         </h1>
-        <p className="text-xl text-white/80 font-light max-w-4xl">
+        <p className="text-xl text-black/80 dark:text-white/80 font-light max-w-4xl">
           Review your historical precision mapping and data population events.
         </p>
       </div>
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 text-white/60">
+        <div className="flex items-center gap-2 text-black/60 dark:text-white/60">
           <Filter className="w-4 h-4" />
           <span className="text-xs font-bold uppercase tracking-wider">
             Filter:
@@ -168,11 +168,10 @@ export default function HistoryPage() {
           <button
             key={type}
             onClick={() => handleFilterChange(type)}
-            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
-              filter === type
+            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${filter === type
                 ? "bg-white text-black"
                 : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
-            }`}
+              }`}
           >
             {type === "all" ? "All" : type.replace("_", " ")}
           </button>
@@ -188,34 +187,34 @@ export default function HistoryPage() {
               .map((_, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-4 p-4 bg-white/[0.02] rounded-2xl animate-pulse"
+                  className="flex items-center gap-4 p-4 bg-black/[0.02] dark:bg-white/[0.02] rounded-2xl animate-pulse"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-white/10" />
+                  <div className="w-12 h-12 rounded-xl bg-black/10 dark:bg-white/10" />
                   <div className="flex-1 space-y-2">
-                    <div className="h-4 w-48 bg-white/10 rounded" />
-                    <div className="h-3 w-32 bg-white/5 rounded" />
+                    <div className="h-4 w-48 bg-black/10 dark:bg-white/10 rounded" />
+                    <div className="h-3 w-32 bg-black/5 dark:bg-white/5 rounded" />
                   </div>
-                  <div className="h-6 w-20 bg-white/10 rounded-full" />
+                  <div className="h-6 w-20 bg-black/10 dark:bg-white/10 rounded-full" />
                 </div>
               ))}
           </div>
         ) : events.length === 0 ? (
           <div className="p-20 text-center space-y-6">
-            <div className="w-20 h-20 bg-white/[0.03] border border-white/[0.05] rounded-3xl mx-auto flex items-center justify-center">
-              <Zap className="w-10 h-10 text-white/60" />
+            <div className="w-20 h-20 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] rounded-3xl mx-auto flex items-center justify-center">
+              <Zap className="w-10 h-10 text-black/60 dark:text-white/60" />
             </div>
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold text-white tracking-tight">
+              <h2 className="text-2xl font-bold text-black dark:text-white tracking-tight">
                 No Events Yet
               </h2>
-              <p className="text-white/80 font-light italic max-w-4xl mx-auto">
+              <p className="text-black/80 dark:text-white/80 font-light italic max-w-4xl mx-auto">
                 Start using the extension to fill forms and your history will
                 appear here.
               </p>
             </div>
           </div>
         ) : (
-          <div className="divide-y divide-white/[0.05]">
+          <div className="divide-y divide-black/[0.05] dark:divide-white/[0.05]">
             {events.map((event, index) => (
               <motion.div
                 key={event.id}
@@ -236,7 +235,7 @@ export default function HistoryPage() {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
-                    <h3 className="text-sm font-semibold text-white truncate">
+                    <h3 className="text-sm font-semibold text-black dark:text-white truncate">
                       {event.pageTitle ||
                         (event.type === "cv_parse"
                           ? "CV Parsed"
@@ -246,7 +245,7 @@ export default function HistoryPage() {
                     </h3>
                     <EventTypeBadge type={event.type} />
                   </div>
-                  <div className="flex items-center gap-4 text-[11px] text-white/60">
+                  <div className="flex items-center gap-4 text-[11px] text-black/60 dark:text-white/60">
                     {event.domain && (
                       <span className="flex items-center gap-1">
                         <Globe className="w-3 h-3" />
@@ -265,7 +264,7 @@ export default function HistoryPage() {
                 </div>
 
                 <div className="text-right shrink-0">
-                  <div className="flex items-center gap-2 text-xs text-white/80">
+                  <div className="flex items-center gap-2 text-xs text-black/80 dark:text-white/80">
                     <Calendar className="w-3 h-3" />
                     {getTimeAgo(event.createdAt)}
                   </div>
@@ -282,8 +281,8 @@ export default function HistoryPage() {
 
         {/* Pagination */}
         {pagination && pagination.pages > 1 && (
-          <div className="flex items-center justify-between p-6 border-t border-white/[0.05]">
-            <div className="text-xs text-white/60">
+          <div className="flex items-center justify-between p-6 border-t border-black/[0.05] dark:border-white/[0.05]">
+            <div className="text-xs text-black/60 dark:text-white/60">
               Showing {(pagination.page - 1) * pagination.limit + 1} -{" "}
               {Math.min(pagination.page * pagination.limit, pagination.total)}{" "}
               of {pagination.total}
@@ -292,7 +291,7 @@ export default function HistoryPage() {
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={pagination.page === 1}
-                className="p-2 rounded-lg bg-white/5 text-white/70 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -331,7 +330,7 @@ export default function HistoryPage() {
                   setPage((p) => Math.min(pagination.pages, p + 1))
                 }
                 disabled={pagination.page === pagination.pages}
-                className="p-2 rounded-lg bg-white/5 text-white/70 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

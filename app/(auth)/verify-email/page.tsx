@@ -54,11 +54,11 @@ function VerifyEmailContent() {
     <div className="space-y-8 text-center py-10">
       {status === "loading" && (
         <div className="flex flex-col items-center space-y-4">
-          <Loader2 className="w-12 h-12 text-white/70 animate-spin" />
-          <h2 className="text-xl font-medium text-white">
+          <Loader2 className="w-12 h-12 text-black/70 dark:text-white/70 animate-spin" />
+          <h2 className="text-xl font-medium text-black dark:text-white">
             Verifying your identity
           </h2>
-          <p className="text-white/80 font-light">
+          <p className="text-black/80 dark:text-white/80 font-light">
             Please wait while we secure your account...
           </p>
         </div>
@@ -72,10 +72,10 @@ function VerifyEmailContent() {
             </div>
           </div>
           <div className="space-y-2">
-            <h2 className="text-2xl font-semibold text-white tracking-tight">
+            <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight">
               Email Verified
             </h2>
-            <p className="text-lg text-white/80 font-light leading-relaxed">
+            <p className="text-lg text-black/80 dark:text-white/80 font-light leading-relaxed">
               {message}
             </p>
           </div>
@@ -97,10 +97,10 @@ function VerifyEmailContent() {
             </div>
           </div>
           <div className="space-y-2">
-            <h2 className="text-2xl font-semibold text-white tracking-tight">
+            <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight">
               Verification Failed
             </h2>
-            <p className="text-lg text-white/80 font-light leading-relaxed">
+            <p className="text-lg text-black/80 dark:text-white/80 font-light leading-relaxed">
               {message}
             </p>
           </div>
@@ -121,7 +121,7 @@ export default function VerifyEmailPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex justify-center py-20 text-white">
+        <div className="flex justify-center py-20 text-black dark:text-white">
           <Loader2 className="w-8 h-8 animate-spin opacity-20" />
         </div>
       }

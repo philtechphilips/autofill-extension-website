@@ -54,10 +54,10 @@ function ResetPasswordForm() {
           </div>
         </div>
         <div className="space-y-2">
-          <h2 className="text-xl font-semibold text-white tracking-tight">
+          <h2 className="text-xl font-semibold text-black dark:text-white tracking-tight">
             Password Updated
           </h2>
-          <p className="text-sm text-white/80 font-light leading-relaxed">
+          <p className="text-sm text-black/80 dark:text-white/80 font-light leading-relaxed">
             Your password has been successfully updated. You can now log in with
             your new password.
           </p>
@@ -76,10 +76,10 @@ function ResetPasswordForm() {
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <h2 className="text-3xl font-semibold text-white tracking-tight">
+        <h2 className="text-3xl font-semibold text-black dark:text-white tracking-tight">
           Reset Password
         </h2>
-        <p className="text-lg text-white/80 font-light leading-relaxed">
+        <p className="text-lg text-black/80 dark:text-white/80 font-light leading-relaxed">
           Please enter your new password below.
         </p>
       </div>
@@ -92,7 +92,7 @@ function ResetPasswordForm() {
         )}
 
         <div className="space-y-3">
-          <label className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em] px-1">
+          <label className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em] px-1">
             New Password
           </label>
           <input
@@ -101,12 +101,12 @@ function ResetPasswordForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+            className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
           />
         </div>
 
         <div className="space-y-3">
-          <label className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em] px-1">
+          <label className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em] px-1">
             Confirm Password
           </label>
           <input
@@ -115,7 +115,7 @@ function ResetPasswordForm() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+            className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
           />
         </div>
 
@@ -137,7 +137,7 @@ export default function ResetPasswordPage() {
     <Suspense
       fallback={
         <div className="flex justify-center py-20">
-          <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-black/20 dark:border-white/20 border-t-white rounded-full animate-spin" />
         </div>
       }
     >

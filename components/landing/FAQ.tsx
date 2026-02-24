@@ -28,7 +28,7 @@ export default function FAQ() {
   ];
 
   return (
-    <section id="faq" className="relative py-32 px-6 overflow-hidden bg-onyx">
+    <section id="faq" className="relative py-32 px-6 overflow-hidden bg-white dark:bg-onyx">
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-24"
@@ -36,16 +36,16 @@ export default function FAQ() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white tracking-tight mb-6">
             Everything you need to know.
           </h2>
-          <p className="text-lg text-white/80 font-light">
+          <p className="text-lg text-black/80 dark:text-white/80 font-light">
             Simple answers to common questions about the platform.
           </p>
         </motion.div>
 
         <motion.div
-          className="grid md:grid-cols-2 gap-x-12 border-t border-white/[0.05]"
+          className="grid md:grid-cols-2 gap-x-12 border-t border-black/[0.05] dark:border-white/[0.05]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -69,12 +69,12 @@ export default function FAQ() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <p className="text-[12px] font-mono tracking-widest text-white/70 uppercase mb-4">
+          <p className="text-[12px] font-mono tracking-widest text-black/70 dark:text-white/70 uppercase mb-4">
             Support
           </p>
           <a
             href="mailto:support@autofillai.com"
-            className="text-white hover:text-brand-accent transition-colors text-sm font-medium"
+            className="text-black dark:text-white hover:text-brand-accent transition-colors text-sm font-medium"
           >
             Contact the engineering team →
           </a>

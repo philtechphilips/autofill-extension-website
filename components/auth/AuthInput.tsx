@@ -22,7 +22,7 @@ export default function AuthInput({
       <div className="flex justify-between items-center px-1">
         <label
           htmlFor={name}
-          className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em]"
+          className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em]"
         >
           {label}
         </label>
@@ -34,7 +34,7 @@ export default function AuthInput({
           type={type}
           placeholder={placeholder}
           required={required}
-          className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+          className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
         />
       </div>
     </div>

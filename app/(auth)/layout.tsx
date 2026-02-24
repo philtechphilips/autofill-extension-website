@@ -25,14 +25,14 @@ export default function AuthLayout({
 
   if (!hasHydrated || (isAuthenticated && !pathname.includes("verify-email"))) {
     return (
-      <div className="min-h-screen bg-onyx flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      <div className="min-h-screen bg-white dark:bg-onyx flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-black/20 dark:border-white/20 border-t-white rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-onyx relative flex flex-col items-center py-20 px-6 overflow-y-auto overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-onyx relative flex flex-col items-center py-20 px-6 overflow-y-auto overflow-x-hidden">
       {/* Background Elements - Consistent with Hero */}
       <div className="absolute inset-0 grid-pattern opacity-40 pt-20 pointer-events-none" />
       <div className="absolute inset-0 gradient-mesh opacity-100 pointer-events-none" />
@@ -60,10 +60,10 @@ export default function AuthLayout({
             </div>
           </Link>
           <div className="text-center space-y-2 md:space-y-4">
-            <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tighter leading-tight">
+            <h1 className="text-3xl md:text-5xl font-bold text-black dark:text-white tracking-tighter leading-tight">
               AutoFill AI
             </h1>
-            <p className="text-white/80 text-base md:text-xl font-light tracking-tight mx-auto px-4">
+            <p className="text-black/80 dark:text-white/80 text-base md:text-xl font-light tracking-tight mx-auto px-4">
               Stop filling forms. Start moving faster.
             </p>
           </div>
@@ -78,7 +78,7 @@ export default function AuthLayout({
         </div>
 
         {/* Footer Link */}
-        <div className="mt-8 md:mt-12 text-center text-[10px] font-mono tracking-[0.2em] text-white/60 uppercase italic">
+        <div className="mt-8 md:mt-12 text-center text-[10px] font-mono tracking-[0.2em] text-black/60 dark:text-white/60 uppercase italic">
           Built for the technical elite.
         </div>
       </motion.div>

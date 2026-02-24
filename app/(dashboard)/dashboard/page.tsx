@@ -72,16 +72,16 @@ const MetricCard = ({
     </div>
 
     <div className="relative z-10">
-      <div className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-        <Icon className="w-6 h-6 text-white/80 group-hover:text-white transition-colors" />
+      <div className="w-12 h-12 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+        <Icon className="w-6 h-6 text-black/80 dark:text-white/80 group-hover:text-white transition-colors" />
       </div>
 
       <div className="space-y-1 mb-4">
         <div className="flex items-end gap-3">
           {loading ? (
-            <div className="h-10 w-20 bg-white/10 rounded animate-pulse" />
+            <div className="h-10 w-20 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
           ) : (
-            <h3 className="text-4xl font-bold text-white tracking-tighter leading-none">
+            <h3 className="text-4xl font-bold text-black dark:text-white tracking-tighter leading-none">
               {value}
             </h3>
           )}
@@ -92,12 +92,12 @@ const MetricCard = ({
             </div>
           )}
         </div>
-        <p className="text-xs font-bold text-white/70 uppercase tracking-[0.2em]">
+        <p className="text-xs font-bold text-black/70 dark:text-white/70 uppercase tracking-[0.2em]">
           {label}
         </p>
       </div>
 
-      <p className="text-sm text-white/80 font-light leading-relaxed max-w-[200px]">
+      <p className="text-sm text-black/80 dark:text-white/80 font-light leading-relaxed max-w-[200px]">
         {description}
       </p>
     </div>
@@ -141,27 +141,27 @@ const ActivityItem = ({ event }: { event: RecentEvent }) => {
       </div>
 
       <div className="flex-1 overflow-hidden">
-        <div className="text-sm font-semibold text-white truncate">
+        <div className="text-sm font-semibold text-black dark:text-white truncate">
           {getEventTitle(event)}
         </div>
-        <div className="text-[11px] text-white/70 flex items-center gap-2">
+        <div className="text-[11px] text-black/70 dark:text-white/70 flex items-center gap-2">
           <Globe className="w-3 h-3" />
           {event.domain || "Local"}
         </div>
       </div>
 
       <div className="text-right">
-        <div className="text-xs font-bold text-white/80 uppercase tracking-tighter">
+        <div className="text-xs font-bold text-black/80 dark:text-white/80 uppercase tracking-tighter">
           {getTimeAgo(event.createdAt)}
         </div>
         {event.type === "form_fill" && event.fieldCount > 0 && (
-          <div className="text-[10px] text-white/60 mt-0.5">
+          <div className="text-[10px] text-black/60 dark:text-white/60 mt-0.5">
             {event.fieldCount} fields
           </div>
         )}
       </div>
 
-      <ChevronRight className="w-4 h-4 text-white/5 group-hover:text-white/70 transition-colors" />
+      <ChevronRight className="w-4 h-4 text-black/5 dark:text-white/5 group-hover:text-white/70 transition-colors" />
     </div>
   );
 };
@@ -227,10 +227,10 @@ export default function DashboardPage() {
             <Sparkles className="w-4 h-4" />
             System Online
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tighter leading-none">
-            Overview<span className="text-white/70">.</span>
+          <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">
+            Overview<span className="text-black/70 dark:text-white/70">.</span>
           </h1>
-          <p className="text-xl text-white/80 font-light max-w-4xl">
+          <p className="text-xl text-black/80 dark:text-white/80 font-light max-w-4xl">
             Monitor your automated precision and efficiency gains across the
             digital landscape.
           </p>
@@ -240,7 +240,7 @@ export default function DashboardPage() {
         <Link href="/dashboard/billing">
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="glassmorphic p-6 px-10 rounded-[32px] flex items-center justify-between gap-10 border-white/5 hover:border-white/20 transition-all group cursor-pointer overflow-hidden relative"
+            className="glassmorphic p-6 px-10 rounded-[32px] flex items-center justify-between gap-10 border-black/5 dark:border-white/5 hover:border-white/20 transition-all group cursor-pointer overflow-hidden relative"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-brand-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="flex items-center gap-6 relative z-10">
@@ -248,12 +248,12 @@ export default function DashboardPage() {
                 <Zap className="w-6 h-6 text-brand-accent px-0" />
               </div>
               <div>
-                <div className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] mb-1">
+                <div className="text-[10px] font-bold text-black/40 dark:text-white/40 uppercase tracking-[0.2em] mb-1">
                   Available Credits
                 </div>
-                <div className="text-3xl font-black text-white tracking-tighter">
+                <div className="text-3xl font-black text-black dark:text-white tracking-tighter">
                   42{" "}
-                  <span className="text-sm font-light text-white/40 ml-1 italic tracking-normal">
+                  <span className="text-sm font-light text-black/40 dark:text-white/40 ml-1 italic tracking-normal">
                     Credits left
                   </span>
                 </div>
@@ -263,7 +263,7 @@ export default function DashboardPage() {
               <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
                 Active Pack: Pro
               </span>
-              <div className="flex items-center gap-2 text-white/60 group-hover:text-white transition-colors">
+              <div className="flex items-center gap-2 text-black/60 dark:text-white/60 group-hover:text-white transition-colors">
                 <span className="text-xs font-medium">Add credits</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
@@ -290,7 +290,7 @@ export default function DashboardPage() {
         />
         <MetricCard
           label="Time Saved"
-          value={`${stats?.timeSavedHours?.toFixed(1) || "0"}h`}
+          value={`${stats?.timeSavedHours?.toFixed(1) || "0"} h`}
           description="Estimated manual effort eliminated through automation."
           icon={Clock}
           loading={loading}
@@ -309,21 +309,21 @@ export default function DashboardPage() {
         {/* Usage Chart */}
         <div className="lg:col-span-2 glassmorphic p-10 rounded-[40px] relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-10">
-            <Sparkles className="w-8 h-8 text-white/5 animate-slow-pulse" />
+            <Sparkles className="w-8 h-8 text-black/5 dark:text-white/5 animate-slow-pulse" />
           </div>
 
           <div className="flex items-center justify-between mb-12">
             <div className="space-y-1">
-              <h2 className="text-2xl font-bold text-white tracking-tight">
+              <h2 className="text-2xl font-bold text-black dark:text-white tracking-tight">
                 Usage Intensity
               </h2>
-              <p className="text-sm text-white/80 font-light italic">
+              <p className="text-sm text-black/80 dark:text-white/80 font-light italic">
                 Frequency of automated interactions over 30 days.
               </p>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-brand-accent shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
-              <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest pb-px">
+              <span className="text-[10px] font-bold text-black/80 dark:text-white/80 uppercase tracking-widest pb-px">
                 Live Data
               </span>
             </div>
@@ -344,9 +344,9 @@ export default function DashboardPage() {
                     duration: 0.8,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="flex-1 bg-white/[0.03] hover:bg-white/[0.1] rounded-t-lg transition-all relative group/bar"
+                  className="flex-1 bg-black/[0.03] dark:bg-white/[0.03] hover:bg-white/[0.1] rounded-t-lg transition-all relative group/bar"
                 >
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-white text-black text-[10px] font-bold opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap shadow-xl z-10">
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap shadow-xl z-10">
                     {day.count} fills
                   </div>
                 </motion.div>
@@ -354,7 +354,7 @@ export default function DashboardPage() {
             })}
           </div>
 
-          <div className="flex justify-between mt-8 px-2 text-[10px] font-bold text-white/60 uppercase tracking-[0.2em]">
+          <div className="flex justify-between mt-8 px-2 text-[10px] font-bold text-black/60 dark:text-white/60 uppercase tracking-[0.2em]">
             <span>{dateRange.start}</span>
             <span>{dateRange.end}</span>
           </div>
@@ -363,12 +363,12 @@ export default function DashboardPage() {
         {/* Activity Log */}
         <div className="glassmorphic p-8 rounded-[40px] flex flex-col">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-bold text-white tracking-tight">
+            <h2 className="text-xl font-bold text-black dark:text-white tracking-tight">
               Recent Stream
             </h2>
             <Link
               href="/dashboard/history"
-              className="text-[10px] font-bold text-white/70 hover:text-white transition-colors uppercase tracking-widest border border-white/5 bg-white/[0.02] px-3 py-1.5 rounded-full"
+              className="text-[10px] font-bold text-black/70 dark:text-white/70 hover:text-white transition-colors uppercase tracking-widest border border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] px-3 py-1.5 rounded-full"
             >
               View all
             </Link>
@@ -380,10 +380,10 @@ export default function DashboardPage() {
                 .fill(0)
                 .map((_, i) => (
                   <div key={i} className="flex items-center gap-4 p-4">
-                    <div className="w-10 h-10 rounded-xl bg-white/5 animate-pulse" />
+                    <div className="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 animate-pulse" />
                     <div className="flex-1 space-y-2">
-                      <div className="h-4 w-32 bg-white/10 rounded animate-pulse" />
-                      <div className="h-3 w-24 bg-white/5 rounded animate-pulse" />
+                      <div className="h-4 w-32 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
+                      <div className="h-3 w-24 bg-black/5 dark:bg-white/5 rounded animate-pulse" />
                     </div>
                   </div>
                 ))
@@ -392,20 +392,20 @@ export default function DashboardPage() {
                 <ActivityItem key={event.id} event={event} />
               ))
             ) : (
-              <div className="flex-1 flex items-center justify-center text-white/50 text-sm">
+              <div className="flex-1 flex items-center justify-center text-black/50 dark:text-white/50 text-sm">
                 No activity yet. Start filling forms!
               </div>
             )}
           </div>
 
-          <div className="mt-8 pt-6 border-t border-white/[0.05] text-center">
-            <p className="text-[10px] font-bold text-white/60 uppercase tracking-[0.3em]">
+          <div className="mt-8 pt-6 border-t border-black/[0.05] dark:border-white/[0.05] text-center">
+            <p className="text-[10px] font-bold text-black/60 dark:text-white/60 uppercase tracking-[0.3em]">
               Autofill Engine
               <span className="text-emerald-500/40 ml-2">ONLINE</span>
             </p>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }

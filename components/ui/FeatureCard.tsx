@@ -26,14 +26,14 @@ export default function FeatureCard({
       viewport={{ once: true }}
     >
       <div className="flex flex-col gap-6">
-        <div className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-white/80 group-hover:text-white transition-colors duration-500">
+        <div className="w-10 h-10 rounded-lg bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] flex items-center justify-center text-black/80 dark:text-white/80 group-hover:text-white transition-colors duration-500">
           {icon}
         </div>
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-white tracking-tight">
+          <h3 className="text-sm font-semibold text-black dark:text-white tracking-tight">
             {title}
           </h3>
-          <p className="text-[13px] text-white/80 leading-relaxed font-light">
+          <p className="text-[13px] text-black/80 dark:text-white/80 leading-relaxed font-light">
             {description}
           </p>
         </div>

@@ -17,7 +17,7 @@ export default function Navbar() {
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className="fixed top-0 left-0 right-0 z-50 flex justify-center px-6 py-8 pointer-events-none"
     >
-      <div className="max-w-6xl w-full flex items-center justify-between glassmorphic px-5 py-2 rounded-full border border-white/[0.05] shadow-2xl pointer-events-auto">
+      <div className="max-w-6xl w-full flex items-center justify-between glassmorphic px-5 py-2 rounded-full border border-black/[0.05] dark:border-white/[0.05] shadow-2xl pointer-events-auto">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 group cursor-pointer">
           <div className="w-8 h-8 rounded-full overflow-hidden transition-transform group-hover:scale-110 shadow-lg shadow-white/10">
@@ -29,13 +29,13 @@ export default function Navbar() {
               className="w-full h-full object-cover"
             />
           </div>
-          <span className="text-white font-semibold text-sm tracking-tight">
+          <span className="text-black dark:text-white font-semibold text-sm tracking-tight">
             AutoFill AI
           </span>
         </Link>
 
         {/* Navigation - Ultra Minimal */}
-        <div className="hidden md:flex items-center gap-10 text-[11px] font-medium tracking-[0.1em] text-white/80 uppercase">
+        <div className="hidden md:flex items-center gap-10 text-[11px] font-medium tracking-[0.1em] text-black/80 dark:text-white/80 uppercase">
           <a href="#features" className="hover:text-white transition-colors">
             Features
           </a>
@@ -54,11 +54,11 @@ export default function Navbar() {
         <div className="flex items-center gap-6">
           <a
             href="https://github.com"
-            className="text-white/80 hover:text-white transition-colors hidden sm:block"
+            className="text-black/80 dark:text-white/80 hover:text-white transition-colors hidden sm:block"
           >
             <Github className="w-4 h-4" />
           </a>
-          <div className="w-px h-4 bg-white/10 hidden sm:block" />
+          <div className="w-px h-4 bg-black/10 dark:bg-white/10 hidden sm:block" />
           {isAuthenticated ? (
             <Button
               href="/dashboard"
@@ -72,7 +72,7 @@ export default function Navbar() {
             <>
               <Link
                 href="/login"
-                className="text-[11px] font-bold tracking-widest text-white/80 hover:text-white uppercase transition-colors"
+                className="text-[11px] font-bold tracking-widest text-black/80 dark:text-white/80 hover:text-white uppercase transition-colors"
               >
                 Sign In
               </Link>

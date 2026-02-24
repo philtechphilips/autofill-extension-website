@@ -5,8 +5,17 @@ import { motion } from "framer-motion";
 import { CreditCard, Clock, X, Globe, Zap } from "lucide-react";
 import PricingCard from "../ui/PricingCard";
 
+interface Pack {
+  packId: string;
+  name: string;
+  tokens: number | string;
+  priceNGN: number;
+  priceUSD: number;
+}
+
 export default function Pricing() {
   const [region, setRegion] = useState<"Global" | "Nigeria">("Global");
+  const [packsData, setPacksData] = useState<Pack[]>([]);
 
   useEffect(() => {
     // Attempt to detect region
@@ -30,48 +39,77 @@ export default function Pricing() {
       }
     };
 
+    const fetchPricing = async () => {
+      try {
+        const url = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000/api/v1";
+        const res = await fetch(`${url}/pricing`);
+        const json = await res.json();
+        if (json.success && json.data?.packs) {
+          setPacksData(json.data.packs);
+        }
+      } catch (err) {
+        console.error("Failed to fetch pricing:", err);
+      }
+    };
+
     detectRegion();
+    fetchPricing();
   }, []);
+
+  const getPackPrice = (packId: string, defaultNaira: string, defaultUsd: string) => {
+    const pack = packsData.find(p => p.packId === packId);
+    if (!pack) return region === "Nigeria" ? defaultNaira : defaultUsd;
+    return region === "Nigeria" ? `₦${pack.priceNGN.toLocaleString()}` : `$${pack.priceUSD}`;
+  };
+
+  const getPackTokens = (packId: string, defaultTokens: string) => {
+    const pack = packsData.find(p => p.packId === packId);
+    if (!pack) return defaultTokens;
+    if (packId === "welcome") return "one-time";
+    return `${pack.tokens} credits`;
+  };
+
+  const getPackName = (packId: string, defaultName: string) => {
+    const pack = packsData.find(p => p.packId === packId);
+    return pack ? pack.name : defaultName;
+  };
+
+  const getPackTokensNum = (packId: string, defaultTokens: number) => {
+    const pack = packsData.find(p => p.packId === packId);
+    return pack ? pack.tokens : defaultTokens;
+  };
+
+  const commonFeatures = (tokensNum: number | string) => [
+    `${tokensNum} AI Actions`,
+    "Deep Form Analysis",
+    "Resume to Profile Parsing",
+    "Text Enhancement",
+    "Priority Support",
+    "Cloud Sync",
+  ];
 
   const packs = [
     {
-      name: "Welcome Pack",
-      price: region === "Nigeria" ? "₦0" : "$0",
-      period: "one-time",
-      features: [
-        "50 Free Credits",
-        "2 Local Profiles",
-        "Basic AI Analysis",
-        "Cloud Sync (Beta)",
-      ],
+      name: getPackName("welcome", "Welcome Pack"),
+      price: getPackPrice("welcome", "₦0", "$0"),
+      period: getPackTokens("welcome", "one-time"),
+      features: commonFeatures(getPackTokensNum("welcome", 50)),
       ctaText: "Claim Free Credits",
     },
     {
-      name: "Pro Pack",
-      price: region === "Nigeria" ? "₦1,500" : "$2.50",
-      period: "250 credits",
-      features: [
-        "250 AI Actions",
-        "Resume to Profile",
-        "Text Enhancement",
-        "Priority Support",
-        "Valid Forever",
-      ],
+      name: getPackName("pro", "Pro Pack"),
+      price: getPackPrice("pro", "₦1,500", "$2.50"),
+      period: getPackTokens("pro", "250 credits"),
+      features: commonFeatures(getPackTokensNum("pro", 250)),
       recommended: true,
       ctaText: "Buy Credits",
       badge: "Most Popular",
     },
     {
-      name: "Elite Pack",
-      price: region === "Nigeria" ? "₦5,000" : "$8.00",
-      period: "1000 credits",
-      features: [
-        "1000 AI Actions",
-        "Deep Form Analysis",
-        "Early Feature Access",
-        "Lifetime Cloud Sync",
-        "Advanced Formatting",
-      ],
+      name: getPackName("elite", "Elite Pack"),
+      price: getPackPrice("elite", "₦5,000", "$8.00"),
+      period: getPackTokens("elite", "1000 credits"),
+      features: commonFeatures(getPackTokensNum("elite", 1000)),
       ctaText: "Get 1000 Credits",
     },
   ];
@@ -83,7 +121,7 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="relative py-20 px-6 overflow-hidden">
+    <section id="pricing" className="relative py-20 px-6 overflow-hidden bg-white dark:bg-onyx">
       {/* Background gradient */}
       <div className="absolute inset-0 gradient-mesh opacity-30" />
 
@@ -94,33 +132,31 @@ export default function Pricing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
             Simple Credit-Based Pricing
           </h2>
-          <p className="text-xl text-gray-400 mb-12">
+          <p className="text-xl text-black/60 dark:text-gray-400 mb-12">
             Pay for what you use. No monthly subscriptions.
           </p>
 
           {/* Region Toggle */}
-          <div className="inline-flex items-center p-1 bg-white/5 border border-white/10 rounded-full mb-8">
+          <div className="inline-flex items-center p-1 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full mb-8">
             <button
               onClick={() => setRegion("Global")}
-              className={`flex items-center gap-2 px-6 py-2 rounded-full text-xs font-bold transition-all ${
-                region === "Global"
-                  ? "bg-white text-black shadow-lg"
-                  : "text-white/60 hover:text-white"
-              }`}
+              className={`flex items-center gap-2 px-6 py-2 rounded-full text-xs font-bold transition-all ${region === "Global"
+                ? "bg-white text-black shadow-lg"
+                : "text-white/60 hover:text-white"
+                }`}
             >
               <Globe className="w-3 h-3" />
               GLOBAL
             </button>
             <button
               onClick={() => setRegion("Nigeria")}
-              className={`flex items-center gap-2 px-6 py-2 rounded-full text-xs font-bold transition-all ${
-                region === "Nigeria"
-                  ? "bg-white text-black shadow-lg"
-                  : "text-white/60 hover:text-white"
-              }`}
+              className={`flex items-center gap-2 px-6 py-2 rounded-full text-xs font-bold transition-all ${region === "Nigeria"
+                ? "bg-white text-black shadow-lg"
+                : "text-white/60 hover:text-white"
+                }`}
             >
               <Zap className="w-3 h-3" />
               NIGERIA
@@ -139,10 +175,10 @@ export default function Pricing() {
           {trustBadges.map((badge, index) => (
             <div
               key={index}
-              className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2"
+              className="flex items-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full px-4 py-2"
             >
               <badge.icon className="w-4 h-4 text-emerald-400" />
-              <span className="text-sm text-white/80 font-medium">
+              <span className="text-sm text-black/80 dark:text-white/80 font-medium">
                 {badge.text}
               </span>
             </div>
@@ -171,11 +207,11 @@ export default function Pricing() {
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
-          <p className="text-gray-400">
+          <p className="text-black/60 dark:text-gray-400">
             Start free, upgrade when you need more. No payment required to get
             started.
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-black/50 dark:text-gray-500">
             Payment integration coming soon. Enjoy full Pro features during the
             beta!
           </p>

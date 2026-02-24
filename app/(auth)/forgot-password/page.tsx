@@ -37,10 +37,10 @@ export default function ForgotPasswordPage() {
           </div>
         </div>
         <div className="space-y-2">
-          <h2 className="text-xl font-semibold text-white tracking-tight">
+          <h2 className="text-xl font-semibold text-black dark:text-white tracking-tight">
             Email Sent
           </h2>
-          <p className="text-sm text-white/80 font-light leading-relaxed">
+          <p className="text-sm text-black/80 dark:text-white/80 font-light leading-relaxed">
             If an account exists for that email, you will receive a reset link
             shortly.
           </p>
@@ -61,15 +61,15 @@ export default function ForgotPasswordPage() {
       <div className="space-y-2">
         <Link
           href="/login"
-          className="inline-flex items-center gap-2 text-[10px] text-white/70 hover:text-white transition-colors uppercase tracking-[0.2em] font-bold mb-4"
+          className="inline-flex items-center gap-2 text-[10px] text-black/70 dark:text-white/70 hover:text-white transition-colors uppercase tracking-[0.2em] font-bold mb-4"
         >
           <ArrowLeft className="w-3 h-3" />
           Back to login
         </Link>
-        <h2 className="text-3xl font-semibold text-white tracking-tight">
+        <h2 className="text-3xl font-semibold text-black dark:text-white tracking-tight">
           Forgot Password
         </h2>
-        <p className="text-lg text-white/80 font-light leading-relaxed">
+        <p className="text-lg text-black/80 dark:text-white/80 font-light leading-relaxed">
           Enter your email address to receive a password reset link.
         </p>
       </div>
@@ -82,7 +82,7 @@ export default function ForgotPasswordPage() {
         )}
 
         <div className="space-y-3">
-          <label className="text-[11px] font-bold text-white/80 uppercase tracking-[0.25em] px-1">
+          <label className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em] px-1">
             Email Address
           </label>
           <input
@@ -91,7 +91,7 @@ export default function ForgotPasswordPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-4 text-base text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+            className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/60 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
           />
         </div>
 

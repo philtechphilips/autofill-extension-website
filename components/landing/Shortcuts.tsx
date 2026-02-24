@@ -15,11 +15,11 @@ const KeyCap = ({
         inline-flex items-center justify-center
         ${variant === "wide" ? "px-3 min-w-[40px]" : "px-2 min-w-[28px]"}
         h-7 rounded-[6px]
-        bg-white/[0.04] border border-white/[0.08]
-        text-[11px] font-mono font-medium text-white/80
-        shadow-[0_2px_0_0_rgba(255,255,255,0.03)]
-        group-hover:bg-white/[0.08] group-hover:border-white/[0.12]
-        group-hover:text-white
+        bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08]
+        text-[11px] font-mono font-medium text-black/80 dark:text-white/80
+        shadow-[0_2px_0_0_rgba(0,0,0,0.03)] dark:shadow-[0_2px_0_0_rgba(255,255,255,0.03)]
+        group-hover:bg-black/[0.08] dark:group-hover:bg-white/[0.08] group-hover:border-black/[0.12] dark:group-hover:border-white/[0.12]
+        group-hover:text-black dark:group-hover:text-white
         transition-all duration-300
     `}
     >
@@ -68,7 +68,7 @@ export default function Shortcuts() {
     ];
 
     return (
-        <section className="relative py-32 px-6 overflow-hidden">
+        <section className="relative py-32 px-6 overflow-hidden bg-white dark:bg-onyx">
             {/* Subtle background glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-brand-accent/5 blur-[120px] rounded-full pointer-events-none" />
 
@@ -79,17 +79,17 @@ export default function Shortcuts() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                 >
-                    <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
-                        <Keyboard className="w-3 h-3 text-white/80" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
+                    <div className="inline-flex items-center gap-2 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
+                        <Keyboard className="w-3 h-3 text-black/80 dark:text-white/80" />
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-black/80 dark:text-white/80">
                             Kinetic Input
                         </span>
                     </div>
 
-                    <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">
+                    <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight mb-6">
                         Move at the speed of thought.
                     </h2>
-                    <p className="text-lg text-white/60 max-w-4xl mx-auto font-light leading-relaxed">
+                    <p className="text-lg text-black/60 dark:text-white/60 max-w-4xl mx-auto font-light leading-relaxed">
                         Never touch your mouse. Master our global shortcuts to automate data entry across the web in milliseconds.
                     </p>
                 </motion.div>
@@ -98,7 +98,7 @@ export default function Shortcuts() {
                     {shortcutFeatures.map((feature, index) => (
                         <motion.div
                             key={index}
-                            className="group relative p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.04] hover:border-white/[0.08] transition-all duration-500 overflow-hidden"
+                            className="group relative p-8 rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.04] hover:bg-black/[0.04] dark:hover:bg-white/[0.04] hover:border-black/[0.08] dark:hover:border-white/[0.08] transition-all duration-500 overflow-hidden"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -119,22 +119,22 @@ export default function Shortcuts() {
                                     ))}
                                 </div>
 
-                                <h3 className="text-lg font-bold text-white tracking-tight">
+                                <h3 className="text-lg font-bold text-black dark:text-white tracking-tight">
                                     {feature.title}
                                 </h3>
-                                <p className="text-sm text-white/60 font-light leading-relaxed">
+                                <p className="text-sm text-black/60 dark:text-white/60 font-light leading-relaxed">
                                     {feature.description}
                                 </p>
                             </div>
 
                             {/* Hover gradient effect */}
-                            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/[0.02] dark:from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                         </motion.div>
                     ))}
                 </div>
 
                 <motion.div
-                    className="mt-16 text-center flex items-center justify-center gap-3 text-sm text-white/40 font-light"
+                    className="mt-16 text-center flex items-center justify-center gap-3 text-sm text-black/40 dark:text-white/40 font-light"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}

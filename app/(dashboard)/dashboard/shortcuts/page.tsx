@@ -133,17 +133,17 @@ const ShortcutRow = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="flex items-center gap-6 p-6 hover:bg-white/[0.02] transition-all group border-b border-white/[0.03] last:border-b-0"
+      className="flex items-center gap-6 p-6 hover:bg-white/[0.02] transition-all group border-b border-black/[0.03] dark:border-white/[0.03] last:border-b-0"
     >
-      <div className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center group-hover:scale-110 group-hover:bg-white/[0.05] transition-all duration-500">
-        <Icon className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+      <div className="w-12 h-12 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] flex items-center justify-center group-hover:scale-110 group-hover:bg-white/[0.05] transition-all duration-500">
+        <Icon className="w-5 h-5 text-black/70 dark:text-white/70 group-hover:text-white transition-colors" />
       </div>
 
       <div className="flex-1 min-w-0">
-        <h3 className="text-sm font-bold text-white mb-1 tracking-tight">
+        <h3 className="text-sm font-bold text-black dark:text-white mb-1 tracking-tight">
           {shortcut.action}
         </h3>
-        <p className="text-xs text-white/60 font-light leading-relaxed line-clamp-2">
+        <p className="text-xs text-black/60 dark:text-white/60 font-light leading-relaxed line-clamp-2">
           {shortcut.description}
         </p>
       </div>
@@ -171,7 +171,7 @@ const CategorySection = ({
   <div className="space-y-4">
     <div className="flex items-center gap-3 px-2">
       <div className="h-px flex-1 bg-gradient-to-r from-white/[0.1] to-transparent" />
-      <span className="text-[10px] font-bold text-white/40 uppercase tracking-[0.3em]">
+      <span className="text-[10px] font-bold text-black/40 dark:text-white/40 uppercase tracking-[0.3em]">
         {title}
       </span>
       <div className="h-px flex-1 bg-gradient-to-l from-white/[0.1] to-transparent" />
@@ -203,10 +203,10 @@ export default function ShortcutsPage() {
           <Keyboard className="w-4 h-4" />
           Kinetic Input
         </div>
-        <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tighter leading-none">
-          Shortcuts<span className="text-white/70">.</span>
+        <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">
+          Shortcuts<span className="text-black/70 dark:text-white/70">.</span>
         </h1>
-        <p className="text-xl text-white/80 font-light max-w-4xl">
+        <p className="text-xl text-black/80 dark:text-white/80 font-light max-w-4xl">
           Master the high-speed interface with keyboard commands for
           lightning-fast form automation.
         </p>
@@ -214,10 +214,10 @@ export default function ShortcutsPage() {
 
       {/* Platform Toggle */}
       <div className="flex items-center gap-4">
-        <span className="text-xs font-bold text-white/60 uppercase tracking-wider">
+        <span className="text-xs font-bold text-black/60 dark:text-white/60 uppercase tracking-wider">
           Platform:
         </span>
-        <div className="flex items-center gap-2 p-1 bg-white/[0.03] rounded-full border border-white/[0.05]">
+        <div className="flex items-center gap-2 p-1 bg-black/[0.03] dark:bg-white/[0.03] rounded-full border border-black/[0.05] dark:border-white/[0.05]">
           <button
             onClick={() => setPlatform("mac")}
             className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
@@ -245,49 +245,49 @@ export default function ShortcutsPage() {
 
       {/* Key Legend */}
       <div className="glassmorphic p-6 rounded-[24px] flex flex-wrap items-center gap-6">
-        <span className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">
+        <span className="text-[10px] font-bold text-black/40 dark:text-white/40 uppercase tracking-[0.2em]">
           Key Legend:
         </span>
         {platform === "mac" ? (
           <>
             <div className="flex items-center gap-2">
               <KeyCap>⌘</KeyCap>
-              <span className="text-xs text-white/70">Command</span>
+              <span className="text-xs text-black/70 dark:text-white/70">Command</span>
             </div>
             <div className="flex items-center gap-2">
               <KeyCap>⌥</KeyCap>
-              <span className="text-xs text-white/70">Option/Alt</span>
+              <span className="text-xs text-black/70 dark:text-white/70">Option/Alt</span>
             </div>
             <div className="flex items-center gap-2">
               <KeyCap>⌃</KeyCap>
-              <span className="text-xs text-white/70">Control</span>
+              <span className="text-xs text-black/70 dark:text-white/70">Control</span>
             </div>
             <div className="flex items-center gap-2">
               <KeyCap>⇧</KeyCap>
-              <span className="text-xs text-white/70">Shift</span>
+              <span className="text-xs text-black/70 dark:text-white/70">Shift</span>
             </div>
             <div className="flex items-center gap-2">
               <KeyCap>↵</KeyCap>
-              <span className="text-xs text-white/70">Return</span>
+              <span className="text-xs text-black/70 dark:text-white/70">Return</span>
             </div>
           </>
         ) : (
           <>
             <div className="flex items-center gap-2">
               <KeyCap variant="wide">Ctrl</KeyCap>
-              <span className="text-xs text-white/70">Control</span>
+              <span className="text-xs text-black/70 dark:text-white/70">Control</span>
             </div>
             <div className="flex items-center gap-2">
               <KeyCap variant="wide">Alt</KeyCap>
-              <span className="text-xs text-white/70">Alt</span>
+              <span className="text-xs text-black/70 dark:text-white/70">Alt</span>
             </div>
             <div className="flex items-center gap-2">
               <KeyCap variant="wide">Shift</KeyCap>
-              <span className="text-xs text-white/70">Shift</span>
+              <span className="text-xs text-black/70 dark:text-white/70">Shift</span>
             </div>
             <div className="flex items-center gap-2">
               <KeyCap variant="wide">Enter</KeyCap>
-              <span className="text-xs text-white/70">Enter</span>
+              <span className="text-xs text-black/70 dark:text-white/70">Enter</span>
             </div>
           </>
         )}
@@ -319,10 +319,10 @@ export default function ShortcutsPage() {
             <Command className="w-5 h-5 text-brand-accent" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-white mb-1">
+            <h3 className="text-sm font-bold text-black dark:text-white mb-1">
               Customize Your Shortcuts
             </h3>
-            <p className="text-xs text-white/60 font-light">
+            <p className="text-xs text-black/60 dark:text-white/60 font-light">
               You can customize all global shortcuts in Chrome's extension
               settings.
             </p>
@@ -337,7 +337,7 @@ export default function ShortcutsPage() {
               "Copied to clipboard! Paste this URL in your Chrome address bar:\n\nchrome://extensions/shortcuts",
             );
           }}
-          className="flex items-center gap-2 px-6 py-3 bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.1] hover:border-white/[0.2] rounded-full text-xs font-bold text-white uppercase tracking-wider transition-all group"
+          className="flex items-center gap-2 px-6 py-3 bg-black/[0.05] dark:bg-white/[0.05] hover:bg-white/[0.1] border border-black/[0.1] dark:border-white/[0.1] hover:border-white/[0.2] rounded-full text-xs font-bold text-black dark:text-white uppercase tracking-wider transition-all group"
         >
           <span>Open Chrome Shortcuts</span>
           <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -355,8 +355,8 @@ export default function ShortcutsPage() {
           <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
             <Zap className="w-5 h-5 text-emerald-500" />
           </div>
-          <h4 className="text-sm font-bold text-white">Pro Tip: Quick Fill</h4>
-          <p className="text-xs text-white/60 font-light leading-relaxed">
+          <h4 className="text-sm font-bold text-black dark:text-white">Pro Tip: Quick Fill</h4>
+          <p className="text-xs text-black/60 dark:text-white/60 font-light leading-relaxed">
             Use {platform === "mac" ? "⌃⇧F" : "Alt+Shift+F"} to instantly fill
             forms without opening the popup. Perfect for rapid job applications.
           </p>
@@ -371,10 +371,10 @@ export default function ShortcutsPage() {
           <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
             <Hash className="w-5 h-5 text-amber-500" />
           </div>
-          <h4 className="text-sm font-bold text-white">
+          <h4 className="text-sm font-bold text-black dark:text-white">
             Pro Tip: Profile Switching
           </h4>
-          <p className="text-xs text-white/60 font-light leading-relaxed">
+          <p className="text-xs text-black/60 dark:text-white/60 font-light leading-relaxed">
             Press 1-9 in the popup to instantly switch profiles. Your selection
             is remembered for Quick Fill shortcuts.
           </p>
@@ -389,8 +389,8 @@ export default function ShortcutsPage() {
           <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
             <Undo2 className="w-5 h-5 text-blue-500" />
           </div>
-          <h4 className="text-sm font-bold text-white">Pro Tip: Safe Undo</h4>
-          <p className="text-xs text-white/60 font-light leading-relaxed">
+          <h4 className="text-sm font-bold text-black dark:text-white">Pro Tip: Safe Undo</h4>
+          <p className="text-xs text-black/60 dark:text-white/60 font-light leading-relaxed">
             Made a mistake? Press {platform === "mac" ? "⌃⇧Z" : "Alt+Shift+Z"}{" "}
             to instantly restore all fields to their previous values.
           </p>

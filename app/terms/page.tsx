@@ -11,10 +11,10 @@ export default function TermsOfService() {
         <main className="relative w-full overflow-hidden min-h-screen">
             <Navbar />
             <div className="pt-40 pb-32 px-6 max-w-5xl mx-auto">
-                <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-8">
+                <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight mb-8">
                     Terms of Service
                 </h1>
-                <div className="space-y-8 text-white/70 font-light leading-relaxed">
+                <div className="space-y-8 text-black/70 dark:text-white/70 font-light leading-relaxed">
                     <section>
                         <p className="mb-4">
                             Last updated: {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
@@ -26,7 +26,7 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             1. Acceptance of Terms
                         </h2>
                         <p>
@@ -36,7 +36,7 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             2. Description of Service
                         </h2>
                         <p>
@@ -47,7 +47,7 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             3. User Conduct and Responsibilities
                         </h2>
                         <p className="mb-4">As a user of our Service, you agree to:</p>
@@ -59,7 +59,7 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             4. Credit and Payment Terms
                         </h2>
                         <p>
@@ -70,7 +70,7 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             5. Intellectual Property
                         </h2>
                         <p>
@@ -80,7 +80,7 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             6. Limitation of Liability
                         </h2>
                         <p>
@@ -91,7 +91,7 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             7. Contact Information
                         </h2>
                         <p>

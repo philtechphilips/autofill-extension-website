@@ -11,10 +11,10 @@ export default function PrivacyPolicy() {
         <main className="relative w-full overflow-hidden min-h-screen">
             <Navbar />
             <div className="pt-40 pb-32 px-6 max-w-6xl mx-auto">
-                <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-8">
+                <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight mb-8">
                     Privacy Policy
                 </h1>
-                <div className="space-y-8 text-white/70 font-light leading-relaxed">
+                <div className="space-y-8 text-black/70 dark:text-white/70 font-light leading-relaxed">
                     <section>
                         <p className="mb-4">
                             Last updated: {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             1. Information We Collect
                         </h2>
                         <p className="mb-4">
@@ -40,7 +40,7 @@ export default function PrivacyPolicy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             2. How We Use Your Information
                         </h2>
                         <ul className="list-disc pl-6 space-y-2">
@@ -51,7 +51,7 @@ export default function PrivacyPolicy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             3. Data Security
                         </h2>
                         <p>
@@ -62,7 +62,7 @@ export default function PrivacyPolicy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             4. Changes to This Policy
                         </h2>
                         <p>
@@ -72,7 +72,7 @@ export default function PrivacyPolicy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-white tracking-tight mb-4">
+                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
                             5. Contact Us
                         </h2>
                         <p>

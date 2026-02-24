@@ -26,7 +26,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-onyx">
+    <section className="relative py-32 px-6 overflow-hidden bg-white dark:bg-onyx">
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
           className="text-left mb-24"
@@ -34,12 +34,12 @@ export default function HowItWorks() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
+          <div className="inline-flex items-center gap-2 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] rounded-full px-4 py-1.5 mb-8">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-black/80 dark:text-white/80">
               The Workflow
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight">
             Designed for high-speed <br />
             professionals.
           </h2>
@@ -49,20 +49,20 @@ export default function HowItWorks() {
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              className="relative group p-8 border border-white/30 rounded-2xl hover:bg-white/20 transition-all duration-500"
+              className="relative group p-8 border border-black/30 dark:border-white/30 rounded-2xl hover:bg-white/20 transition-all duration-500"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <div className="text-[40px] font-bold text-white group-hover:text-brand-accent/80 transition-colors duration-500 mb-6">
+              <div className="text-[40px] font-bold text-black dark:text-white group-hover:text-brand-accent/80 transition-colors duration-500 mb-6">
                 {step.number}
               </div>
               <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-white tracking-tight">
+                <h3 className="text-sm font-semibold text-black dark:text-white tracking-tight">
                   {step.title}
                 </h3>
-                <p className="text-[13px] text-white/80 leading-relaxed font-light">
+                <p className="text-[13px] text-black/80 dark:text-white/80 leading-relaxed font-light">
                   {step.description}
                 </p>
               </div>

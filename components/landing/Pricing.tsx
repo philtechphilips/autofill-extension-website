@@ -81,11 +81,9 @@ export default function Pricing() {
 
   const commonFeatures = (tokensNum: number | string) => [
     `${tokensNum} AI Actions`,
-    "Deep Form Analysis",
-    "Resume to Profile Parsing",
+    "Resume to Profile",
     "Text Enhancement",
-    "Priority Support",
-    "Cloud Sync",
+    "Valid Forever",
   ];
 
   const packs = [
@@ -212,8 +210,7 @@ export default function Pricing() {
             started.
           </p>
           <p className="text-sm text-black/50 dark:text-gray-500">
-            Payment integration coming soon. Enjoy full Pro features during the
-            beta!
+            Secure payments powered by Polar. Credits never expire.
           </p>
         </motion.div>
       </div>

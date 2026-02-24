@@ -12,7 +12,8 @@ import {
     X,
     User,
     ShieldAlert,
-    Settings
+    Settings,
+    DollarSign,
 } from "lucide-react";
 import Image from "next/image";
 import { useAuthStore } from "@/store/authStore";
@@ -80,6 +81,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
     const sidebarItems = [
         { href: "/admin/dashboard", icon: LayoutDashboard, label: "Admin Overview" },
+        { href: "/admin/payments", icon: DollarSign, label: "Payment Analytics" },
         { href: "/admin/settings", icon: Settings, label: "System Settings" },
         { href: "/dashboard", icon: User, label: "User Dashboard" },
     ];

@@ -173,19 +173,28 @@ const formatNumber = (num: number): string => {
   return num.toLocaleString();
 };
 
+interface LastPack {
+  packId: string;
+  packName: string;
+  purchasedAt: string;
+}
+
 export default function DashboardPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [dailyData, setDailyData] = useState<DailyData[]>([]);
   const [recentEvents, setRecentEvents] = useState<RecentEvent[]>([]);
+  const [credits, setCredits] = useState<number>(0);
+  const [lastPack, setLastPack] = useState<LastPack | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [statsRes, dailyRes, recentRes] = await Promise.all([
+        const [statsRes, dailyRes, recentRes, creditsRes] = await Promise.all([
           api.get("/analytics/stats"),
           api.get("/analytics/daily?days=30"),
           api.get("/analytics/recent?limit=6"),
+          api.get("/payment/credits"),
         ]);
 
         setStats(statsRes.data.data?.stats || statsRes.data.stats);
@@ -193,6 +202,8 @@ export default function DashboardPage() {
         setRecentEvents(
           recentRes.data.data?.events || recentRes.data.events || [],
         );
+        setCredits(creditsRes.data.data?.credits || 0);
+        setLastPack(creditsRes.data.data?.lastPack || null);
       } catch (err) {
         console.error("Failed to fetch analytics:", err);
       } finally {
@@ -252,7 +263,11 @@ export default function DashboardPage() {
                   Available Credits
                 </div>
                 <div className="text-3xl font-black text-black dark:text-white tracking-tighter">
-                  42{" "}
+                  {loading ? (
+                    <span className="inline-block h-8 w-16 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
+                  ) : (
+                    formatNumber(credits)
+                  )}{" "}
                   <span className="text-sm font-light text-black/40 dark:text-white/40 ml-1 italic tracking-normal">
                     Credits left
                   </span>
@@ -260,11 +275,19 @@ export default function DashboardPage() {
               </div>
             </div>
             <div className="flex flex-col items-end gap-1 relative z-10">
-              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
-                Active Pack: Pro
-              </span>
+              {loading ? (
+                <span className="inline-block h-4 w-24 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
+              ) : lastPack ? (
+                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
+                  Last Pack: {lastPack.packName}
+                </span>
+              ) : (
+                <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest">
+                  Free Tier
+                </span>
+              )}
               <div className="flex items-center gap-2 text-black/60 dark:text-white/60 group-hover:text-white transition-colors">
-                <span className="text-xs font-medium">Add credits</span>
+                <span className="text-xs font-medium">{lastPack ? "Add more credits" : "Get credits"}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>

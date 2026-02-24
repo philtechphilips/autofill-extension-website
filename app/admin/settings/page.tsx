@@ -9,6 +9,7 @@ import api from "@/lib/api";
 interface TokenCosts {
     formAnalysis: number;
     textEnhancement: number;
+    textGeneration: number;
     cvParsing: number;
     profileUsage: number;
 }
@@ -26,6 +27,7 @@ export default function AdminSettingsPage() {
     const [tokenCosts, setTokenCosts] = useState<TokenCosts>({
         formAnalysis: 0,
         textEnhancement: 0,
+        textGeneration: 0,
         cvParsing: 0,
         profileUsage: 0,
     });
@@ -143,6 +145,16 @@ export default function AdminSettingsPage() {
                                 min="0"
                                 value={tokenCosts.textEnhancement}
                                 onChange={(e) => setTokenCosts({ ...tokenCosts, textEnhancement: Number(e.target.value) })}
+                                className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-black dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-black/80 dark:text-white/80">Text Generation Cost</label>
+                            <input
+                                type="number"
+                                min="0"
+                                value={tokenCosts.textGeneration}
+                                onChange={(e) => setTokenCosts({ ...tokenCosts, textGeneration: Number(e.target.value) })}
                                 className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-black dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
                             />
                         </div>

@@ -36,24 +36,29 @@ export default function Navbar() {
 
         {/* Navigation - Ultra Minimal */}
         <div className="hidden md:flex items-center gap-10 text-[11px] font-medium tracking-[0.1em] text-black/80 dark:text-white/80 uppercase">
-          <a href="#features" className="hover:text-white transition-colors">
+          <a href="/#features" className="hover:text-white transition-colors">
             Features
           </a>
-          <a href="#security" className="hover:text-white transition-colors">
+          <a href="/#security" className="hover:text-white transition-colors">
             Security
           </a>
-          <a href="#pricing" className="hover:text-white transition-colors">
+          <a href="/#pricing" className="hover:text-white transition-colors">
             Pricing
           </a>
-          <a href="#faq" className="hover:text-white transition-colors">
+          <a href="/#faq" className="hover:text-white transition-colors">
             FAQ
           </a>
+          <Link href="/contact" className="hover:text-white transition-colors">
+            Contact
+          </Link>
         </div>
 
         {/* Right Actions */}
         <div className="flex items-center gap-6">
           <a
-            href="https://github.com"
+            href="https://github.com/philtechphilips/autofill-chrome-extension"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-black/80 dark:text-white/80 hover:text-white transition-colors hidden sm:block"
           >
             <Github className="w-4 h-4" />

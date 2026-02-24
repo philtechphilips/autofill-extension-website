@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import { useRouter } from "next/navigation";
 import Button from "./Button";
 
 interface PricingCardProps {
@@ -12,6 +13,7 @@ interface PricingCardProps {
   recommended?: boolean;
   ctaText: string;
   badge?: string;
+  packId?: string;
 }
 
 export default function PricingCard({
@@ -22,7 +24,14 @@ export default function PricingCard({
   recommended = false,
   ctaText,
   badge,
+  packId,
 }: PricingCardProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/dashboard/billing");
+  };
+
   return (
     <motion.div
       className={`relative rounded-xl p-10 border transition-all duration-500 ${recommended
@@ -72,6 +81,7 @@ export default function PricingCard({
         <Button
           variant={recommended ? "primary" : "secondary"}
           className="w-full"
+          onClick={handleClick}
         >
           {ctaText}
         </Button>

@@ -13,11 +13,15 @@ import {
   Menu,
   X,
   User,
+  Mail,
+  Loader2,
 } from "lucide-react";
 import Image from "next/image";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import api from "@/lib/api";
 
 interface SidebarItemProps {
   href: string;
@@ -51,9 +55,10 @@ const SidebarItem = ({ href, icon: Icon, label, active }: SidebarItemProps) => (
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const { logout, user, isAuthenticated, hasHydrated } = useAuthStore();
+  const { logout, user, isAuthenticated, hasHydrated, updateUser } = useAuthStore();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [resendingEmail, setResendingEmail] = useState(false);
 
   useEffect(() => {
     if (hasHydrated && !isAuthenticated) {
@@ -61,9 +66,42 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     }
   }, [isAuthenticated, hasHydrated, router]);
 
+  // Refresh user data to get latest verification status
+  useEffect(() => {
+    const refreshUser = async () => {
+      if (!hasHydrated || !isAuthenticated) return;
+      try {
+        const response = await api.get("/auth/me");
+        if (response.data.data?.user) {
+          updateUser(response.data.data.user);
+        }
+      } catch (err) {
+        // Silently fail - user will see verification screen
+      }
+    };
+    refreshUser();
+  }, [hasHydrated, isAuthenticated, updateUser]);
+
   const handleLogout = () => {
     logout();
     router.push("/login");
+  };
+
+  const handleResendVerification = async () => {
+    if (resendingEmail || !user?.email) return;
+    setResendingEmail(true);
+    try {
+      await api.post("/auth/resend-verification", { email: user.email });
+      toast.success("Verification email sent!", {
+        description: "Please check your inbox and spam folder.",
+      });
+    } catch (error: any) {
+      toast.error("Failed to send verification email", {
+        description: error.response?.data?.error || "Please try again later.",
+      });
+    } finally {
+      setResendingEmail(false);
+    }
   };
 
   if (!hasHydrated) {
@@ -75,6 +113,55 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   if (!isAuthenticated) return null;
+
+  // Show verification required screen if email is not verified
+  if (user && !user.isEmailVerified) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-onyx flex items-center justify-center p-6">
+        <div className="max-w-4xl w-full text-center">
+          <div className="w-20 h-20 rounded-full bg-amber-500/10 flex items-center justify-center mx-auto mb-6">
+            <Mail className="w-10 h-10 text-amber-500" />
+          </div>
+          <h1 className="text-3xl font-bold text-black dark:text-white tracking-tight mb-3">
+            Verify Your Email
+          </h1>
+          <p className="text-black/60 dark:text-white/60 mb-2">
+            We sent a verification link to
+          </p>
+          <p className="text-black dark:text-white font-medium mb-6">
+            {user.email}
+          </p>
+          <p className="text-sm text-black/50 dark:text-white/50 mb-8">
+            Please check your inbox and click the verification link to access your dashboard.
+          </p>
+          <div className="space-y-3 max-w-[400px] mx-auto">
+            <button
+              onClick={handleResendVerification}
+              disabled={resendingEmail}
+              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-black dark:bg-white text-white dark:text-black font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {resendingEmail ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <Mail className="w-5 h-5" />
+              )}
+              {resendingEmail ? "Sending..." : "Resend Verification Email"}
+            </button>
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+            >
+              <LogOut className="w-5 h-5" />
+              Log out
+            </button>
+          </div>
+          <p className="text-xs text-black/40 dark:text-white/40 mt-8">
+            Didn&apos;t receive the email? Check your spam folder or try resending.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const sidebarItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Overview" },
@@ -204,11 +291,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         )}
       </AnimatePresence >
 
-  {/* Main Content */ }
-  < main className = "flex-1 lg:ml-72 pt-16 lg:pt-0" >
+      {/* Main Content */}
+      <main className="flex-1 lg:ml-72 pt-16 lg:pt-0">
         <div className="p-6 md:p-10 lg:px-10 lg:py-16">{children}</div>
-        <div className="h-20 lg:h-0" /> {/* Mobile bottom spacer */ }
-      </main >
-    </div >
+        <div className="h-20 lg:h-0" /> {/* Mobile bottom spacer */}
+      </main>
+    </div>
   );
 }

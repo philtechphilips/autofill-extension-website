@@ -16,7 +16,7 @@ function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get("token");
-  const setAuth = useAuthStore((state) => state.setAuth);
+  const { setAuth, updateUser } = useAuthStore();
 
   useEffect(() => {
     const verify = async () => {
@@ -33,6 +33,9 @@ function VerifyEmailContent() {
         if (user) {
           if (response.data.data.accessToken) {
             setAuth(user, response.data.data.accessToken);
+          } else {
+            // Update existing user in store with verified status
+            updateUser({ isEmailVerified: true });
           }
         }
 
@@ -48,7 +51,7 @@ function VerifyEmailContent() {
     };
 
     verify();
-  }, [token, setAuth]);
+  }, [token, setAuth, updateUser]);
 
   return (
     <div className="space-y-8 text-center py-10">

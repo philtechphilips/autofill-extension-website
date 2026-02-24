@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Github, Twitter } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -17,7 +18,7 @@ export default function Footer() {
       { name: "About", href: "/#about" },
       { name: "Blog", href: "/#blog" },
       { name: "Careers", href: "/#careers" },
-      { name: "Contact", href: "/#contact" },
+      { name: "Contact", href: "/contact" },
     ],
     Legal: [
       { name: "Privacy Policy", href: "/privacy" },
@@ -57,18 +58,33 @@ export default function Footer() {
                 engineers, for the technical elite.
               </p>
               <div className="flex gap-4">
-                {["Twitter", "GitHub", "LinkedIn"].map((social, i) => (
+                {[
+                  {
+                    name: "X",
+                    href: "https://x.com/ai_autofill",
+                    icon: <Twitter className="w-5 h-5" />
+                  },
+                  {
+                    name: "GitHub",
+                    href: "https://github.com/philtechphilips/autofill-chrome-extension",
+                    icon: <Github className="w-5 h-5" />
+                  }
+                ].map((social, i) => (
                   <motion.a
-                    key={social}
-                    href={`#${social.toLowerCase()}`}
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
                     className="w-11 h-11 rounded-full border border-black/[0.05] dark:border-white/[0.05] bg-black/[0.02] dark:bg-white/[0.02] flex items-center justify-center text-black/70 dark:text-white/70 hover:text-white hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 group"
                   >
-                    <span className="sr-only">{social}</span>
-                    <div className="w-1.5 h-1.5 rounded-full bg-current transition-transform group-hover:scale-150" />
+                    <span className="sr-only">{social.name}</span>
+                    <div className="transition-transform group-hover:scale-110">
+                      {social.icon}
+                    </div>
                   </motion.a>
                 ))}
               </div>

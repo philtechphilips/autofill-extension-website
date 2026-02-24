@@ -17,6 +17,7 @@ export default function Home() {
     <main className="relative w-full overflow-hidden">
       <Navbar />
       <Hero />
+      <Demo />
       <Problem />
       <Features />
       <HowItWorks />
@@ -24,7 +25,6 @@ export default function Home() {
       <Pricing />
       <Security />
       {/* <Testimonials /> */}
-      <Demo />
       <FAQ />
       <FinalCTA />
       <Footer />

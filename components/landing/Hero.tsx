@@ -62,17 +62,20 @@ export default function Hero() {
             >
               Install for Chrome
             </Button>
-            <button className="flex items-center gap-2 group text-black/80 dark:text-white/80 hover:text-white transition-all text-sm font-medium h-14">
+            <a
+              href="#features"
+              className="flex items-center gap-2 group text-black/80 dark:text-white/80 hover:text-white transition-all text-sm font-medium h-14"
+            >
               Browse use cases
               <div className="w-5 h-5 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:border-white/20 transition-all">
                 <ArrowRight className="w-3 h-3" />
               </div>
-            </button>
+            </a>
           </div>
           <p className="text-xs text-black/50 dark:text-white/50 flex items-center gap-4">
             <span>No credit card required</span>
             <span className="w-1 h-1 rounded-full bg-black/30 dark:bg-white/30" />
-            <span>50 Free credits for new users</span>
+            <span>500 Free credits for new users</span>
             <span className="w-1 h-1 rounded-full bg-black/30 dark:bg-white/30" />
             <span>Pay only for what you use</span>
           </p>

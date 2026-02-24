@@ -6,6 +6,7 @@ interface User {
   email: string;
   name?: string;
   role?: string;
+  isEmailVerified?: boolean;
 }
 
 interface AuthState {
@@ -14,6 +15,7 @@ interface AuthState {
   isAuthenticated: boolean;
   hasHydrated: boolean;
   setAuth: (user: User, accessToken: string) => void;
+  updateUser: (user: Partial<User>) => void;
   logout: () => void;
   setHasHydrated: (state: boolean) => void;
 }
@@ -27,6 +29,10 @@ export const useAuthStore = create<AuthState>()(
       hasHydrated: false,
       setAuth: (user, accessToken) =>
         set({ user, accessToken, isAuthenticated: true }),
+      updateUser: (userData) =>
+        set((state) => ({
+          user: state.user ? { ...state.user, ...userData } : null,
+        })),
       logout: () =>
         set({ user: null, accessToken: null, isAuthenticated: false }),
       setHasHydrated: (state) => set({ hasHydrated: state }),

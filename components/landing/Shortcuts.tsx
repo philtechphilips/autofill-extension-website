@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Keyboard, Zap, Undo2, MousePointer2, Sparkles, Hash } from "lucide-react";
+import { Keyboard, Zap, Undo2, MousePointer2, Sparkles, Hash, Apple, Monitor } from "lucide-react";
 
 const KeyCap = ({
     children,
@@ -28,12 +29,15 @@ const KeyCap = ({
 );
 
 export default function Shortcuts() {
+    const [platform, setPlatform] = useState<"mac" | "windows">("mac");
+
     const shortcutFeatures = [
         {
             icon: <Zap className="w-5 h-5" />,
             title: "Quick Fill",
             description: "Instantly analyze and fill forms without opening any popup.",
-            keys: ["⌥", "⇧", "F"],
+            macKeys: ["⌃", "⇧", "F"],
+            windowsKeys: ["Alt", "Shift", "F"],
             color: "text-emerald-400",
             bg: "bg-emerald-400/10",
             border: "border-emerald-400/20"
@@ -42,7 +46,8 @@ export default function Shortcuts() {
             icon: <Undo2 className="w-5 h-5" />,
             title: "Safe Undo",
             description: "Quickly revert all fields to their previous state if you make a mistake.",
-            keys: ["⌥", "⇧", "Z"],
+            macKeys: ["⌃", "⇧", "Z"],
+            windowsKeys: ["Alt", "Shift", "Z"],
             color: "text-blue-400",
             bg: "bg-blue-400/10",
             border: "border-blue-400/20"
@@ -51,7 +56,8 @@ export default function Shortcuts() {
             icon: <MousePointer2 className="w-5 h-5" />,
             title: "Open Dashboard",
             description: "Access your profiles and settings in a split second.",
-            keys: ["⌥", "⇧", "Y"],
+            macKeys: ["⌥", "⇧", "Y"],
+            windowsKeys: ["Alt", "Shift", "Y"],
             color: "text-purple-400",
             bg: "bg-purple-400/10",
             border: "border-purple-400/20"
@@ -60,7 +66,8 @@ export default function Shortcuts() {
             icon: <Hash className="w-5 h-5" />,
             title: "Fast Switching",
             description: "Switch active profiles instantly using number keys.",
-            keys: ["1", "-", "9"],
+            macKeys: ["1", "-", "9"],
+            windowsKeys: ["1", "-", "9"],
             color: "text-amber-400",
             bg: "bg-amber-400/10",
             border: "border-amber-400/20"
@@ -89,9 +96,34 @@ export default function Shortcuts() {
                     <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight mb-6">
                         Move at the speed of thought.
                     </h2>
-                    <p className="text-lg text-black/60 dark:text-white/60 max-w-4xl mx-auto font-light leading-relaxed">
+                    <p className="text-lg text-black/60 dark:text-white/60 max-w-4xl mx-auto font-light leading-relaxed mb-12">
                         Never touch your mouse. Master our global shortcuts to automate data entry across the web in milliseconds.
                     </p>
+
+                    <div className="flex justify-center mb-0">
+                        <div className="flex items-center gap-2 p-1 bg-black/[0.03] dark:bg-white/[0.03] rounded-full border border-black/[0.05] dark:border-white/[0.05] inline-flex">
+                            <button
+                                onClick={() => setPlatform("mac")}
+                                className={`flex items-center gap-2 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${platform === "mac"
+                                        ? "bg-white text-black shadow-sm"
+                                        : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.05]"
+                                    }`}
+                            >
+                                <Apple className="w-3.5 h-3.5" />
+                                macOS
+                            </button>
+                            <button
+                                onClick={() => setPlatform("windows")}
+                                className={`flex items-center gap-2 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${platform === "windows"
+                                        ? "bg-white text-black shadow-sm"
+                                        : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.05]"
+                                    }`}
+                            >
+                                <Monitor className="w-3.5 h-3.5" />
+                                Windows
+                            </button>
+                        </div>
+                    </div>
                 </motion.div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -112,7 +144,7 @@ export default function Shortcuts() {
 
                             <div className="space-y-4 relative z-10">
                                 <div className="flex items-center gap-1.5 mb-4 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                                    {feature.keys.map((key, i) => (
+                                    {(platform === "mac" ? feature.macKeys : feature.windowsKeys).map((key, i) => (
                                         <KeyCap key={i} variant={key.length > 1 ? "wide" : "default"}>
                                             {key}
                                         </KeyCap>

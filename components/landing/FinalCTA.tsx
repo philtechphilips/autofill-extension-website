@@ -39,16 +39,19 @@ export default function FinalCTA() {
             <Button variant="primary" size="lg" className="px-12 h-14">
               Download extension
             </Button>
-            <button className="text-black/80 dark:text-white/80 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">
+            <a
+              href="#pricing"
+              className="text-black/80 dark:text-white/80 hover:text-white transition-colors text-sm font-medium flex items-center gap-2"
+            >
               View lifetime plans
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </a>
           </div>
 
           <div className="mt-20 flex flex-wrap justify-center gap-x-12 gap-y-6 text-[10px] font-mono tracking-[0.2em] text-black/70 dark:text-white/70 uppercase">
             <span>No credit card required</span>
-            <span>14-day pro trial</span>
-            <span>Cancel anytime</span>
+            <span>500 Free credits for new users</span>
+            <span>Pay only for what you use</span>
           </div>
         </motion.div>
       </div>

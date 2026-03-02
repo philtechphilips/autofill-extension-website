@@ -33,19 +33,19 @@ interface SidebarItemProps {
 const SidebarItem = ({ href, icon: Icon, label, active }: SidebarItemProps) => (
   <Link href={href}>
     <div
-      className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${active
-          ? "bg-white/[0.05] text-white shadow-sm"
-          : "text-white/80 hover:text-white hover:bg-white/[0.02]"
+      className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group border ${active
+          ? "bg-brand-accent/10 border-brand-accent/20 text-white"
+          : "border-transparent text-white/60 hover:text-white hover:bg-white/[0.04]"
         }`}
     >
       <Icon
-        className={`w-5 h-5 transition-colors ${active ? "text-white" : "text-white/70 group-hover:text-white/80"}`}
+        className={`w-5 h-5 transition-colors ${active ? "text-brand-accent" : "text-white/50 group-hover:text-white/80"}`}
       />
       <span className="text-sm font-medium tracking-tight">{label}</span>
       {active && (
         <motion.div
           layoutId="active-pill"
-          className="ml-auto w-1 h-4 bg-black dark:bg-white rounded-full"
+          className="ml-auto w-1.5 h-1.5 rounded-full bg-brand-accent shadow-[0_0_8px_rgba(59,130,246,0.7)]"
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         />
       )}
@@ -173,27 +173,27 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-white dark:bg-onyx flex">
       {/* Sidebar - Desktop */}
-      <aside className="hidden lg:flex flex-col w-72 border-r border-black/[0.05] dark:border-white/[0.05] bg-gray-50/50 dark:bg-deep-navy/50 backdrop-blur-xl fixed inset-y-0">
-        <div className="p-8">
+      <aside className="hidden lg:flex flex-col w-64 border-r border-white/6 bg-deep-navy backdrop-blur-xl fixed inset-y-0">
+        <div className="px-6 py-7">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full overflow-hidden transition-transform group-hover:scale-110 shadow-lg shadow-white/10">
+            <div className="w-9 h-9 rounded-xl overflow-hidden transition-transform group-hover:scale-110 shadow-lg shadow-brand-accent/10 ring-1 ring-white/10">
               <Image
                 src="/logo.png"
                 alt="AutoFill AI"
-                width={40}
-                height={40}
+                width={36}
+                height={36}
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-xl font-bold text-black dark:text-white tracking-tighter">
+            <span className="text-lg font-bold text-white tracking-tighter">
               AutoFill
             </span>
           </Link>
         </div>
 
-        <nav className="flex-1 px-4 space-y-2">
-          <div className="text-[10px] font-bold text-black/60 dark:text-white/60 uppercase tracking-[0.2em] px-4 mb-4">
-            Navigation
+        <nav className="flex-1 px-3 space-y-1">
+          <div className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em] px-4 mb-3">
+            Menu
           </div>
           {sidebarItems.map((item) => (
             <SidebarItem
@@ -204,36 +204,34 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-black/[0.05] dark:border-white/[0.05]">
-          <div className="bg-black/[0.02] dark:bg-white/[0.02] rounded-2xl p-4 mb-4">
-            <div className="flex items-center gap-3 mb-1">
-              <div className="w-8 h-8 rounded-full bg-black/[0.1] dark:bg-white/[0.1] border border-black/[0.1] dark:border-white/[0.1] flex items-center justify-center">
-                <User className="w-4 h-4 text-black/80 dark:text-white/80" />
+        <div className="p-4 border-t border-white/6">
+          <div className="flex items-center gap-3 px-2 py-3 mb-2">
+            <div className="w-8 h-8 rounded-full bg-brand-accent/15 border border-brand-accent/25 flex items-center justify-center shrink-0">
+              <User className="w-4 h-4 text-brand-accent" />
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <div className="text-sm font-semibold text-white truncate leading-tight">
+                {user?.name || "User"}
               </div>
-              <div className="flex-1 overflow-hidden">
-                <div className="text-sm font-semibold text-black dark:text-white truncate">
-                  {user?.name || "User"}
-                </div>
-                <div className="text-[10px] text-black/80 dark:text-white/80 truncate">
-                  {user?.email}
-                </div>
+              <div className="text-[10px] text-white/40 truncate">
+                {user?.email}
               </div>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-black/80 dark:text-white/80 hover:text-white hover:bg-white/[0.02] transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-white/50 hover:text-white hover:bg-white/5 transition-colors group"
           >
-            <LogOut className="w-5 h-5" />
+            <LogOut className="w-4 h-4 group-hover:text-red-400 transition-colors" />
             <span className="text-sm font-medium">Log out</span>
           </button>
         </div>
       </aside>
 
       {/* Mobile Header */}
-      <header className="lg:hidden fixed top-0 w-full h-16 border-b border-black/[0.05] dark:border-white/[0.05] bg-gray-50/80 dark:bg-deep-navy/80 backdrop-blur-xl z-50 flex items-center justify-between px-6">
+      <header className="lg:hidden fixed top-0 w-full h-16 border-b border-white/6 bg-deep-navy/90 backdrop-blur-xl z-50 flex items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full overflow-hidden">
+          <div className="w-8 h-8 rounded-xl overflow-hidden ring-1 ring-white/10">
             <Image
               src="/logo.png"
               alt="AutoFill AI"
@@ -242,13 +240,13 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               className="w-full h-full object-cover"
             />
           </div>
-          <span className="font-bold text-black dark:text-white tracking-tighter text-lg">
+          <span className="font-bold text-white tracking-tighter text-lg">
             AutoFill
           </span>
         </Link>
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="text-black/80 dark:text-white/80 hover:text-white"
+          className="text-white/70 hover:text-white transition-colors"
         >
           {isMobileMenuOpen ? (
             <X className="w-6 h-6" />
@@ -265,34 +263,38 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
-            className="lg:hidden fixed inset-0 z-40 bg-white dark:bg-onyx pt-20 px-6"
+            className="lg:hidden fixed inset-0 z-40 bg-deep-navy pt-20 px-6"
           >
-            <div className="space-y-4">
+            <div className="space-y-1">
               {sidebarItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center gap-4 py-4 border-b border-black /[0.05] dark:border-white/[0.05] ${pathname === item.href ? "text-white" : "text-white/80"}`}
+                  className={`flex items-center gap-4 px-4 py-4 rounded-xl transition-colors ${
+                    pathname === item.href
+                      ? "bg-brand-accent/10 text-white border border-brand-accent/20"
+                      : "text-white/60 hover:text-white hover:bg-white/5 border border-transparent"
+                  }`}
                 >
-      <item.icon className="w-6 h-6" />
-      <span className="text-lg font-medium">{item.label}</span>
-  </Link>
-))}
-<button
-  onClick={handleLogout}
-  className="flex items-center gap-4 py-4 text-black/80 dark:text-white/80 w-full border-b border-black/[0.05] dark:border-white/[0.05]"
->
-  <LogOut className="w-6 h-6" />
-  <span className="text-lg font-medium">Log out</span>
-</button>
-            </div >
-          </motion.div >
+                  <item.icon className={`w-5 h-5 ${pathname === item.href ? "text-brand-accent" : ""}`} />
+                  <span className="text-base font-medium">{item.label}</span>
+                </Link>
+              ))}
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-4 px-4 py-4 w-full text-white/50 hover:text-white hover:bg-white/5 rounded-xl border border-transparent transition-colors group"
+              >
+                <LogOut className="w-5 h-5 group-hover:text-red-400 transition-colors" />
+                <span className="text-base font-medium">Log out</span>
+              </button>
+            </div>
+          </motion.div>
         )}
-      </AnimatePresence >
+      </AnimatePresence>
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-72 pt-16 lg:pt-0">
+      <main className="flex-1 lg:ml-64 pt-16 lg:pt-0">
         <div className="p-6 md:p-10 lg:px-10 lg:py-16">{children}</div>
         <div className="h-20 lg:h-0" /> {/* Mobile bottom spacer */}
       </main>

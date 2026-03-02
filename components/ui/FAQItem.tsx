@@ -13,20 +13,20 @@ export default function FAQItem({ question, answer }: FAQItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-black/[0.05] dark:border-white/[0.05]">
+    <div className="border-b border-white/[0.07]">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between py-8 text-left group"
       >
-        <span className="text-lg md:text-xl font-medium text-black dark:text-white tracking-tight group-hover:text-white/80 transition-colors uppercase tracking-[0.05em]">
+        <span className="text-base md:text-lg font-medium text-white/80 tracking-tight group-hover:text-white transition-colors">
           {question}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 135 : 0 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="text-black/70 dark:text-white/70 group-hover:text-white transition-colors"
+          className={`shrink-0 ml-4 transition-colors duration-300 ${isOpen ? "text-brand-accent" : "text-white/30 group-hover:text-white/60"}`}
         >
-          <Plus className="w-6 h-6" />
+          <Plus className="w-5 h-5" />
         </motion.div>
       </button>
 
@@ -39,7 +39,7 @@ export default function FAQItem({ question, answer }: FAQItemProps) {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <p className="pb-8 text-base text-black/80 dark:text-white/80 leading-relaxed font-light">
+            <p className="pb-8 text-sm text-white/50 leading-relaxed font-light">
               {answer}
             </p>
           </motion.div>

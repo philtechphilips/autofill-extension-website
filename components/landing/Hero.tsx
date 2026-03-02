@@ -2,15 +2,17 @@
 
 import { motion } from "framer-motion";
 import Button from "../ui/Button";
-import { Chrome, ArrowRight, Shield, Zap, Sparkles } from "lucide-react";
+import { Chrome, ArrowRight, Shield, Zap } from "lucide-react";
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden px-6 pt-48 pb-20 select-none">
-      {/* Background - Total Minimalist */}
-      <div className="absolute inset-0 bg-white dark:bg-onyx" />
-      <div className="absolute inset-0 grid-pattern opacity-40" />
+      {/* Background */}
+      <div className="absolute inset-0 bg-onyx" />
+      <div className="absolute inset-0 grid-pattern opacity-50" />
       <div className="absolute inset-0 gradient-mesh opacity-100" />
+      {/* Subtle radial vignette at center-top */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-brand-accent/[0.04] blur-[120px] rounded-full pointer-events-none" />
 
       {/* Content Layer */}
       <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center">
@@ -19,13 +21,13 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex items-center gap-3 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] rounded-full px-4 py-1.5 mb-12 backdrop-blur-xl"
+          className="flex items-center gap-3 bg-brand-accent/[0.08] border border-brand-accent/20 rounded-full px-5 py-2 mb-12 backdrop-blur-xl"
         >
-          <div className="w-2 h-2 bg-brand-accent rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-          <span className="text-[11px] font-medium tracking-[0.1em] text-black/80 dark:text-white/80">
+          <div className="w-2 h-2 bg-brand-accent rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+          <span className="text-[11px] font-semibold tracking-[0.12em] text-brand-accent/90">
             AUTOFILL V1.0 IS LIVE
           </span>
-          <ArrowRight className="w-3 h-3 text-black/80 dark:text-white/80" />
+          <ArrowRight className="w-3 h-3 text-brand-accent/70" />
         </motion.div>
 
         {/* Hero Headline */}
@@ -33,17 +35,16 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-10"
+          className="space-y-8"
         >
-          <h1 className="text-5xl sm:text-7xl lg:text-[100px] leading-[0.9] font-bold tracking-[-0.05em] text-gradient">
+          <h1 className="text-5xl sm:text-7xl lg:text-[96px] leading-[0.92] font-bold tracking-[-0.05em] text-gradient">
             Fill any form <br className="hidden sm:block" />
             instantly.
           </h1>
 
-          <p className="text-lg md:text-xl text-brand-secondary leading-relaxed max-w-5xl mx-auto font-light tracking-tight">
-            Stop wasting time on repetitive typing. Our smart AI engine{" "}
-            <br className="hidden md:block" />
-            fills your information into any website in seconds.
+          <p className="text-lg md:text-xl text-white/50 leading-relaxed max-w-4xl mx-auto font-light">
+            Stop wasting time on repetitive typing. Our smart AI engine fills
+            your information into any website in seconds.
           </p>
         </motion.div>
 
@@ -52,157 +53,178 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-14 flex flex-col items-center gap-6"
+          className="mt-12 flex flex-col items-center gap-5"
         >
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
               variant="primary"
               size="lg"
-              className="px-10 h-14 text-sm tracking-wide"
+              className="px-10 h-13 text-sm tracking-wide gap-3"
             >
+              <Chrome className="w-4 h-4" />
               Install for Chrome
             </Button>
             <a
               href="#features"
-              className="flex items-center gap-2 group text-black/80 dark:text-white/80 hover:text-white transition-all text-sm font-medium h-14"
+              className="flex items-center gap-2 group text-white/60 hover:text-white transition-all text-sm font-medium h-13"
             >
               Browse use cases
-              <div className="w-5 h-5 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:border-white/20 transition-all">
+              <div className="w-6 h-6 rounded-full border border-white/15 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/5 transition-all">
                 <ArrowRight className="w-3 h-3" />
               </div>
             </a>
           </div>
-          <p className="text-xs text-black/50 dark:text-white/50 flex items-center gap-4">
+          <p className="text-xs text-white/30 flex flex-wrap items-center justify-center gap-3">
             <span>No credit card required</span>
-            <span className="w-1 h-1 rounded-full bg-black/30 dark:bg-white/30" />
-            <span>500 Free credits for new users</span>
-            <span className="w-1 h-1 rounded-full bg-black/30 dark:bg-white/30" />
+            <span className="w-1 h-1 rounded-full bg-white/20" />
+            <span>500 Free credits on sign up</span>
+            <span className="w-1 h-1 rounded-full bg-white/20" />
             <span>Pay only for what you use</span>
           </p>
         </motion.div>
 
-        {/* The "Masterpiece" Mockup */}
+        {/* Browser Mockup */}
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-32 relative w-full max-w-4xl group"
+          className="mt-24 relative w-full max-w-4xl group"
         >
-          {/* Shadow Glow */}
-          <div className="absolute -inset-10 bg-brand-accent/5 blur-[120px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+          {/* Glow behind mockup */}
+          <div className="absolute -inset-1 bg-brand-accent/10 blur-[60px] rounded-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-1000" />
 
-          <div className="relative glassmorphic rounded-2xl overflow-hidden border border-black/[0.03] dark:border-white/[0.03] shadow-2xl">
-            {/* Fake Chrome UI Bar */}
-            <div className="h-10 bg-black/5 dark:bg-white/5 border-b border-black/[0.05] dark:border-white/[0.05] flex items-center px-4 gap-6">
+          <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.6)] bg-[#0d0d0f]">
+            {/* Chrome UI Bar */}
+            <div className="h-10 bg-[#1a1a1d] border-b border-white/[0.06] flex items-center px-4 gap-5">
+              {/* Traffic lights */}
               <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-black/10 dark:bg-white/10" />
-                <div className="w-2.5 h-2.5 rounded-full bg-black/10 dark:bg-white/10" />
-                <div className="w-2.5 h-2.5 rounded-full bg-black/10 dark:bg-white/10" />
+                <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                <div className="w-3 h-3 rounded-full bg-[#28c840]" />
               </div>
-              <div className="flex-1 h-5 bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.05] rounded-md flex items-center px-3 gap-2">
-                <Shield className="w-2 h-2 text-black/70 dark:text-white/70" />
-                <div className="text-[10px] text-black/70 dark:text-white/70 font-mono tracking-tighter">
+              {/* URL bar */}
+              <div className="flex-1 h-6 bg-white/[0.04] border border-white/[0.06] rounded-md flex items-center px-3 gap-2">
+                <Shield className="w-3 h-3 text-emerald-400/70 shrink-0" />
+                <span className="text-[10px] text-white/40 font-mono tracking-tight truncate">
                   https://vanguard.ai/careers/apply
-                </div>
+                </span>
               </div>
             </div>
 
-            {/* The "Ghost Interface" */}
-            <div className="p-12 flex flex-col sm:flex-row gap-16 items-center sm:items-start text-left">
-              <div className="flex-1 space-y-8 w-full">
-                <div className="space-y-2">
-                  <div className="h-3 w-32 bg-black/5 dark:bg-white/5 rounded-full" />
-                  <div className="h-12 w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.05] rounded-lg relative overflow-hidden">
-                    <motion.div
-                      animate={{ x: ["100%", "-100%"] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-accent/5 to-transparent"
-                    />
-                    <div className="absolute inset-0 flex items-center px-4">
-                      <span className="text-black/70 dark:text-white/70 text-sm font-mono tracking-widest">
-                        DETECTING...
-                      </span>
-                    </div>
-                  </div>
+            {/* Browser body */}
+            <div className="p-10 flex flex-col sm:flex-row gap-12 items-center sm:items-start text-left">
+              {/* Form area */}
+              <div className="flex-1 space-y-6 w-full">
+                {/* Status bar */}
+                <div className="h-10 w-full bg-white/[0.02] border border-white/[0.05] rounded-lg relative overflow-hidden flex items-center px-4 gap-3">
+                  <motion.div
+                    animate={{ x: ["100%", "-100%"] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-accent/8 to-transparent"
+                  />
+                  <div className="w-2 h-2 rounded-full bg-brand-accent/60 animate-pulse shrink-0" />
+                  <span className="text-white/40 text-[11px] font-mono tracking-widest">
+                    AI ANALYZING FORM FIELDS...
+                  </span>
                 </div>
 
-                <div className="space-y-6">
+                {/* Form fields */}
+                <div className="space-y-4">
                   {[
-                    { l: "Identity", v: "Alex Sterling", state: "filled" },
-                    {
-                      l: "Global Email",
-                      v: "a.sterling@vanguard.io",
-                      state: "filled",
-                    },
-                    {
-                      l: "Resume Source",
-                      v: "alex_sterling_2026.pdf",
-                      state: "active",
-                    },
+                    { label: "Full Name", value: "Alex Sterling", filled: true },
+                    { label: "Email Address", value: "a.sterling@vanguard.io", filled: true },
+                    { label: "Resume / CV", value: "alex_sterling_2026.pdf", filled: false },
                   ].map((field, i) => (
-                    <div key={i} className="flex gap-6 items-center">
-                      <div className="w-24 h-2 bg-black/10 dark:bg-white/10 rounded-full" />
-                      <div className="flex-1 h-1 bg-black/5 dark:bg-white/5 rounded-full relative">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{
-                            width: field.state === "filled" ? "100%" : "60%",
-                          }}
-                          transition={{ delay: 1 + i * 0.4, duration: 0.8 }}
-                          className={`absolute inset-0 ${field.state === "filled" ? "bg-white/40" : "bg-brand-accent/50"}`}
-                        />
+                    <div key={i} className="space-y-1.5">
+                      <div className="h-2.5 w-20 bg-white/10 rounded-full" />
+                      <div className={`h-11 w-full rounded-lg border flex items-center px-4 ${field.filled
+                        ? "bg-brand-accent/[0.06] border-brand-accent/20"
+                        : "bg-white/[0.02] border-white/[0.06]"
+                        } relative overflow-hidden`}>
+                        {field.filled ? (
+                          <motion.span
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 1 + i * 0.3 }}
+                            className="text-[13px] text-white/70 font-mono"
+                          >
+                            {field.value}
+                          </motion.span>
+                        ) : (
+                          <>
+                            <motion.div
+                              animate={{ x: ["100%", "-100%"] }}
+                              transition={{ duration: 2, repeat: Infinity, ease: "linear", delay: 0.5 }}
+                              className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-accent/8 to-transparent"
+                            />
+                            <span className="text-[11px] text-white/25 font-mono tracking-wider">
+                              Filling...
+                            </span>
+                          </>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* The Mini Extension Floating Box */}
+              {/* Extension Floating Panel */}
               <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="w-full sm:w-64 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.1] dark:border-white/[0.1] rounded-xl p-6 backdrop-blur-2xl shadow-xl flex flex-col gap-5"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="w-full sm:w-60 bg-[#111113] border border-white/[0.1] rounded-xl p-5 shadow-2xl flex flex-col gap-4 shrink-0"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-black dark:bg-white flex items-center justify-center transition-transform group-hover:scale-110">
-                    <Chrome className="w-4 h-4 text-white dark:text-black" />
+                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
+                    <Chrome className="w-4 h-4 text-black" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[11px] font-bold text-black dark:text-white tracking-wide">
+                    <span className="text-[12px] font-bold text-white tracking-tight">
                       AutoFill AI
                     </span>
-                    <span className="text-[9px] text-black/80 dark:text-white/80 uppercase tracking-[0.15em] font-bold">
-                      Engine active
-                    </span>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-[9px] text-emerald-400 uppercase tracking-[0.15em] font-semibold">
+                        Engine active
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="h-px bg-black/10 dark:bg-white/10 w-full" />
+                <div className="h-px bg-white/[0.06] w-full" />
 
-                <div className="space-y-3">
-                  <div className="flex justify-between text-[10px] text-black/80 dark:text-white/80">
-                    <span>Efficiency</span>
-                    <span className="text-black dark:text-white">99.8%</span>
+                <div className="space-y-2.5">
+                  <div className="flex justify-between text-[10px]">
+                    <span className="text-white/50">Match accuracy</span>
+                    <span className="text-white font-semibold">99.8%</span>
                   </div>
-                  <div className="h-1.5 w-full bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
-                      animate={{ width: "99%" }}
-                      transition={{ delay: 2, duration: 1.5 }}
-                      className="h-full bg-brand-accent shadow-[0_0_10px_#3b82f6]"
+                      animate={{ width: "99.8%" }}
+                      transition={{ delay: 1.8, duration: 1.5, ease: "easeOut" }}
+                      className="h-full bg-brand-accent accent-glow"
                     />
                   </div>
                 </div>
 
-                <button className="w-full bg-black dark:bg-white text-white dark:text-black text-[12px] font-bold h-10 rounded-lg hover:bg-gray-200 transition-all flex items-center justify-center gap-2">
+                <div className="space-y-2">
+                  {["Name", "Email", "Resume"].map((item, i) => (
+                    <div key={i} className="flex items-center justify-between text-[10px]">
+                      <span className="text-white/40">{item}</span>
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.5 + i * 0.3 }}
+                        className={i < 2 ? "text-emerald-400 font-medium" : "text-brand-accent font-medium"}
+                      >
+                        {i < 2 ? "✓ Filled" : "Filling..."}
+                      </motion.span>
+                    </div>
+                  ))}
+                </div>
+
+                <button className="w-full bg-white text-black text-[11px] font-bold h-9 rounded-lg hover:bg-white/90 transition-all flex items-center justify-center gap-2 mt-1">
                   <Zap className="w-3 h-3 fill-current" />
                   Instant Fill
                 </button>
@@ -211,22 +233,24 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Tech Stack Footer Proof */}
-        <motion.div
+        {/* Tech Stack */}
+        {/* <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.3 }}
-          transition={{ delay: 1.5 }}
-          className="mt-24 flex items-center gap-12"
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+          className="mt-16 flex items-center gap-8"
         >
-          {["DeepSeek-V3", "chrome-web-store", "aes-256"].map((tech) => (
+          <div className="h-px flex-1 max-w-20 bg-gradient-to-r from-transparent to-white/10" />
+          {["DeepSeek-V3", "Chrome Extension", "AES-256"].map((tech) => (
             <span
               key={tech}
-              className="text-[10px] font-mono tracking-[0.3em] uppercase"
+              className="text-[10px] font-mono tracking-[0.25em] uppercase text-white/25"
             >
               {tech}
             </span>
           ))}
-        </motion.div>
+          <div className="h-px flex-1 max-w-20 bg-gradient-to-l from-transparent to-white/10" />
+        </motion.div> */}
       </div>
     </section>
   );

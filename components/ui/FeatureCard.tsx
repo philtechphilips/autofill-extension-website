@@ -18,22 +18,27 @@ export default function FeatureCard({
 }: FeatureCardProps) {
   return (
     <motion.div
-      className={`glassmorphic rounded-xl p-8 border border-white/[0.03] group hover:border-white/[0.08] transition-all duration-500 ${
+      className={`relative rounded-2xl p-8 border border-white/[0.07] bg-white/2 group hover:border-brand-accent/25 hover:bg-white/4 transition-all duration-500 overflow-hidden ${
         large ? "md:col-span-2" : ""
       }`}
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
     >
-      <div className="flex flex-col gap-6">
-        <div className="w-10 h-10 rounded-lg bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] flex items-center justify-center text-black/80 dark:text-white/80 group-hover:text-white transition-colors duration-500">
+      {/* Hover glow */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+        <div className="absolute top-0 left-0 w-32 h-32 bg-brand-accent/6 blur-2xl rounded-full -translate-x-8 -translate-y-8" />
+      </div>
+
+      <div className="relative flex flex-col gap-6">
+        <div className="w-11 h-11 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent group-hover:bg-brand-accent/15 group-hover:border-brand-accent/30 transition-all duration-500">
           {icon}
         </div>
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-black dark:text-white tracking-tight">
+          <h3 className="text-sm font-semibold text-white tracking-tight">
             {title}
           </h3>
-          <p className="text-[13px] text-black/80 dark:text-white/80 leading-relaxed font-light">
+          <p className="text-[13px] text-white/50 leading-relaxed font-light">
             {description}
           </p>
         </div>

@@ -375,9 +375,6 @@ export default function BillingPage() {
           </div>
         </div>
 
-        <p className="text-[10px] font-mono text-black/30 dark:text-white/30 uppercase tracking-[0.2em]">
-          V1.0.4 Credit Engine • Nominal Status
-        </p>
       </div>
     </div>
   );

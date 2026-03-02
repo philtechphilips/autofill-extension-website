@@ -45,24 +45,26 @@ export default function HowItWorks() {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-12">
+        <div className="grid md:grid-cols-3 gap-6">
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              className="relative group p-8 border border-black/30 dark:border-white/30 rounded-2xl hover:bg-white/20 transition-all duration-500"
+              className="relative group p-8 border border-white/[0.07] bg-white/2 rounded-2xl hover:border-brand-accent/20 hover:bg-white/4 transition-all duration-500"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <div className="text-[40px] font-bold text-black dark:text-white group-hover:text-brand-accent/80 transition-colors duration-500 mb-6">
-                {step.number}
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center shrink-0">
+                  <span className="text-sm font-bold text-brand-accent">{step.number}</span>
+                </div>
               </div>
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-black dark:text-white tracking-tight">
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-white tracking-tight">
                   {step.title}
                 </h3>
-                <p className="text-[13px] text-black/80 dark:text-white/80 leading-relaxed font-light">
+                <p className="text-[13px] text-white/50 leading-relaxed font-light">
                   {step.description}
                 </p>
               </div>

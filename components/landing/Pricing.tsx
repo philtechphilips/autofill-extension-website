@@ -114,7 +114,7 @@ export default function Pricing() {
 
   const trustBadges = [
     { icon: CreditCard, text: "No credit card required" },
-    { icon: Clock, text: "14-day Pro trial included" },
+    { icon: Clock, text: "Free 500 Credits" },
     { icon: X, text: "Cancel anytime" },
   ];
 

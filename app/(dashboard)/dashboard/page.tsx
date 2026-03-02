@@ -72,8 +72,8 @@ const MetricCard = ({
     </div>
 
     <div className="relative z-10">
-      <div className="w-12 h-12 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-        <Icon className="w-6 h-6 text-black/80 dark:text-white/80 group-hover:text-white transition-colors" />
+      <div className="w-12 h-12 rounded-2xl bg-brand-accent/6 border border-brand-accent/12 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-brand-accent/15 group-hover:border-brand-accent/30 transition-all duration-500">
+        <Icon className="w-6 h-6 text-white/60 group-hover:text-brand-accent transition-colors duration-300" />
       </div>
 
       <div className="space-y-1 mb-4">
@@ -234,8 +234,11 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-4">
-          <div className="flex items-center gap-2 text-brand-accent text-xs font-bold uppercase tracking-[0.3em] animate-pulse">
-            <Sparkles className="w-4 h-4" />
+          <div className="flex items-center gap-2 text-brand-accent text-xs font-bold uppercase tracking-[0.3em]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-50" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            </span>
             System Online
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">
@@ -367,7 +370,7 @@ export default function DashboardPage() {
                     duration: 0.8,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="flex-1 bg-black/[0.03] dark:bg-white/[0.03] hover:bg-white/[0.1] rounded-t-lg transition-all relative group/bar"
+                  className="flex-1 bg-brand-accent/15 hover:bg-brand-accent/35 rounded-t-lg transition-all relative group/bar cursor-pointer"
                 >
                   <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap shadow-xl z-10">
                     {day.count} fills

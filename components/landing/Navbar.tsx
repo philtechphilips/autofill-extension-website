@@ -17,7 +17,7 @@ export default function Navbar() {
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className="fixed top-0 left-0 right-0 z-50 flex justify-center px-6 py-8 pointer-events-none"
     >
-      <div className="max-w-6xl w-full flex items-center justify-between glassmorphic px-5 py-2 rounded-full border border-black/[0.05] dark:border-white/[0.05] shadow-2xl pointer-events-auto">
+      <div className="max-w-6xl w-full flex items-center justify-between glassmorphic px-5 py-2 rounded-full border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] pointer-events-auto">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 group cursor-pointer">
           <div className="w-8 h-8 rounded-full overflow-hidden transition-transform group-hover:scale-110 shadow-lg shadow-white/10">

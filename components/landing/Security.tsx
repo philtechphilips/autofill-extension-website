@@ -59,23 +59,23 @@ export default function Security() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {securityFeatures.map((feature, index) => (
             <motion.div
               key={index}
-              className="group p-8 border border-black/[0.03] dark:border-white/[0.03] rounded-2xl hover:bg-white/[0.02] transition-all duration-500"
+              className="group p-8 border border-white/[0.07] bg-white/2 rounded-2xl hover:border-brand-accent/20 hover:bg-white/4 transition-all duration-500"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <div className="w-10 h-10 rounded-lg bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] flex items-center justify-center text-black/80 dark:text-white/80 group-hover:text-white transition-colors duration-500 mb-6 font-bold uppercase tracking-widest text-xs">
+              <div className="w-11 h-11 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent group-hover:bg-brand-accent/15 transition-all duration-500 mb-6">
                 {feature.icon}
               </div>
-              <h3 className="text-sm font-semibold text-black dark:text-white tracking-tight mb-3">
+              <h3 className="text-sm font-semibold text-white tracking-tight mb-3">
                 {feature.title}
               </h3>
-              <p className="text-[13px] text-black/80 dark:text-white/80 leading-relaxed font-light">
+              <p className="text-[13px] text-white/50 leading-relaxed font-light">
                 {feature.description}
               </p>
             </motion.div>

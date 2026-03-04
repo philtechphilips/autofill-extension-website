@@ -113,6 +113,28 @@ export function usePayment() {
     }
   }, []);
 
+  const initializePaystack = useCallback(async (packId: string) => {
+    try {
+      setCheckoutLoading(packId);
+      const response = await api.post("/payment/paystack/initialize", { packId });
+      const { authorizationUrl } = response.data.data;
+
+      if (authorizationUrl) {
+        window.location.href = authorizationUrl;
+      }
+
+      return response.data.data;
+    } catch (error: any) {
+      const message = error.response?.data?.message || "Failed to start Paystack payment";
+      toast.error("Payment failed", {
+        description: message,
+      });
+      throw error;
+    } finally {
+      setCheckoutLoading(null);
+    }
+  }, []);
+
   const getPricing = useCallback(async () => {
     try {
       const response = await api.get("/pricing");
@@ -132,6 +154,7 @@ export function usePayment() {
     getCredits,
     getTransactions,
     createCheckout,
+    initializePaystack,
     getPricing,
   };
 }

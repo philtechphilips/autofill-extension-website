@@ -43,7 +43,8 @@ export default function LoginPage() {
         router.push("/dashboard");
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to sign in");
+      const data = err.response?.data;
+      setError(data?.error || data?.message || "Failed to sign in");
     } finally {
       setIsLoading(false);
     }

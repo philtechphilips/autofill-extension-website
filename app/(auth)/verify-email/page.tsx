@@ -43,8 +43,10 @@ function VerifyEmailContent() {
         setMessage(successMsg || "Your email has been verified successfully.");
       } catch (err: any) {
         setStatus("error");
+        const data = err.response?.data;
         setMessage(
-          err.response?.data?.message ||
+          data?.error ||
+          data?.message ||
           "Verification failed. The link may be expired or invalid.",
         );
       }

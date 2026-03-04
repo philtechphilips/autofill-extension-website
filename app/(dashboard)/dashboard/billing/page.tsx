@@ -29,16 +29,18 @@ export default function BillingPage() {
   const [loadingData, setLoadingData] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { getCredits, getPricing, createCheckout, checkoutLoading } = usePayment();
+  const { getCredits, getPricing, createCheckout, initializePaystack, checkoutLoading } = usePayment();
 
   useEffect(() => {
     const success = searchParams.get("success");
     const canceled = searchParams.get("canceled");
-    const packId = searchParams.get("packId");
+    const method = searchParams.get("method");
 
     if (success === "true") {
       toast.success("Payment successful!", {
-        description: "Your credits have been added to your account.",
+        description: method === "paystack"
+          ? "Naira payment confirmed! Your credits have been added."
+          : "Your credits have been added to your account.",
       });
       window.history.replaceState({}, "", "/dashboard/billing");
     } else if (canceled === "true") {
@@ -90,15 +92,12 @@ export default function BillingPage() {
   }, []);
 
   const handleCheckout = async (packId: string) => {
-    if (region === "Nigeria") {
-      toast.info("Naira payments coming soon!", {
-        description: "Please switch to Global (USD) to complete your purchase. We're working on adding local payment options.",
-      });
-      return;
-    }
-
     try {
-      await createCheckout(packId);
+      if (region === "Nigeria") {
+        await initializePaystack(packId);
+      } else {
+        await createCheckout(packId);
+      }
     } catch (err) {
       // Error already handled in hook
     }
@@ -335,8 +334,8 @@ export default function BillingPage() {
                         </>
                       ) : region === "Nigeria" ? (
                         <>
-                          Coming Soon
-                          <Clock className="w-4 h-4" />
+                          Buy in Naira
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </>
                       ) : (
                         <>
@@ -359,7 +358,7 @@ export default function BillingPage() {
           <div className="flex items-center gap-2 text-black/40 dark:text-white/40">
             <ShieldCheck className="w-4 h-4" />
             <span className="text-[10px] font-bold uppercase tracking-widest text-black/50 dark:text-white/90">
-              Secure checkout via Polar
+              Secure checkout — Naira · USD
             </span>
           </div>
           <div className="flex items-center gap-2 text-black/40 dark:text-white/40 border-l border-black/10 dark:border-white/10 pl-6">

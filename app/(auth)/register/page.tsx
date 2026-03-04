@@ -35,7 +35,8 @@ export default function RegisterPage() {
       setAuth(user, accessToken);
       router.push("/dashboard");
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to create account");
+      const data = err.response?.data;
+      setError(data?.error || data?.message || "Failed to create account");
     } finally {
       setIsLoading(false);
     }

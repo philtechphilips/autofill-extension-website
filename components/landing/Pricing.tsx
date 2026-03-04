@@ -210,7 +210,7 @@ export default function Pricing() {
             started.
           </p>
           <p className="text-sm text-black/50 dark:text-gray-500">
-            Secure payments powered by Polar. Credits never expire.
+            Pay in Naira (NGN) or in USD. Credits never expire.
           </p>
         </motion.div>
       </div>

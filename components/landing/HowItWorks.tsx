@@ -64,7 +64,7 @@ export default function HowItWorks() {
                 <h3 className="text-sm font-semibold text-white tracking-tight">
                   {step.title}
                 </h3>
-                <p className="text-[13px] text-white/50 leading-relaxed font-light">
+                <p className="text-[13px] text-white/90 leading-relaxed font-light">
                   {step.description}
                 </p>
               </div>

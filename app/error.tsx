@@ -63,7 +63,7 @@ export default function GlobalError({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="text-white/50 text-base mb-8"
+          className="text-white/90 text-base mb-8"
         >
           An unexpected error occurred. You can try again or return to the home
           page.

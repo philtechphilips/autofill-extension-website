@@ -37,7 +37,7 @@ export default function DashboardError({
         </h2>
 
         {/* Description */}
-        <p className="text-white/50 text-sm mb-8">
+        <p className="text-white/90 text-sm mb-8">
           This page ran into an unexpected error. Try reloading it — your data
           is safe.
         </p>

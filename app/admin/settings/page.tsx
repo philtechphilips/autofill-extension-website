@@ -102,7 +102,7 @@ export default function AdminSettingsPage() {
     if (loading) {
         return (
             <div className="flex items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 text-black/50 dark:text-white/50 animate-spin" />
+                <Loader2 className="w-8 h-8 text-black/50 dark:text-white/90 animate-spin" />
             </div>
         );
     }
@@ -115,7 +115,7 @@ export default function AdminSettingsPage() {
                     System Settings
                 </div>
                 <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">
-                    Configuration<span className="text-black/70 dark:text-white/70">.</span>
+                    Configuration<span className="text-black/70 dark:text-white/90">.</span>
                 </h1>
                 <p className="text-xl text-black/80 dark:text-white/80 font-light max-w-4xl">
                     Manage token costs for AI actions and configure pricing packs.
@@ -200,7 +200,7 @@ export default function AdminSettingsPage() {
                             <div className="flex items-center justify-between">
                                 <h3 className="text-xl font-bold text-black dark:text-white capitalize">{pack.packId} Pack</h3>
                                 <label className="flex items-center gap-2 cursor-pointer">
-                                    <span className="text-sm text-black/60 dark:text-white/60">Active Status</span>
+                                    <span className="text-sm text-black/60 dark:text-white/80">Active Status</span>
                                     <input
                                         type="checkbox"
                                         checked={pack.isActive}

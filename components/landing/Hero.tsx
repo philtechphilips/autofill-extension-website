@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import Button from "../ui/Button";
-import { Chrome, ArrowRight, Shield, Zap } from "lucide-react";
+import { Chrome, ArrowRight, Shield, Zap, Globe } from "lucide-react";
+import { toast } from "sonner";
 
 export default function Hero() {
   return (
@@ -42,7 +43,7 @@ export default function Hero() {
             instantly.
           </h1>
 
-          <p className="text-lg md:text-xl text-white/50 leading-relaxed max-w-4xl mx-auto font-light">
+          <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mx-auto font-light">
             Stop wasting time on repetitive typing. Our smart AI engine fills
             your information into any website in seconds.
           </p>
@@ -56,29 +57,38 @@ export default function Hero() {
           className="mt-12 flex flex-col items-center gap-5"
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button
-              variant="primary"
-              size="lg"
-              className="px-10 h-13 text-sm tracking-wide gap-3"
+            <Link
+              href="https://chromewebstore.google.com/detail/Autofill.Ai/hdgpkgjdemnphbknlndiloffnocnmfhd"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 px-8 h-12 text-[13px] font-semibold tracking-wide rounded-md bg-white text-black hover:bg-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.1)] transition-all duration-200 active:scale-[0.98]"
             >
               <Chrome className="w-4 h-4" />
-              Install for Chrome
-            </Button>
-            <a
-              href="#features"
-              className="flex items-center gap-2 group text-white/60 hover:text-white transition-all text-sm font-medium h-13"
+              Chrome
+            </Link>
+            <button
+              onClick={() => toast.info("Firefox support is coming soon!")}
+              className="inline-flex items-center justify-center gap-3 px-8 h-12 text-[13px] font-semibold tracking-wide rounded-md bg-white/5 text-white/90 border border-white/10 hover:bg-white/10 transition-all duration-200 active:scale-[0.98] cursor-pointer"
             >
-              Browse use cases
-              <div className="w-6 h-6 rounded-full border border-white/15 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/5 transition-all">
-                <ArrowRight className="w-3 h-3" />
-              </div>
-            </a>
+              <Globe className="w-4 h-4" />
+              Firefox
+            </button>
+            <button
+              onClick={() => toast.info("Microsoft Edge support is coming soon!")}
+              className="inline-flex items-center justify-center gap-3 px-8 h-12 text-[13px] font-semibold tracking-wide rounded-md bg-white/5 text-white/90 border border-white/10 hover:bg-white/10 transition-all duration-200 active:scale-[0.98] cursor-pointer"
+            >
+              <Globe className="w-4 h-4" />
+              Edge
+            </button>
           </div>
-          <p className="text-xs text-white/30 flex flex-wrap items-center justify-center gap-3">
+          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
+            <span>Multibrowser support in active development</span>
+          </div>
+          <p className="text-xs text-white/90 flex flex-wrap items-center justify-center gap-3">
             <span>No credit card required</span>
-            <span className="w-1 h-1 rounded-full bg-white/20" />
+            <span className="w-1 h-1 rounded-full bg-white/30" />
             <span>500 Free credits on sign up</span>
-            <span className="w-1 h-1 rounded-full bg-white/20" />
+            <span className="w-1 h-1 rounded-full bg-white/30" />
             <span>Pay only for what you use</span>
           </p>
         </motion.div>
@@ -105,7 +115,7 @@ export default function Hero() {
               {/* URL bar */}
               <div className="flex-1 h-6 bg-white/[0.04] border border-white/[0.06] rounded-md flex items-center px-3 gap-2">
                 <Shield className="w-3 h-3 text-emerald-400/70 shrink-0" />
-                <span className="text-[10px] text-white/40 font-mono tracking-tight truncate">
+                <span className="text-[10px] text-white/80 font-mono tracking-tight truncate">
                   https://vanguard.ai/careers/apply
                 </span>
               </div>
@@ -123,7 +133,7 @@ export default function Hero() {
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-accent/8 to-transparent"
                   />
                   <div className="w-2 h-2 rounded-full bg-brand-accent/60 animate-pulse shrink-0" />
-                  <span className="text-white/40 text-[11px] font-mono tracking-widest">
+                  <span className="text-white/80 text-[11px] font-mono tracking-widest">
                     AI ANALYZING FORM FIELDS...
                   </span>
                 </div>
@@ -146,7 +156,7 @@ export default function Hero() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1 + i * 0.3 }}
-                            className="text-[13px] text-white/70 font-mono"
+                            className="text-[13px] text-white/90 font-mono"
                           >
                             {field.value}
                           </motion.span>
@@ -195,7 +205,7 @@ export default function Hero() {
 
                 <div className="space-y-2.5">
                   <div className="flex justify-between text-[10px]">
-                    <span className="text-white/50">Match accuracy</span>
+                    <span className="text-white/90">Match accuracy</span>
                     <span className="text-white font-semibold">99.8%</span>
                   </div>
                   <div className="h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden">

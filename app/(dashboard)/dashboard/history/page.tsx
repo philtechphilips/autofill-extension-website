@@ -66,7 +66,7 @@ const EventTypeBadge = ({ type }: { type: string }) => {
   };
   const { label, color } = config[type as keyof typeof config] || {
     label: type,
-    color: "bg-white/10 text-white/70",
+    color: "bg-white/10 text-white/90",
   };
 
   return (
@@ -149,7 +149,7 @@ export default function HistoryPage() {
           Data Archives
         </div>
         <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">
-          Form History<span className="text-black/70 dark:text-white/70">.</span>
+          Form History<span className="text-black/70 dark:text-white/90">.</span>
         </h1>
         <p className="text-xl text-black/80 dark:text-white/80 font-light max-w-4xl">
           Review your historical precision mapping and data population events.
@@ -158,7 +158,7 @@ export default function HistoryPage() {
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 text-black/60 dark:text-white/60">
+        <div className="flex items-center gap-2 text-black/60 dark:text-white/80">
           <Filter className="w-4 h-4" />
           <span className="text-xs font-bold uppercase tracking-wider">
             Filter:
@@ -169,8 +169,8 @@ export default function HistoryPage() {
             key={type}
             onClick={() => handleFilterChange(type)}
             className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${filter === type
-                ? "bg-white text-black"
-                : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+              ? "bg-white text-black"
+              : "bg-white/5 text-white/90 hover:bg-white/10 hover:text-white"
               }`}
           >
             {type === "all" ? "All" : type.replace("_", " ")}
@@ -201,7 +201,7 @@ export default function HistoryPage() {
         ) : events.length === 0 ? (
           <div className="p-20 text-center space-y-6">
             <div className="w-20 h-20 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] rounded-3xl mx-auto flex items-center justify-center">
-              <Zap className="w-10 h-10 text-black/60 dark:text-white/60" />
+              <Zap className="w-10 h-10 text-black/60 dark:text-white/80" />
             </div>
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-black dark:text-white tracking-tight">
@@ -224,11 +224,10 @@ export default function HistoryPage() {
                 className="flex items-center gap-4 p-6 hover:bg-white/[0.02] transition-colors"
               >
                 <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                    event.success
-                      ? "bg-emerald-500/10 text-emerald-500"
-                      : "bg-red-500/10 text-red-500"
-                  }`}
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center ${event.success
+                    ? "bg-emerald-500/10 text-emerald-500"
+                    : "bg-red-500/10 text-red-500"
+                    }`}
                 >
                   <EventTypeIcon type={event.type} success={event.success} />
                 </div>
@@ -245,7 +244,7 @@ export default function HistoryPage() {
                     </h3>
                     <EventTypeBadge type={event.type} />
                   </div>
-                  <div className="flex items-center gap-4 text-[11px] text-black/60 dark:text-white/60">
+                  <div className="flex items-center gap-4 text-[11px] text-black/60 dark:text-white/80">
                     {event.domain && (
                       <span className="flex items-center gap-1">
                         <Globe className="w-3 h-3" />
@@ -282,7 +281,7 @@ export default function HistoryPage() {
         {/* Pagination */}
         {pagination && pagination.pages > 1 && (
           <div className="flex items-center justify-between p-6 border-t border-black/[0.05] dark:border-white/[0.05]">
-            <div className="text-xs text-black/60 dark:text-white/60">
+            <div className="text-xs text-black/60 dark:text-white/80">
               Showing {(pagination.page - 1) * pagination.limit + 1} -{" "}
               {Math.min(pagination.page * pagination.limit, pagination.total)}{" "}
               of {pagination.total}
@@ -291,7 +290,7 @@ export default function HistoryPage() {
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={pagination.page === 1}
-                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/90 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -313,11 +312,10 @@ export default function HistoryPage() {
                       <button
                         key={pageNum}
                         onClick={() => setPage(pageNum)}
-                        className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
-                          pagination.page === pageNum
-                            ? "bg-white text-black"
-                            : "bg-white/5 text-white/70 hover:bg-white/10"
-                        }`}
+                        className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${pagination.page === pageNum
+                          ? "bg-white text-black"
+                          : "bg-white/5 text-white/90 hover:bg-white/10"
+                          }`}
                       >
                         {pageNum}
                       </button>
@@ -330,7 +328,7 @@ export default function HistoryPage() {
                   setPage((p) => Math.min(pagination.pages, p + 1))
                 }
                 disabled={pagination.page === pagination.pages}
-                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/90 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

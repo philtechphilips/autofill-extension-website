@@ -96,7 +96,7 @@ export default function Shortcuts() {
                     <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight mb-6">
                         Move at the speed of thought.
                     </h2>
-                    <p className="text-lg text-black/60 dark:text-white/60 max-w-4xl mx-auto font-light leading-relaxed mb-12">
+                    <p className="text-lg text-black/80 dark:text-white/80 max-w-4xl mx-auto font-light leading-relaxed mb-12">
                         Never touch your mouse. Master our global shortcuts to automate data entry across the web in milliseconds.
                     </p>
 
@@ -105,8 +105,8 @@ export default function Shortcuts() {
                             <button
                                 onClick={() => setPlatform("mac")}
                                 className={`flex items-center gap-2 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${platform === "mac"
-                                        ? "bg-white text-black shadow-sm"
-                                        : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.05]"
+                                    ? "bg-white text-black shadow-sm"
+                                    : "text-black/60 dark:text-white/80 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.05]"
                                     }`}
                             >
                                 <Apple className="w-3.5 h-3.5" />
@@ -115,8 +115,8 @@ export default function Shortcuts() {
                             <button
                                 onClick={() => setPlatform("windows")}
                                 className={`flex items-center gap-2 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${platform === "windows"
-                                        ? "bg-white text-black shadow-sm"
-                                        : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.05]"
+                                    ? "bg-white text-black shadow-sm"
+                                    : "text-black/60 dark:text-white/80 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.05]"
                                     }`}
                             >
                                 <Monitor className="w-3.5 h-3.5" />
@@ -154,7 +154,7 @@ export default function Shortcuts() {
                                 <h3 className="text-lg font-bold text-black dark:text-white tracking-tight">
                                     {feature.title}
                                 </h3>
-                                <p className="text-sm text-black/60 dark:text-white/60 font-light leading-relaxed">
+                                <p className="text-sm text-black/90 dark:text-white/90 font-light leading-relaxed">
                                     {feature.description}
                                 </p>
                             </div>
@@ -173,7 +173,7 @@ export default function Shortcuts() {
                     transition={{ delay: 0.6 }}
                 >
                     <Sparkles className="w-4 h-4" />
-                    <span>Fully customizable in Chrome extension settings</span>
+                    <span>Fully customizable in browser extension settings</span>
                 </motion.div>
             </div>
         </section>

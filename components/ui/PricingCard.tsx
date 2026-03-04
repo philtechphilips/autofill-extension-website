@@ -34,11 +34,10 @@ export default function PricingCard({
 
   return (
     <motion.div
-      className={`relative rounded-2xl p-8 border transition-all duration-500 overflow-hidden ${
-        recommended
-          ? "bg-white/[0.04] border-brand-accent/30 shadow-[0_0_0_1px_rgba(59,130,246,0.15),0_0_60px_rgba(59,130,246,0.1),0_8px_40px_rgba(0,0,0,0.4)] scale-[1.03]"
-          : "bg-white/[0.02] border-white/[0.07] hover:border-white/[0.12] hover:bg-white/[0.04]"
-      }`}
+      className={`relative rounded-2xl p-8 border transition-all duration-500 overflow-hidden ${recommended
+        ? "bg-white/[0.04] border-brand-accent/30 shadow-[0_0_0_1px_rgba(59,130,246,0.15),0_0_60px_rgba(59,130,246,0.1),0_8px_40px_rgba(0,0,0,0.4)] scale-[1.03]"
+        : "bg-white/[0.02] border-white/[0.07] hover:border-white/[0.12] hover:bg-white/[0.04]"
+        }`}
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -57,7 +56,7 @@ export default function PricingCard({
         )}
 
         <div className="space-y-3">
-          <h3 className={`text-xs font-bold uppercase tracking-widest ${recommended ? "text-brand-accent" : "text-white/50"}`}>
+          <h3 className={`text-xs font-bold uppercase tracking-widest ${recommended ? "text-brand-accent" : "text-white/90"}`}>
             {name}
           </h3>
           <div className="flex items-baseline gap-2">
@@ -80,7 +79,7 @@ export default function PricingCard({
           {features.map((feature, index) => (
             <li
               key={index}
-              className="flex items-start gap-3 text-[13px] text-white/60 font-light"
+              className="flex items-start gap-3 text-[13px] text-white/80 font-light"
             >
               <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
                 <Check className="w-3 h-3 text-emerald-400" />

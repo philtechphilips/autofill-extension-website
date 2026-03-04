@@ -34,12 +34,12 @@ const SidebarItem = ({ href, icon: Icon, label, active }: SidebarItemProps) => (
   <Link href={href}>
     <div
       className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group border ${active
-          ? "bg-brand-accent/10 border-brand-accent/20 text-white"
-          : "border-transparent text-white/60 hover:text-white hover:bg-white/[0.04]"
+        ? "bg-brand-accent/10 border-brand-accent/20 text-white"
+        : "border-transparent text-white/80 hover:text-white hover:bg-white/[0.04]"
         }`}
     >
       <Icon
-        className={`w-5 h-5 transition-colors ${active ? "text-brand-accent" : "text-white/50 group-hover:text-white/80"}`}
+        className={`w-5 h-5 transition-colors ${active ? "text-brand-accent" : "text-white/90 group-hover:text-white/80"}`}
       />
       <span className="text-sm font-medium tracking-tight">{label}</span>
       {active && (
@@ -125,13 +125,13 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <h1 className="text-3xl font-bold text-black dark:text-white tracking-tight mb-3">
             Verify Your Email
           </h1>
-          <p className="text-black/60 dark:text-white/60 mb-2">
+          <p className="text-black/60 dark:text-white/80 mb-2">
             We sent a verification link to
           </p>
           <p className="text-black dark:text-white font-medium mb-6">
             {user.email}
           </p>
-          <p className="text-sm text-black/50 dark:text-white/50 mb-8">
+          <p className="text-sm text-black/50 dark:text-white/90 mb-8">
             Please check your inbox and click the verification link to access your dashboard.
           </p>
           <div className="space-y-3 max-w-[400px] mx-auto">
@@ -149,7 +149,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </button>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-black/10 dark:border-white/10 text-black/70 dark:text-white/90 font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             >
               <LogOut className="w-5 h-5" />
               Log out
@@ -220,7 +220,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-white/50 hover:text-white hover:bg-white/5 transition-colors group"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-white/90 hover:text-white hover:bg-white/5 transition-colors group"
           >
             <LogOut className="w-4 h-4 group-hover:text-red-400 transition-colors" />
             <span className="text-sm font-medium">Log out</span>
@@ -246,7 +246,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </Link>
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="text-white/70 hover:text-white transition-colors"
+          className="text-white/90 hover:text-white transition-colors"
         >
           {isMobileMenuOpen ? (
             <X className="w-6 h-6" />
@@ -271,11 +271,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center gap-4 px-4 py-4 rounded-xl transition-colors ${
-                    pathname === item.href
-                      ? "bg-brand-accent/10 text-white border border-brand-accent/20"
-                      : "text-white/60 hover:text-white hover:bg-white/5 border border-transparent"
-                  }`}
+                  className={`flex items-center gap-4 px-4 py-4 rounded-xl transition-colors ${pathname === item.href
+                    ? "bg-brand-accent/10 text-white border border-brand-accent/20"
+                    : "text-white/80 hover:text-white hover:bg-white/5 border border-transparent"
+                    }`}
                 >
                   <item.icon className={`w-5 h-5 ${pathname === item.href ? "text-brand-accent" : ""}`} />
                   <span className="text-base font-medium">{item.label}</span>
@@ -283,7 +282,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               ))}
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-4 px-4 py-4 w-full text-white/50 hover:text-white hover:bg-white/5 rounded-xl border border-transparent transition-colors group"
+                className="flex items-center gap-4 px-4 py-4 w-full text-white/90 hover:text-white hover:bg-white/5 rounded-xl border border-transparent transition-colors group"
               >
                 <LogOut className="w-5 h-5 group-hover:text-red-400 transition-colors" />
                 <span className="text-base font-medium">Log out</span>

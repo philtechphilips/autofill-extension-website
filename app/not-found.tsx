@@ -60,7 +60,7 @@ export default function NotFound() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-white/50 text-base md:text-lg max-w-2sm mb-10"
+          className="text-white/90 text-base md:text-lg max-w-2sm mb-10"
         >
           The page you&apos;re looking for doesn&apos;t exist or has been moved to a
           different URL.

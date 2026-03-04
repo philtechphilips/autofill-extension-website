@@ -143,7 +143,7 @@ export default function Pricing() {
               onClick={() => setRegion("Global")}
               className={`flex items-center gap-2 px-6 py-2 rounded-full text-xs font-bold transition-all ${region === "Global"
                 ? "bg-white text-black shadow-lg"
-                : "text-white/60 hover:text-white"
+                : "text-white/80 hover:text-white"
                 }`}
             >
               <Globe className="w-3 h-3" />
@@ -153,7 +153,7 @@ export default function Pricing() {
               onClick={() => setRegion("Nigeria")}
               className={`flex items-center gap-2 px-6 py-2 rounded-full text-xs font-bold transition-all ${region === "Nigeria"
                 ? "bg-white text-black shadow-lg"
-                : "text-white/60 hover:text-white"
+                : "text-white/80 hover:text-white"
                 }`}
             >
               <Zap className="w-3 h-3" />

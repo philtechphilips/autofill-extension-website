@@ -45,7 +45,7 @@ function VerifyEmailContent() {
         setStatus("error");
         setMessage(
           err.response?.data?.message ||
-            "Verification failed. The link may be expired or invalid.",
+          "Verification failed. The link may be expired or invalid.",
         );
       }
     };
@@ -57,7 +57,7 @@ function VerifyEmailContent() {
     <div className="space-y-8 text-center py-10">
       {status === "loading" && (
         <div className="flex flex-col items-center space-y-4">
-          <Loader2 className="w-12 h-12 text-black/70 dark:text-white/70 animate-spin" />
+          <Loader2 className="w-12 h-12 text-black/70 dark:text-white/90 animate-spin" />
           <h2 className="text-xl font-medium text-black dark:text-white">
             Verifying your identity
           </h2>

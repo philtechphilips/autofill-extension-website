@@ -36,7 +36,7 @@ const SidebarItem = ({ href, icon: Icon, label, active }: SidebarItemProps) => (
                 }`}
         >
             <Icon
-                className={`w-5 h-5 transition-colors ${active ? "text-white" : "text-white/70 group-hover:text-white/80"}`}
+                className={`w-5 h-5 transition-colors ${active ? "text-white" : "text-white/90 group-hover:text-white/80"}`}
             />
             <span className="text-sm font-medium tracking-tight">{label}</span>
             {active && (
@@ -101,7 +101,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 </div>
 
                 <nav className="flex-1 px-4 space-y-2">
-                    <div className="text-[10px] font-bold text-black/60 dark:text-white/60 uppercase tracking-[0.2em] px-4 mb-4">
+                    <div className="text-[10px] font-bold text-black/60 dark:text-white/80 uppercase tracking-[0.2em] px-4 mb-4">
                         Navigation
                     </div>
                     {sidebarItems.map((item) => (
@@ -174,26 +174,26 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className={`flex items-center gap-4 py-4 border-b border-black /[0.05] dark:border-white/[0.05] ${pathname === item.href ? "text-white" : "text-white/80"}`}
                                 >
-            <item.icon className="w-6 h-6" />
-            <span className="text-lg font-medium">{item.label}</span>
-    </Link>
-))}
-<button
-    onClick={handleLogout}
-    className="flex items-center gap-4 py-4 text-black/80 dark:text-white/80 w-full border-b border-black/[0.05] dark:border-white/[0.05]"
->
-    <LogOut className="w-6 h-6" />
-    <span className="text-lg font-medium">Log out</span>
-</button>
+                                    <item.icon className="w-6 h-6" />
+                                    <span className="text-lg font-medium">{item.label}</span>
+                                </Link>
+                            ))}
+                            <button
+                                onClick={handleLogout}
+                                className="flex items-center gap-4 py-4 text-black/80 dark:text-white/80 w-full border-b border-black/[0.05] dark:border-white/[0.05]"
+                            >
+                                <LogOut className="w-6 h-6" />
+                                <span className="text-lg font-medium">Log out</span>
+                            </button>
                         </div >
                     </motion.div >
                 )}
             </AnimatePresence >
 
-    <main className="flex-1 lg:ml-72 pt-16 lg:pt-0">
-        <div className="p-6 md:p-10 lg:px-10 lg:py-16">{children}</div>
-        <div className="h-20 lg:h-0" />
-    </main>
+            <main className="flex-1 lg:ml-72 pt-16 lg:pt-0">
+                <div className="p-6 md:p-10 lg:px-10 lg:py-16">{children}</div>
+                <div className="h-20 lg:h-0" />
+            </main>
         </div >
     );
 }

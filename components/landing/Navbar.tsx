@@ -35,20 +35,20 @@ export default function Navbar() {
         </Link>
 
         {/* Navigation - Ultra Minimal */}
-        <div className="hidden md:flex items-center gap-10 text-[11px] font-medium tracking-[0.1em] text-black/80 dark:text-white/80 uppercase">
-          <a href="/#features" className="hover:text-white transition-colors">
+        <div className="hidden md:flex items-center gap-10 text-[12px] font-semibold tracking-[0.1em] text-black dark:text-white uppercase">
+          <a href="/#features" className="hover:text-white/90 transition-colors">
             Features
           </a>
-          <a href="/#security" className="hover:text-white transition-colors">
+          <a href="/#security" className="hover:text-white/90 transition-colors">
             Security
           </a>
-          <a href="/#pricing" className="hover:text-white transition-colors">
+          <a href="/#pricing" className="hover:text-white/90 transition-colors">
             Pricing
           </a>
-          <a href="/#faq" className="hover:text-white transition-colors">
+          <a href="/#faq" className="hover:text-white/90 transition-colors">
             FAQ
           </a>
-          <Link href="/contact" className="hover:text-white transition-colors">
+          <Link href="/contact" className="hover:text-white/90 transition-colors">
             Contact
           </Link>
         </div>
@@ -77,7 +77,7 @@ export default function Navbar() {
             <>
               <Link
                 href="/login"
-                className="text-[11px] font-bold tracking-widest text-black/80 dark:text-white/80 hover:text-white uppercase transition-colors"
+                className="text-[12px] font-bold tracking-widest text-black dark:text-white hover:text-white/90 uppercase transition-colors"
               >
                 Sign In
               </Link>

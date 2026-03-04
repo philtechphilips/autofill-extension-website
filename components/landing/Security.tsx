@@ -75,7 +75,7 @@ export default function Security() {
               <h3 className="text-sm font-semibold text-white tracking-tight mb-3">
                 {feature.title}
               </h3>
-              <p className="text-[13px] text-white/50 leading-relaxed font-light">
+              <p className="text-[13px] text-white/90 leading-relaxed font-light">
                 {feature.description}
               </p>
             </motion.div>

@@ -137,9 +137,8 @@ export default function PaymentsPage() {
                     </div>
                     {trend && (
                         <div
-                            className={`flex items-center gap-1 text-xs font-medium ${
-                                trend === "up" ? "text-emerald-500" : "text-red-500"
-                            }`}
+                            className={`flex items-center gap-1 text-xs font-medium ${trend === "up" ? "text-emerald-500" : "text-red-500"
+                                }`}
                         >
                             {trend === "up" ? (
                                 <ArrowUpRight className="w-3 h-3" />
@@ -157,7 +156,7 @@ export default function PaymentsPage() {
                             {value}
                         </h3>
                     )}
-                    <p className="text-xs font-medium text-black/50 dark:text-white/50 uppercase tracking-wider">
+                    <p className="text-xs font-medium text-black/50 dark:text-white/90 uppercase tracking-wider">
                         {label}
                     </p>
                     {subValue && (
@@ -260,7 +259,7 @@ export default function PaymentsPage() {
                                         <p className="font-semibold text-black dark:text-white">
                                             {pack.packName || pack._id || "Unknown"}
                                         </p>
-                                        <p className="text-xs text-black/50 dark:text-white/50">
+                                        <p className="text-xs text-black/50 dark:text-white/90">
                                             {pack.orders} orders · {formatNumber(pack.credits)} credits
                                         </p>
                                     </div>
@@ -270,7 +269,7 @@ export default function PaymentsPage() {
                                 </div>
                             ))
                         ) : (
-                            <p className="text-center text-black/50 dark:text-white/50 py-8">
+                            <p className="text-center text-black/50 dark:text-white/90 py-8">
                                 No sales data yet
                             </p>
                         )}
@@ -306,7 +305,7 @@ export default function PaymentsPage() {
                                             <p className="text-sm font-medium text-black dark:text-white">
                                                 {operationNames[op._id] || op._id}
                                             </p>
-                                            <p className="text-sm text-black/70 dark:text-white/70">
+                                            <p className="text-sm text-black/70 dark:text-white/90">
                                                 {formatNumber(op.totalUsed)} credits ({op.count} uses)
                                             </p>
                                         </div>
@@ -320,7 +319,7 @@ export default function PaymentsPage() {
                                 );
                             })
                         ) : (
-                            <p className="text-center text-black/50 dark:text-white/50 py-8">
+                            <p className="text-center text-black/50 dark:text-white/90 py-8">
                                 No usage data yet
                             </p>
                         )}
@@ -338,16 +337,16 @@ export default function PaymentsPage() {
                     <table className="w-full">
                         <thead>
                             <tr className="border-b border-black/5 dark:border-white/5">
-                                <th className="px-4 py-3 text-left text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
+                                <th className="px-4 py-3 text-left text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
                                     Customer
                                 </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
+                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
                                     Orders
                                 </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
+                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
                                     Credits
                                 </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
+                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
                                     Total Spent
                                 </th>
                             </tr>
@@ -390,16 +389,16 @@ export default function PaymentsPage() {
                                                     <p className="font-medium text-black dark:text-white">
                                                         {customer.name || "N/A"}
                                                     </p>
-                                                    <p className="text-xs text-black/50 dark:text-white/50">
+                                                    <p className="text-xs text-black/50 dark:text-white/90">
                                                         {customer.email}
                                                     </p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-4 py-3 text-right text-sm text-black/70 dark:text-white/70">
+                                        <td className="px-4 py-3 text-right text-sm text-black/70 dark:text-white/90">
                                             {customer.orderCount}
                                         </td>
-                                        <td className="px-4 py-3 text-right text-sm text-black/70 dark:text-white/70">
+                                        <td className="px-4 py-3 text-right text-sm text-black/70 dark:text-white/90">
                                             {formatNumber(customer.totalCredits)}
                                         </td>
                                         <td className="px-4 py-3 text-right font-semibold text-emerald-500">
@@ -411,7 +410,7 @@ export default function PaymentsPage() {
                                 <tr>
                                     <td
                                         colSpan={4}
-                                        className="px-4 py-8 text-center text-black/50 dark:text-white/50"
+                                        className="px-4 py-8 text-center text-black/50 dark:text-white/90"
                                     >
                                         No customers yet
                                     </td>
@@ -432,19 +431,19 @@ export default function PaymentsPage() {
                     <table className="w-full">
                         <thead>
                             <tr className="border-b border-black/5 dark:border-white/5">
-                                <th className="px-4 py-3 text-left text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
+                                <th className="px-4 py-3 text-left text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
                                     Customer
                                 </th>
-                                <th className="px-4 py-3 text-left text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
+                                <th className="px-4 py-3 text-left text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
                                     Pack
                                 </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
+                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
                                     Credits
                                 </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
+                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
                                     Amount
                                 </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
+                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
                                     Date
                                 </th>
                             </tr>
@@ -485,7 +484,7 @@ export default function PaymentsPage() {
                                             <p className="font-medium text-black dark:text-white">
                                                 {tx.user?.name || "N/A"}
                                             </p>
-                                            <p className="text-xs text-black/50 dark:text-white/50">
+                                            <p className="text-xs text-black/50 dark:text-white/90">
                                                 {tx.user?.email || "Unknown"}
                                             </p>
                                         </td>
@@ -494,13 +493,13 @@ export default function PaymentsPage() {
                                                 {tx.packName || "N/A"}
                                             </span>
                                         </td>
-                                        <td className="px-4 py-3 text-right text-sm text-black/70 dark:text-white/70">
+                                        <td className="px-4 py-3 text-right text-sm text-black/70 dark:text-white/90">
                                             +{formatNumber(tx.credits)}
                                         </td>
                                         <td className="px-4 py-3 text-right font-semibold text-emerald-500">
                                             {formatCurrency(tx.amount)}
                                         </td>
-                                        <td className="px-4 py-3 text-right text-sm text-black/50 dark:text-white/50">
+                                        <td className="px-4 py-3 text-right text-sm text-black/50 dark:text-white/90">
                                             {new Date(tx.date).toLocaleDateString()}
                                         </td>
                                     </tr>
@@ -509,7 +508,7 @@ export default function PaymentsPage() {
                                 <tr>
                                     <td
                                         colSpan={5}
-                                        className="px-4 py-8 text-center text-black/50 dark:text-white/50"
+                                        className="px-4 py-8 text-center text-black/50 dark:text-white/90"
                                     >
                                         No transactions yet
                                     </td>

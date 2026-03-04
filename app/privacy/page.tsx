@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
                 <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight mb-8">
                     Privacy Policy
                 </h1>
-                <div className="space-y-8 text-black/70 dark:text-white/70 font-light leading-relaxed">
+                <div className="space-y-8 text-black/70 dark:text-white/90 font-light leading-relaxed">
                     <section>
                         <p className="mb-4">
                             Last updated: {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}

@@ -73,7 +73,7 @@ const MetricCard = ({
 
     <div className="relative z-10">
       <div className="w-12 h-12 rounded-2xl bg-brand-accent/6 border border-brand-accent/12 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-brand-accent/15 group-hover:border-brand-accent/30 transition-all duration-500">
-        <Icon className="w-6 h-6 text-white/60 group-hover:text-brand-accent transition-colors duration-300" />
+        <Icon className="w-6 h-6 text-white/80 group-hover:text-brand-accent transition-colors duration-300" />
       </div>
 
       <div className="space-y-1 mb-4">
@@ -92,7 +92,7 @@ const MetricCard = ({
             </div>
           )}
         </div>
-        <p className="text-xs font-bold text-black/70 dark:text-white/70 uppercase tracking-[0.2em]">
+        <p className="text-xs font-bold text-black/70 dark:text-white/90 uppercase tracking-[0.2em]">
           {label}
         </p>
       </div>
@@ -144,7 +144,7 @@ const ActivityItem = ({ event }: { event: RecentEvent }) => {
         <div className="text-sm font-semibold text-black dark:text-white truncate">
           {getEventTitle(event)}
         </div>
-        <div className="text-[11px] text-black/70 dark:text-white/70 flex items-center gap-2">
+        <div className="text-[11px] text-black/70 dark:text-white/90 flex items-center gap-2">
           <Globe className="w-3 h-3" />
           {event.domain || "Local"}
         </div>
@@ -155,13 +155,13 @@ const ActivityItem = ({ event }: { event: RecentEvent }) => {
           {getTimeAgo(event.createdAt)}
         </div>
         {event.type === "form_fill" && event.fieldCount > 0 && (
-          <div className="text-[10px] text-black/60 dark:text-white/60 mt-0.5">
+          <div className="text-[10px] text-black/60 dark:text-white/80 mt-0.5">
             {event.fieldCount} fields
           </div>
         )}
       </div>
 
-      <ChevronRight className="w-4 h-4 text-black/5 dark:text-white/5 group-hover:text-white/70 transition-colors" />
+      <ChevronRight className="w-4 h-4 text-black/5 dark:text-white/5 group-hover:text-white/90 transition-colors" />
     </div>
   );
 };
@@ -242,7 +242,7 @@ export default function DashboardPage() {
             System Online
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">
-            Overview<span className="text-black/70 dark:text-white/70">.</span>
+            Overview<span className="text-black/70 dark:text-white/90">.</span>
           </h1>
           <p className="text-xl text-black/80 dark:text-white/80 font-light max-w-4xl">
             Monitor your automated precision and efficiency gains across the
@@ -289,7 +289,7 @@ export default function DashboardPage() {
                   Free Tier
                 </span>
               )}
-              <div className="flex items-center gap-2 text-black/60 dark:text-white/60 group-hover:text-white transition-colors">
+              <div className="flex items-center gap-2 text-black/60 dark:text-white/80 group-hover:text-white transition-colors">
                 <span className="text-xs font-medium">{lastPack ? "Add more credits" : "Get credits"}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
@@ -380,7 +380,7 @@ export default function DashboardPage() {
             })}
           </div>
 
-          <div className="flex justify-between mt-8 px-2 text-[10px] font-bold text-black/60 dark:text-white/60 uppercase tracking-[0.2em]">
+          <div className="flex justify-between mt-8 px-2 text-[10px] font-bold text-black/60 dark:text-white/80 uppercase tracking-[0.2em]">
             <span>{dateRange.start}</span>
             <span>{dateRange.end}</span>
           </div>
@@ -394,7 +394,7 @@ export default function DashboardPage() {
             </h2>
             <Link
               href="/dashboard/history"
-              className="text-[10px] font-bold text-black/70 dark:text-white/70 hover:text-white transition-colors uppercase tracking-widest border border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] px-3 py-1.5 rounded-full"
+              className="text-[10px] font-bold text-black/70 dark:text-white/90 hover:text-white transition-colors uppercase tracking-widest border border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] px-3 py-1.5 rounded-full"
             >
               View all
             </Link>
@@ -418,14 +418,14 @@ export default function DashboardPage() {
                 <ActivityItem key={event.id} event={event} />
               ))
             ) : (
-              <div className="flex-1 flex items-center justify-center text-black/50 dark:text-white/50 text-sm">
+              <div className="flex-1 flex items-center justify-center text-black/50 dark:text-white/90 text-sm">
                 No activity yet. Start filling forms!
               </div>
             )}
           </div>
 
           <div className="mt-8 pt-6 border-t border-black/[0.05] dark:border-white/[0.05] text-center">
-            <p className="text-[10px] font-bold text-black/60 dark:text-white/60 uppercase tracking-[0.3em]">
+            <p className="text-[10px] font-bold text-black/60 dark:text-white/80 uppercase tracking-[0.3em]">
               Autofill Engine
               <span className="text-emerald-500/40 ml-2">ONLINE</span>
             </p>

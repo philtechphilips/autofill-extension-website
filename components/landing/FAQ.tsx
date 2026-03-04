@@ -25,6 +25,11 @@ export default function FAQ() {
       answer:
         "Our core engine is open source on GitHub. We believe security equals transparency.",
     },
+    {
+      question: "Support for other browsers",
+      answer:
+        "We currently support Google Chrome. Support for Mozilla Firefox and Microsoft Edge is in active development and will be available soon.",
+    },
   ];
 
   return (
@@ -39,7 +44,7 @@ export default function FAQ() {
           <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white tracking-tight mb-6">
             Everything you need to know.
           </h2>
-          <p className="text-lg text-black/80 dark:text-white/80 font-light">
+          <p className="text-lg text-black/90 dark:text-white/90 font-light">
             Simple answers to common questions about the platform.
           </p>
         </motion.div>
@@ -69,7 +74,7 @@ export default function FAQ() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <p className="text-[12px] font-mono tracking-widest text-black/70 dark:text-white/70 uppercase mb-4">
+          <p className="text-[12px] font-mono tracking-widest text-black/70 dark:text-white/90 uppercase mb-4">
             Support
           </p>
           <a

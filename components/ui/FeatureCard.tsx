@@ -18,9 +18,8 @@ export default function FeatureCard({
 }: FeatureCardProps) {
   return (
     <motion.div
-      className={`relative rounded-2xl p-8 border border-white/[0.07] bg-white/2 group hover:border-brand-accent/25 hover:bg-white/4 transition-all duration-500 overflow-hidden ${
-        large ? "md:col-span-2" : ""
-      }`}
+      className={`relative rounded-2xl p-8 border border-white/[0.07] bg-white/2 group hover:border-brand-accent/25 hover:bg-white/4 transition-all duration-500 overflow-hidden ${large ? "md:col-span-2" : ""
+        }`}
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -38,7 +37,7 @@ export default function FeatureCard({
           <h3 className="text-sm font-semibold text-white tracking-tight">
             {title}
           </h3>
-          <p className="text-[13px] text-white/50 leading-relaxed font-light">
+          <p className="text-[13px] text-white/90 leading-relaxed font-light">
             {description}
           </p>
         </div>

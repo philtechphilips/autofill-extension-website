@@ -37,7 +37,7 @@ export default function AdminError({
         </h2>
 
         {/* Description */}
-        <p className="text-white/50 text-sm mb-8">
+        <p className="text-white/90 text-sm mb-8">
           This admin page ran into an unexpected error. Try reloading or
           navigate to a different section.
         </p>

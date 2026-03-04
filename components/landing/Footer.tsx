@@ -56,7 +56,7 @@ export default function Footer() {
                 </div>
                 AutoFill AI
               </h3>
-              <p className="text-sm text-white/40 font-light leading-relaxed max-w-3xs">
+              <p className="text-sm text-white/90 font-light leading-relaxed max-w-4xs">
                 The standard for precision-driven form automation. Built by
                 engineers, for everyone.
               </p>
@@ -102,7 +102,7 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ delay: 0.1 + i * 0.1 }}
             >
-              <h4 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.25em] mb-6">
+              <h4 className="text-[10px] font-bold text-white/80 uppercase tracking-[0.25em] mb-6">
                 {category}
               </h4>
               <ul className="space-y-3">
@@ -110,7 +110,7 @@ export default function Footer() {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-sm text-white/50 hover:text-white transition-all duration-300 font-light hover:translate-x-0.5 inline-block"
+                      className="text-sm text-white/90 hover:text-white transition-all duration-300 font-light hover:translate-x-0.5 inline-block"
                     >
                       {link.name}
                     </a>
@@ -123,18 +123,18 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-white/[0.07] flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6">
-            <p className="text-[11px] font-mono text-white/30 tracking-[0.2em] uppercase">
+            <p className="text-[11px] font-mono text-white/80 tracking-[0.2em] uppercase">
               © {currentYear} AutoFill Labs Inc.
             </p>
             <div className="h-3 w-px bg-white/10 hidden md:block" />
-            <p className="text-[11px] font-mono text-white/20 tracking-[0.2em] uppercase italic">
+            <p className="text-[11px] font-mono text-white/40 tracking-[0.2em] uppercase italic">
               Built for speed.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <p className="text-[10px] text-white/30 font-medium tracking-[0.15em] uppercase">
+            <p className="text-[10px] text-white/80 font-medium tracking-[0.15em] uppercase">
               Systems status: <span className="text-emerald-400">Nominal</span>
             </p>
           </div>

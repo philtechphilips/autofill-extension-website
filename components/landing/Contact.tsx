@@ -68,7 +68,7 @@ export default function Contact() {
                     <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tighter mb-4 md:mb-6">
                         Let's talk.
                     </h1>
-                    <p className="text-base md:text-lg text-black/60 dark:text-white/60 mx-auto font-light leading-relaxed">
+                    <p className="text-base md:text-lg text-black/60 dark:text-white/80 mx-auto font-light leading-relaxed">
                         Have a question about AutoFill AI, need help with your account, or want to discuss enterprise features? We're here to help.
                     </p>
                 </motion.div>
@@ -92,7 +92,7 @@ export default function Contact() {
                             </div>
                             <div className="space-y-2">
                                 <h3 className="text-2xl font-bold text-black dark:text-white">Message Sent!</h3>
-                                <p className="text-black/60 dark:text-white/60 font-light max-w-[700px] mx-auto">
+                                <p className="text-black/60 dark:text-white/80 font-light max-w-[700px] mx-auto">
                                     Thank you for reaching out. We'll get back to you within 24 hours.
                                 </p>
                             </div>
@@ -115,7 +115,7 @@ export default function Contact() {
 
                             <div className="flex flex-col gap-6 w-full">
                                 <div className="space-y-2">
-                                    <label htmlFor="name" className="text-xs font-bold text-black/70 dark:text-white/70 uppercase tracking-wider pl-1">Name</label>
+                                    <label htmlFor="name" className="text-xs font-bold text-black/70 dark:text-white/90 uppercase tracking-wider pl-1">Name</label>
                                     <div className="relative">
                                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/40 dark:text-white/40" />
                                         <input
@@ -133,7 +133,7 @@ export default function Contact() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label htmlFor="email" className="text-xs font-bold text-black/70 dark:text-white/70 uppercase tracking-wider pl-1">Email</label>
+                                    <label htmlFor="email" className="text-xs font-bold text-black/70 dark:text-white/90 uppercase tracking-wider pl-1">Email</label>
                                     <div className="relative">
                                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/40 dark:text-white/40" />
                                         <input
@@ -150,7 +150,7 @@ export default function Contact() {
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="message" className="text-xs font-bold text-black/70 dark:text-white/70 uppercase tracking-wider pl-1">Message</label>
+                                <label htmlFor="message" className="text-xs font-bold text-black/70 dark:text-white/90 uppercase tracking-wider pl-1">Message</label>
                                 <div className="relative">
                                     <MessageSquare className="absolute left-4 top-4 w-4 h-4 text-black/40 dark:text-white/40" />
                                     <textarea

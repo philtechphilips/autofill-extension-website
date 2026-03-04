@@ -83,7 +83,7 @@ export default function AdminDashboardPage() {
                             </h3>
                         )}
                     </div>
-                    <p className="text-xs font-bold text-black/70 dark:text-white/70 uppercase tracking-[0.2em]">
+                    <p className="text-xs font-bold text-black/70 dark:text-white/90 uppercase tracking-[0.2em]">
                         {label}
                     </p>
                 </div>
@@ -103,7 +103,7 @@ export default function AdminDashboardPage() {
                     Admin Portal
                 </div>
                 <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">
-                    System Core<span className="text-black/70 dark:text-white/70">.</span>
+                    System Core<span className="text-black/70 dark:text-white/90">.</span>
                 </h1>
                 <p className="text-xl text-black/80 dark:text-white/80 font-light max-w-4xl">
                     Global statistics, user management, and system overview.
@@ -150,9 +150,9 @@ export default function AdminDashboardPage() {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="border-b border-black/[0.05] dark:border-white/[0.05]">
-                                <th className="px-4 py-4 text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-widest">User</th>
-                                <th className="px-4 py-4 text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-widest">Role</th>
-                                <th className="px-4 py-4 text-xs font-bold text-black/50 dark:text-white/50 uppercase tracking-widest text-right">Joined</th>
+                                <th className="px-4 py-4 text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-widest">User</th>
+                                <th className="px-4 py-4 text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-widest">Role</th>
+                                <th className="px-4 py-4 text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-widest text-right">Joined</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -169,21 +169,21 @@ export default function AdminDashboardPage() {
                                     <tr key={u.id} className="border-b border-black/[0.05] dark:border-white/[0.05] hover:bg-white/[0.02] transition-colors">
                                         <td className="px-4 py-4">
                                             <div className="font-semibold text-black dark:text-white">{u.name || "N/A"}</div>
-                                            <div className="text-xs text-black/50 dark:text-white/50">{u.email}</div>
+                                            <div className="text-xs text-black/50 dark:text-white/90">{u.email}</div>
                                         </td>
                                         <td className="px-4 py-4">
                                             <span className={`px-2 py-1 rounded text-xs uppercase font-bold tracking-wider ${u.role === 'admin' ? 'bg-blue-500/20 text-blue-500' : 'bg-emerald-500/20 text-emerald-500'}`}>
                                                 {u.role || 'user'}
                                             </span>
                                         </td>
-                                        <td className="px-4 py-4 text-right text-sm text-black/70 dark:text-white/70">
+                                        <td className="px-4 py-4 text-right text-sm text-black/70 dark:text-white/90">
                                             {new Date(u.createdAt).toLocaleDateString()}
                                         </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={3} className="px-4 py-8 text-center text-black/50 dark:text-white/50">No users found.</td>
+                                    <td colSpan={3} className="px-4 py-8 text-center text-black/50 dark:text-white/90">No users found.</td>
                                 </tr>
                             )}
                         </tbody>

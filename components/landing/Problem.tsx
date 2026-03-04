@@ -49,7 +49,7 @@ export default function Problem() {
                 key={index}
                 className="flex items-center gap-6 p-6 border border-black/[0.03] dark:border-white/[0.03] rounded-xl hover:bg-white/[0.01] transition-colors group"
               >
-                <Minus className="w-4 h-4 text-black/70 dark:text-white/70 group-hover:text-white/80 transition-colors" />
+                <Minus className="w-4 h-4 text-black/70 dark:text-white/90 group-hover:text-white/80 transition-colors" />
                 <span className="text-[13px] font-medium text-black/80 dark:text-white/80 tracking-wide uppercase">
                   {point}
                 </span>
@@ -69,14 +69,14 @@ export default function Problem() {
 
             <div className="relative space-y-12">
               <div className="space-y-4">
-                <p className="text-[10px] font-mono tracking-[0.2em] text-black/70 dark:text-white/70 uppercase">
+                <p className="text-[10px] font-mono tracking-[0.2em] text-black/70 dark:text-white/90 uppercase">
                   Manual Job Application Time
                 </p>
                 <div className="flex items-baseline gap-4">
-                  <span className="text-6xl font-bold text-black/70 dark:text-white/70 tracking-tighter italic">
+                  <span className="text-6xl font-bold text-black/70 dark:text-white/90 tracking-tighter italic">
                     15m
                   </span>
-                  <span className="text-sm text-black/60 dark:text-white/60 font-light">
+                  <span className="text-sm text-black/60 dark:text-white/80 font-light">
                     average per form
                   </span>
                 </div>

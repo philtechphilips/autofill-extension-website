@@ -66,19 +66,21 @@ export default function Hero() {
               <Chrome className="w-4 h-4" />
               Chrome
             </Link>
+            <Link
+              href="https://microsoftedge.microsoft.com/addons/detail/pnpokgabjdolinkjcpdegjlgemommjic"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 px-8 h-12 text-[13px] font-semibold tracking-wide rounded-md bg-white text-black hover:bg-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.1)] transition-all duration-200 active:scale-[0.98]"
+            >
+              <Globe className="w-4 h-4" />
+              Edge
+            </Link>
             <button
               onClick={() => toast.info("Firefox support is coming soon!")}
               className="inline-flex items-center justify-center gap-3 px-8 h-12 text-[13px] font-semibold tracking-wide rounded-md bg-white/5 text-white/90 border border-white/10 hover:bg-white/10 transition-all duration-200 active:scale-[0.98] cursor-pointer"
             >
               <Globe className="w-4 h-4" />
               Firefox
-            </button>
-            <button
-              onClick={() => toast.info("Microsoft Edge support is coming soon!")}
-              className="inline-flex items-center justify-center gap-3 px-8 h-12 text-[13px] font-semibold tracking-wide rounded-md bg-white/5 text-white/90 border border-white/10 hover:bg-white/10 transition-all duration-200 active:scale-[0.98] cursor-pointer"
-            >
-              <Globe className="w-4 h-4" />
-              Edge
             </button>
           </div>
           <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
@@ -129,7 +131,11 @@ export default function Hero() {
                 <div className="h-10 w-full bg-white/[0.02] border border-white/[0.05] rounded-lg relative overflow-hidden flex items-center px-4 gap-3">
                   <motion.div
                     animate={{ x: ["100%", "-100%"] }}
-                    transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 2.5,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-accent/8 to-transparent"
                   />
                   <div className="w-2 h-2 rounded-full bg-brand-accent/60 animate-pulse shrink-0" />
@@ -141,16 +147,31 @@ export default function Hero() {
                 {/* Form fields */}
                 <div className="space-y-4">
                   {[
-                    { label: "Full Name", value: "Alex Sterling", filled: true },
-                    { label: "Email Address", value: "a.sterling@vanguard.io", filled: true },
-                    { label: "Resume / CV", value: "alex_sterling_2026.pdf", filled: false },
+                    {
+                      label: "Full Name",
+                      value: "Alex Sterling",
+                      filled: true,
+                    },
+                    {
+                      label: "Email Address",
+                      value: "a.sterling@vanguard.io",
+                      filled: true,
+                    },
+                    {
+                      label: "Resume / CV",
+                      value: "alex_sterling_2026.pdf",
+                      filled: false,
+                    },
                   ].map((field, i) => (
                     <div key={i} className="space-y-1.5">
                       <div className="h-2.5 w-20 bg-white/10 rounded-full" />
-                      <div className={`h-11 w-full rounded-lg border flex items-center px-4 ${field.filled
-                        ? "bg-brand-accent/[0.06] border-brand-accent/20"
-                        : "bg-white/[0.02] border-white/[0.06]"
-                        } relative overflow-hidden`}>
+                      <div
+                        className={`h-11 w-full rounded-lg border flex items-center px-4 ${
+                          field.filled
+                            ? "bg-brand-accent/[0.06] border-brand-accent/20"
+                            : "bg-white/[0.02] border-white/[0.06]"
+                        } relative overflow-hidden`}
+                      >
                         {field.filled ? (
                           <motion.span
                             initial={{ opacity: 0 }}
@@ -164,7 +185,12 @@ export default function Hero() {
                           <>
                             <motion.div
                               animate={{ x: ["100%", "-100%"] }}
-                              transition={{ duration: 2, repeat: Infinity, ease: "linear", delay: 0.5 }}
+                              transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "linear",
+                                delay: 0.5,
+                              }}
                               className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-accent/8 to-transparent"
                             />
                             <span className="text-[11px] text-white/25 font-mono tracking-wider">
@@ -181,7 +207,11 @@ export default function Hero() {
               {/* Extension Floating Panel */}
               <motion.div
                 animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="w-full sm:w-60 bg-[#111113] border border-white/[0.1] rounded-xl p-5 shadow-2xl flex flex-col gap-4 shrink-0"
               >
                 <div className="flex items-center gap-3">
@@ -212,7 +242,11 @@ export default function Hero() {
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: "99.8%" }}
-                      transition={{ delay: 1.8, duration: 1.5, ease: "easeOut" }}
+                      transition={{
+                        delay: 1.8,
+                        duration: 1.5,
+                        ease: "easeOut",
+                      }}
                       className="h-full bg-brand-accent accent-glow"
                     />
                   </div>
@@ -220,13 +254,20 @@ export default function Hero() {
 
                 <div className="space-y-2">
                   {["Name", "Email", "Resume"].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between text-[10px]">
+                    <div
+                      key={i}
+                      className="flex items-center justify-between text-[10px]"
+                    >
                       <span className="text-white/40">{item}</span>
                       <motion.span
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.5 + i * 0.3 }}
-                        className={i < 2 ? "text-emerald-400 font-medium" : "text-brand-accent font-medium"}
+                        className={
+                          i < 2
+                            ? "text-emerald-400 font-medium"
+                            : "text-brand-accent font-medium"
+                        }
                       >
                         {i < 2 ? "✓ Filled" : "Filling..."}
                       </motion.span>
@@ -265,3 +306,4 @@ export default function Hero() {
     </section>
   );
 }
+

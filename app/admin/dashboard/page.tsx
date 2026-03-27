@@ -152,6 +152,7 @@ export default function AdminDashboardPage() {
                             <tr className="border-b border-black/[0.05] dark:border-white/[0.05]">
                                 <th className="px-4 py-4 text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-widest">User</th>
                                 <th className="px-4 py-4 text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-widest">Role</th>
+                                <th className="px-4 py-4 text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-widest text-right">Forms Filled</th>
                                 <th className="px-4 py-4 text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-widest text-right">Joined</th>
                             </tr>
                         </thead>
@@ -161,12 +162,13 @@ export default function AdminDashboardPage() {
                                     <tr key={i} className="border-b border-black/[0.05] dark:border-white/[0.05]">
                                         <td className="px-4 py-4"><div className="w-32 h-4 bg-black/10 dark:bg-white/10 animate-pulse rounded"></div></td>
                                         <td className="px-4 py-4"><div className="w-16 h-4 bg-black/10 dark:bg-white/10 animate-pulse rounded"></div></td>
+                                        <td className="px-4 py-4 text-right"><div className="w-16 h-4 bg-black/10 dark:bg-white/10 animate-pulse rounded ml-auto"></div></td>
                                         <td className="px-4 py-4 text-right"><div className="w-24 h-4 bg-black/10 dark:bg-white/10 animate-pulse rounded ml-auto"></div></td>
                                     </tr>
                                 ))
                             ) : users.length > 0 ? (
                                 users.map((u) => (
-                                    <tr key={u.id} className="border-b border-black/[0.05] dark:border-white/[0.05] hover:bg-white/[0.02] transition-colors">
+                                    <tr key={u._id} className="border-b border-black/[0.05] dark:border-white/[0.05] hover:bg-white/[0.02] transition-colors">
                                         <td className="px-4 py-4">
                                             <div className="font-semibold text-black dark:text-white">{u.name || "N/A"}</div>
                                             <div className="text-xs text-black/50 dark:text-white/90">{u.email}</div>
@@ -176,6 +178,16 @@ export default function AdminDashboardPage() {
                                                 {u.role || 'user'}
                                             </span>
                                         </td>
+                                        <td className="px-4 py-4 text-right">
+                                            <span className="font-semibold text-black dark:text-white">
+                                                {formatNumber(u.fillStats?.totalFills || 0)}
+                                            </span>
+                                            {u.fillStats?.totalFills > 0 && (
+                                                <div className="text-xs text-black/50 dark:text-white/50">
+                                                    {u.fillStats.totalFieldsFilled} fields
+                                                </div>
+                                            )}
+                                        </td>
                                         <td className="px-4 py-4 text-right text-sm text-black/70 dark:text-white/90">
                                             {new Date(u.createdAt).toLocaleDateString()}
                                         </td>
@@ -183,7 +195,7 @@ export default function AdminDashboardPage() {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={3} className="px-4 py-8 text-center text-black/50 dark:text-white/90">No users found.</td>
+                                    <td colSpan={4} className="px-4 py-8 text-center text-black/50 dark:text-white/90">No users found.</td>
                                 </tr>
                             )}
                         </tbody>

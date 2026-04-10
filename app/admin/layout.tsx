@@ -14,6 +14,7 @@ import {
     ShieldAlert,
     Settings,
     DollarSign,
+    Mail,
 } from "lucide-react";
 import Image from "next/image";
 import { useAuthStore } from "@/store/authStore";
@@ -82,6 +83,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     const sidebarItems = [
         { href: "/admin/dashboard", icon: LayoutDashboard, label: "Admin Overview" },
         { href: "/admin/payments", icon: DollarSign, label: "Payment Analytics" },
+        { href: "/admin/emails", icon: Mail, label: "Send Emails" },
         { href: "/admin/settings", icon: Settings, label: "System Settings" },
         { href: "/dashboard", icon: User, label: "User Dashboard" },
     ];
@@ -91,8 +93,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <aside className="hidden lg:flex flex-col w-72 border-r border-black/[0.05] dark:border-white/[0.05] bg-gray-50/50 dark:bg-deep-navy/50 backdrop-blur-xl fixed inset-y-0">
                 <div className="p-8">
                     <Link href="/" className="flex items-center gap-3 group">
-                        <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-blue-500/20 text-blue-500 transition-transform group-hover:scale-110 shadow-lg shadow-white/10">
-                            <ShieldAlert className="w-6 h-6" />
+                        <div className="w-10 h-10 rounded-full overflow-hidden transition-transform group-hover:scale-110 shadow-lg shadow-white/10">
+                            <Image src="/logo.png" alt="AutoFill AI" width={40} height={40} className="w-full h-full object-cover" />
                         </div>
                         <span className="text-xl font-bold text-black dark:text-white tracking-tighter">
                             Admin
@@ -140,8 +142,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             </aside>
 
             <header className="lg:hidden fixed top-0 w-full h-16 border-b border-black/[0.05] dark:border-white/[0.05] bg-gray-50/80 dark:bg-deep-navy/80 backdrop-blur-xl z-50 flex items-center justify-between px-6">
-                <Link href="/" className="flex items-center gap-2 text-blue-500">
-                    <ShieldAlert className="w-6 h-6" />
+                <Link href="/" className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full overflow-hidden">
+                        <Image src="/logo.png" alt="AutoFill AI" width={32} height={32} className="w-full h-full object-cover" />
+                    </div>
                     <span className="font-bold text-black dark:text-white tracking-tighter text-lg">
                         Admin
                     </span>

@@ -13,8 +13,8 @@ import {
     Clock,
     LogOut,
     ChevronRight,
-    ShieldAlert,
 } from "lucide-react";
+import Image from "next/image";
 import api from "@/lib/api";
 
 interface AdminStats {
@@ -99,7 +99,9 @@ export default function AdminDashboardPage() {
         <div className="space-y-12">
             <div className="space-y-4">
                 <div className="flex items-center gap-2 text-blue-500 text-xs font-bold uppercase tracking-[0.3em] animate-pulse">
-                    <ShieldAlert className="w-4 h-4" />
+                    <div className="w-4 h-4 rounded-full overflow-hidden shrink-0">
+                        <Image src="/logo.png" alt="AutoFill AI" width={16} height={16} className="w-full h-full object-cover" />
+                    </div>
                     Admin Portal
                 </div>
                 <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">

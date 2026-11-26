@@ -166,7 +166,7 @@ export default function AppShell({
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="mx-auto max-w-[1180px] px-5 py-8 sm:px-8 lg:px-12 lg:py-12"
+          className="w-full px-5 py-8 sm:px-8 lg:px-10 lg:py-10"
         >
           {children}
         </motion.div>

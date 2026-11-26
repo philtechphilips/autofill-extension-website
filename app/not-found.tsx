@@ -1,96 +1,55 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Home, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import SiteShell from "@/components/site/SiteShell";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import SiteButton from "@/components/site/SiteButton";
+import { TileReveal } from "@/components/site/Reveal";
+import { Container } from "@/components/site/Primitives";
 
 export default function NotFound() {
   return (
-    <main className="relative w-full min-h-screen overflow-hidden">
+    <SiteShell>
       <Navbar />
-
-      {/* Background */}
-      <div className="absolute inset-0 gradient-mesh pointer-events-none" />
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.3]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
-
-      {/* Content */}
-      <div className="relative flex flex-col items-center justify-center min-h-screen px-6 text-center pt-20 pb-32">
-        {/* 404 number */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-2 select-none"
-        >
-          <span
-            className="font-bold leading-none"
-            style={{
-              fontSize: "clamp(8rem, 22vw, 16rem)",
-              background: "linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            404
-          </span>
-        </motion.div>
-
-        {/* Heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-3xl md:text-4xl font-semibold text-white mb-4"
-        >
-          Page not found
-        </motion.h1>
-
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-white/90 text-base md:text-lg max-w-2sm mb-10"
-        >
-          The page you&apos;re looking for doesn&apos;t exist or has been moved to a
-          different URL.
-        </motion.p>
-
-        {/* Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-3 items-center"
-        >
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center gap-2 px-6 h-11 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-100 transition-colors"
-          >
-            <Home className="w-4 h-4" />
-            Go home
-          </Link>
-          <button
-            onClick={() => window.history.back()}
-            className="inline-flex items-center justify-center gap-2 px-6 h-11 bg-white/[0.03] text-white/90 text-sm font-semibold rounded-md border border-white/[0.05] hover:bg-white/[0.08] backdrop-blur-sm transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Go back
-          </button>
-        </motion.div>
-      </div>
-
+      <main className="pt-[84px] md:pt-[92px]">
+        <Container>
+          <div className="grid gap-4 lg:grid-cols-[58fr_42fr] lg:gap-5">
+            <TileReveal
+              trigger="mount"
+              className="flex min-h-[440px] flex-col justify-between gap-12 rounded-2xl bg-tile-2 p-8 sm:p-11"
+            >
+              <h1 className="font-serif-display text-[52px] leading-[1.02] text-ink sm:text-[76px]">
+                This page didn&apos;t
+                <br />
+                fill in.
+              </h1>
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+                <p className="max-w-[360px] text-[16px] leading-[1.55] text-ink">
+                  The page you&apos;re looking for doesn&apos;t exist or has moved.
+                </p>
+                <div className="flex gap-3">
+                  <SiteButton variant="secondary" onClick={() => window.history.back()}>
+                    Go back
+                  </SiteButton>
+                  <SiteButton href="/" arrow>
+                    Home
+                  </SiteButton>
+                </div>
+              </div>
+            </TileReveal>
+            <TileReveal
+              trigger="mount"
+              delay={0.15}
+              className="grid min-h-[260px] place-items-center rounded-2xl bg-tile-warm"
+            >
+              <span className="font-serif-display text-[140px] leading-none text-ink sm:text-[180px]">
+                404
+              </span>
+            </TileReveal>
+          </div>
+        </Container>
+      </main>
       <Footer />
-    </main>
+    </SiteShell>
   );
 }

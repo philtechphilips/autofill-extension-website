@@ -1,3 +1,4 @@
+import SiteShell from "@/components/site/SiteShell";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 
@@ -8,13 +9,13 @@ export const metadata = {
 
 export default function PrivacyPolicy() {
     return (
-        <main className="relative w-full overflow-hidden min-h-screen">
+        <SiteShell>
             <Navbar />
-            <div className="pt-40 pb-32 px-6 max-w-6xl mx-auto">
-                <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight mb-8">
+            <main className="mx-auto max-w-[760px] px-5 pb-28 pt-36 sm:px-8 md:pt-48">
+                <h1 className="mb-8 font-serif-display text-[48px] leading-[1.02] text-ink md:text-[72px]">
                     Privacy Policy
                 </h1>
-                <div className="space-y-8 text-black/70 dark:text-white/90 font-light leading-relaxed">
+                <div className="space-y-12 border-t border-line pt-10 text-[16px] leading-[1.75] text-ink-soft">
                     <section>
                         <p className="mb-4">
                             Last updated: {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
@@ -27,7 +28,7 @@ export default function PrivacyPolicy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             1. Information We Collect
                         </h2>
                         <p className="mb-4">
@@ -40,10 +41,10 @@ export default function PrivacyPolicy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             2. How We Use Your Information
                         </h2>
-                        <ul className="list-disc pl-6 space-y-2">
+                        <ul className="list-disc space-y-2 pl-5 marker:text-ink-mute">
                             <li>To provide the core functionality of automating form filling.</li>
                             <li>To sync your profiles securely across multiple devices (when enabled).</li>
                             <li>To improve our AI algorithms. (Only entirely anonymized, opt-in telemetry metadata is used to calculate success rates; personal identifiable data is never shared).</li>
@@ -51,7 +52,7 @@ export default function PrivacyPolicy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             3. Data Security
                         </h2>
                         <p>
@@ -62,17 +63,17 @@ export default function PrivacyPolicy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             4. Changes to This Policy
                         </h2>
                         <p>
                             We may update our Privacy Policy periodically. We will notify you of any structural changes by posting the new
-                            Privacy Policy on this page and updating the "Last updated" date. We recommend reviewing this policy periodically.
+                            Privacy Policy on this page and updating the &ldquo;Last updated&rdquo; date. We recommend reviewing this policy periodically.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             5. Contact Us
                         </h2>
                         <p>
@@ -80,8 +81,8 @@ export default function PrivacyPolicy() {
                         </p>
                     </section>
                 </div>
-            </div>
+            </main>
             <Footer />
-        </main>
+        </SiteShell>
     );
 }

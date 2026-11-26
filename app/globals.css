@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap");
-
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -14,8 +12,8 @@
   --color-dark-slate: #18181b; /* Zinc 900 */
 
   /* Typography - Precision Inter */
-  --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
 
   /* Spacing - Intentional & Balanced */
   --spacing-xs: 0.5rem;
@@ -38,6 +36,37 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   --shadow-glow: 0 0 80px rgba(59, 130, 246, 0.05);
+
+  /* ─────────────────────────────────────────────
+     Site (marketing) design system
+     Warm paper canvas · ink type · cobalt accent
+     ───────────────────────────────────────────── */
+  --color-paper: #fbfaf7;
+  --color-paper-deep: #f2f0ea;
+  --color-card: #ffffff;
+  --color-line: #e8e5de;
+  --color-line-strong: #d3cfc5;
+  --color-ink: #0f1b3d;
+  --color-ink-hover: #1c2c5c;
+  --color-ink-soft: #3b4668;
+  --color-ink-mute: #646c8a;
+  --color-cobalt: #3150e0;
+  --color-cobalt-deep: #213aa8;
+  --color-sky: #dfe5fb;
+  --color-sky-soft: #eef1fd;
+
+  /* Flat pastel tiles — the backbone of the layout */
+  --color-tile-1: #c9d3f8; /* periwinkle */
+  --color-tile-2: #dde3fa; /* mist */
+  --color-tile-3: #eceffc; /* haze */
+  --color-tile-warm: #f4dcc8; /* apricot */
+  --color-tile-warm-soft: #f9ece1;
+
+  --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
+  --font-accent: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
@@ -49,13 +78,13 @@
 
   html {
     scroll-behavior: smooth;
-    background: var(--color-onyx);
+    background: var(--color-paper);
   }
 
   body {
-    background: var(--color-onyx);
-    color: #ffffff;
-    font-family: var(--font-body);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-display);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
@@ -64,9 +93,9 @@
   h2,
   h3,
   h4 {
-    font-family: var(--font-heading);
-    letter-spacing: -0.04em;
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -113,4 +142,133 @@
 
 @utility accent-glow {
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 0 60px rgba(59, 130, 246, 0.1);
+}
+
+/* ─────────────────────────────────────────────
+   Site shell — public/marketing pages
+   ───────────────────────────────────────────── */
+@layer base {
+  html:has(.site),
+  html:has(.site) body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .site {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    background: var(--color-paper);
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+
+  .site :where(h1, h2, h3, h4) {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .site ::selection {
+    background: var(--color-sky);
+    color: var(--color-ink);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes soft-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+
+@utility animate-soft-ping {
+  animation: soft-ping 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@utility mask-fade-x {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+@utility font-serif-display {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  letter-spacing: -0.022em;
+  font-optical-sizing: auto;
+}
+
+@keyframes ticker-up {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  55%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@utility animate-caret {
+  animation: caret-blink 1.1s steps(1, end) infinite;
+}
+
+@utility animate-ticker-up {
+  animation: ticker-up var(--ticker-duration, 24s) linear infinite;
+}
+
+@utility mask-fade-y {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 22%,
+    black 78%,
+    transparent
+  );
+}
+
+@utility font-accent-italic {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-caret,
+  .animate-ticker-up,
+  .animate-soft-ping {
+    animation: none;
+  }
 }

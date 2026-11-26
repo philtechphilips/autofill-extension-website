@@ -2,20 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  History,
-  Globe,
-  CheckCircle2,
-  XCircle,
-  FileText,
-  Wand2,
-  Zap,
-  ChevronLeft,
-  ChevronRight,
-  Filter,
-  Calendar,
-} from "lucide-react";
+import { CheckCircle2, FileText, Wand2, XCircle, Zap } from "lucide-react";
 import api from "@/lib/api";
+import {
+  Badge,
+  EmptyState,
+  PageHeader,
+  Pager,
+  Panel,
+  Segmented,
+} from "@/components/app/AppUI";
+import { EASE } from "@/components/site/motion";
 
 interface UsageEvent {
   id: string;
@@ -39,55 +36,22 @@ interface Pagination {
   pages: number;
 }
 
-const EventTypeIcon = ({
-  type,
-  success,
-}: {
-  type: string;
-  success: boolean;
-}) => {
-  if (type === "cv_parse") return <FileText className="w-5 h-5" />;
-  if (type === "text_enhance") return <Wand2 className="w-5 h-5" />;
-  return success ? (
-    <CheckCircle2 className="w-5 h-5" />
-  ) : (
-    <XCircle className="w-5 h-5" />
-  );
+type Filter = "all" | "form_fill" | "cv_parse" | "text_enhance";
+
+const TYPE_LABEL: Record<string, string> = {
+  form_fill: "Form fill",
+  cv_parse: "Resume parse",
+  text_enhance: "Text enhance",
 };
 
-const EventTypeBadge = ({ type }: { type: string }) => {
-  const config = {
-    form_fill: { label: "Form Fill", color: "bg-blue-500/20 text-blue-400" },
-    cv_parse: { label: "CV Parse", color: "bg-purple-500/20 text-purple-400" },
-    text_enhance: {
-      label: "Text Enhance",
-      color: "bg-amber-500/20 text-amber-400",
-    },
-  };
-  const { label, color } = config[type as keyof typeof config] || {
-    label: type,
-    color: "bg-white/10 text-white/90",
-  };
-
-  return (
-    <span
-      className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${color}`}
-    >
-      {label}
-    </span>
-  );
-};
-
-const formatDate = (dateStr: string) => {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("en-US", {
+const formatDate = (dateStr: string) =>
+  new Date(dateStr).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
   });
-};
 
 const getTimeAgo = (dateStr: string) => {
   const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
@@ -101,23 +65,24 @@ const getTimeAgo = (dateStr: string) => {
   return formatDate(dateStr);
 };
 
+function EventIcon({ type, success }: { type: string; success: boolean }) {
+  const Icon =
+    type === "cv_parse" ? FileText : type === "text_enhance" ? Wand2 : success ? CheckCircle2 : XCircle;
+  return <Icon className="size-[18px]" strokeWidth={1.5} />;
+}
+
 export default function HistoryPage() {
   const [events, setEvents] = useState<UsageEvent[]>([]);
   const [pagination, setPagination] = useState<Pagination | null>(null);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<string>("all");
+  const [filter, setFilter] = useState<Filter>("all");
   const [page, setPage] = useState(1);
 
   const fetchEvents = async (pageNum: number, typeFilter: string) => {
     setLoading(true);
     try {
-      const params = new URLSearchParams({
-        page: pageNum.toString(),
-        limit: "15",
-      });
-      if (typeFilter !== "all") {
-        params.append("type", typeFilter);
-      }
+      const params = new URLSearchParams({ page: pageNum.toString(), limit: "15" });
+      if (typeFilter !== "all") params.append("type", typeFilter);
 
       const response = await api.get(`/analytics/events?${params}`);
       const data = response.data.data || response.data;
@@ -135,207 +100,110 @@ export default function HistoryPage() {
     fetchEvents(page, filter);
   }, [page, filter]);
 
-  const handleFilterChange = (newFilter: string) => {
+  const handleFilterChange = (newFilter: Filter) => {
     setFilter(newFilter);
     setPage(1);
   };
 
   return (
-    <div className="space-y-12">
-      {/* Header */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 text-brand-accent text-xs font-bold uppercase tracking-[0.3em]">
-          <History className="w-4 h-4" />
-          Data Archives
-        </div>
-        <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">
-          Form History<span className="text-black/70 dark:text-white/90">.</span>
-        </h1>
-        <p className="text-xl text-black/80 dark:text-white/80 font-light max-w-4xl">
-          Review your historical precision mapping and data population events.
-        </p>
-      </div>
+    <div>
+      <PageHeader
+        title="Form history"
+        subtitle="Every form fill, resume parse and text enhancement, newest first."
+        actions={
+          <Segmented<Filter>
+            id="history-filter"
+            value={filter}
+            onChange={handleFilterChange}
+            options={[
+              { value: "all", label: "All" },
+              { value: "form_fill", label: "Form fills" },
+              { value: "cv_parse", label: "Resumes" },
+              { value: "text_enhance", label: "Enhance" },
+            ]}
+          />
+        }
+      />
 
-      {/* Filters */}
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 text-black/60 dark:text-white/80">
-          <Filter className="w-4 h-4" />
-          <span className="text-xs font-bold uppercase tracking-wider">
-            Filter:
-          </span>
-        </div>
-        {["all", "form_fill", "cv_parse", "text_enhance"].map((type) => (
-          <button
-            key={type}
-            onClick={() => handleFilterChange(type)}
-            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${filter === type
-              ? "bg-white text-black"
-              : "bg-white/5 text-white/90 hover:bg-white/10 hover:text-white"
-              }`}
-          >
-            {type === "all" ? "All" : type.replace("_", " ")}
-          </button>
-        ))}
-      </div>
-
-      {/* Events List */}
-      <div className="glassmorphic rounded-[40px] overflow-hidden">
+      <Panel>
         {loading ? (
-          <div className="p-8 space-y-4">
-            {Array(5)
-              .fill(0)
-              .map((_, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-4 p-4 bg-black/[0.02] dark:bg-white/[0.02] rounded-2xl animate-pulse"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-black/10 dark:bg-white/10" />
-                  <div className="flex-1 space-y-2">
-                    <div className="h-4 w-48 bg-black/10 dark:bg-white/10 rounded" />
-                    <div className="h-3 w-32 bg-black/5 dark:bg-white/5 rounded" />
-                  </div>
-                  <div className="h-6 w-20 bg-black/10 dark:bg-white/10 rounded-full" />
+          <div>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-4 border-b border-line px-6 py-5 sm:px-7">
+                <span className="size-10 animate-pulse rounded-[10px] bg-ink/[0.07]" />
+                <div className="flex-1 space-y-2">
+                  <span className="block h-4 w-48 animate-pulse rounded-md bg-ink/[0.07]" />
+                  <span className="block h-3 w-32 animate-pulse rounded-md bg-ink/[0.05]" />
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
         ) : events.length === 0 ? (
-          <div className="p-20 text-center space-y-6">
-            <div className="w-20 h-20 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] rounded-3xl mx-auto flex items-center justify-center">
-              <Zap className="w-10 h-10 text-black/60 dark:text-white/80" />
-            </div>
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold text-black dark:text-white tracking-tight">
-                No Events Yet
-              </h2>
-              <p className="text-black/80 dark:text-white/80 font-light italic max-w-4xl mx-auto">
-                Start using the extension to fill forms and your history will
-                appear here.
-              </p>
-            </div>
-          </div>
+          <EmptyState icon={<Zap />} title="Nothing here yet">
+            Use the extension to fill a form and your history will appear here.
+          </EmptyState>
         ) : (
-          <div className="divide-y divide-black/[0.05] dark:divide-white/[0.05]">
+          <div>
             {events.map((event, index) => (
               <motion.div
                 key={event.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                className="flex items-center gap-4 p-6 hover:bg-white/[0.02] transition-colors"
+                transition={{ duration: 0.5, ease: EASE, delay: index * 0.03 }}
+                className="flex items-center gap-4 border-b border-line px-6 py-5 transition-colors hover:bg-paper sm:px-7"
               >
-                <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center ${event.success
-                    ? "bg-emerald-500/10 text-emerald-500"
-                    : "bg-red-500/10 text-red-500"
-                    }`}
+                <span
+                  className={`grid size-10 shrink-0 place-items-center rounded-[10px] ${
+                    event.success ? "bg-tile-3 text-ink" : "bg-red-50 text-red-700"
+                  }`}
                 >
-                  <EventTypeIcon type={event.type} success={event.success} />
-                </div>
+                  <EventIcon type={event.type} success={event.success} />
+                </span>
 
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 mb-1">
-                    <h3 className="text-sm font-semibold text-black dark:text-white truncate">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="truncate text-[14.5px] text-ink">
                       {event.pageTitle ||
                         (event.type === "cv_parse"
-                          ? "CV Parsed"
+                          ? "Resume parsed"
                           : event.type === "text_enhance"
-                            ? "Text Enhanced"
-                            : "Form Fill")}
-                    </h3>
-                    <EventTypeBadge type={event.type} />
+                            ? "Text enhanced"
+                            : "Form fill")}
+                    </span>
+                    <Badge tone="info">{TYPE_LABEL[event.type] || event.type}</Badge>
                   </div>
-                  <div className="flex items-center gap-4 text-[11px] text-black/60 dark:text-white/80">
-                    {event.domain && (
-                      <span className="flex items-center gap-1">
-                        <Globe className="w-3 h-3" />
-                        {event.domain}
-                      </span>
-                    )}
+                  <div className="mt-1 flex flex-wrap gap-x-4 text-[13px] text-ink-mute">
+                    {event.domain && <span>{event.domain}</span>}
                     {event.type === "form_fill" && event.fieldCount > 0 && (
                       <span>{event.fieldCount} fields</span>
                     )}
                     {event.fillMode && (
-                      <span className="capitalize">
-                        {event.fillMode.replace("_", " ")}
-                      </span>
+                      <span className="capitalize">{event.fillMode.replace("_", " ")}</span>
                     )}
                   </div>
                 </div>
 
-                <div className="text-right shrink-0">
-                  <div className="flex items-center gap-2 text-xs text-black/80 dark:text-white/80">
-                    <Calendar className="w-3 h-3" />
-                    {getTimeAgo(event.createdAt)}
-                  </div>
-                  <div
-                    className={`text-[10px] mt-1 ${event.success ? "text-emerald-500" : "text-red-500"}`}
-                  >
+                <div className="shrink-0 text-right">
+                  <div className="text-[13px] text-ink-soft">{getTimeAgo(event.createdAt)}</div>
+                  <Badge tone={event.success ? "success" : "danger"} className="mt-1">
                     {event.success ? "Success" : "Failed"}
-                  </div>
+                  </Badge>
                 </div>
               </motion.div>
             ))}
           </div>
         )}
 
-        {/* Pagination */}
-        {pagination && pagination.pages > 1 && (
-          <div className="flex items-center justify-between p-6 border-t border-black/[0.05] dark:border-white/[0.05]">
-            <div className="text-xs text-black/60 dark:text-white/80">
-              Showing {(pagination.page - 1) * pagination.limit + 1} -{" "}
-              {Math.min(pagination.page * pagination.limit, pagination.total)}{" "}
-              of {pagination.total}
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={pagination.page === 1}
-                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/90 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <div className="flex items-center gap-1">
-                {Array.from(
-                  { length: Math.min(5, pagination.pages) },
-                  (_, i) => {
-                    let pageNum;
-                    if (pagination.pages <= 5) {
-                      pageNum = i + 1;
-                    } else if (pagination.page <= 3) {
-                      pageNum = i + 1;
-                    } else if (pagination.page >= pagination.pages - 2) {
-                      pageNum = pagination.pages - 4 + i;
-                    } else {
-                      pageNum = pagination.page - 2 + i;
-                    }
-                    return (
-                      <button
-                        key={pageNum}
-                        onClick={() => setPage(pageNum)}
-                        className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${pagination.page === pageNum
-                          ? "bg-white text-black"
-                          : "bg-white/5 text-white/90 hover:bg-white/10"
-                          }`}
-                      >
-                        {pageNum}
-                      </button>
-                    );
-                  },
-                )}
-              </div>
-              <button
-                onClick={() =>
-                  setPage((p) => Math.min(pagination.pages, p + 1))
-                }
-                disabled={pagination.page === pagination.pages}
-                className="p-2 rounded-lg bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/90 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+        {pagination && (
+          <Pager
+            page={pagination.page}
+            pages={pagination.pages}
+            total={pagination.total}
+            limit={pagination.limit}
+            onPage={setPage}
+          />
         )}
-      </div>
+      </Panel>
     </div>
   );
 }

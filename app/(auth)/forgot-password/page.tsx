@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import AuthInput from "@/components/auth/AuthInput";
-import Button from "@/components/ui/Button";
+import { ArrowLeft } from "lucide-react";
 import api from "@/lib/api";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import SiteButton from "@/components/site/SiteButton";
+import { fieldClass, FieldLabel } from "@/components/site/Field";
+import { AuthError, AuthHeading, AuthStatus } from "@/components/auth/AuthUI";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -31,79 +32,51 @@ export default function ForgotPasswordPage() {
 
   if (isSubmitted) {
     return (
-      <div className="space-y-8 text-center py-4">
-        <div className="flex justify-center">
-          <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500">
-            <CheckCircle2 className="w-8 h-8" />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <h2 className="text-xl font-semibold text-black dark:text-white tracking-tight">
-            Email Sent
-          </h2>
-          <p className="text-sm text-black/80 dark:text-white/80 font-light leading-relaxed">
-            If an account exists for that email, you will receive a reset link
-            shortly.
-          </p>
-        </div>
-        <Button
-          href="/login"
-          variant="secondary"
-          className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight"
-        >
-          Back to Login
-        </Button>
-      </div>
+      <AuthStatus
+        tone="success"
+        title="Check your email"
+        action={
+          <SiteButton href="/login" variant="secondary" size="lg" className="w-full">
+            Back to sign in
+          </SiteButton>
+        }
+      >
+        If an account exists for that email, you&apos;ll receive a reset link shortly.
+      </AuthStatus>
     );
   }
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-2">
-        <Link
-          href="/login"
-          className="inline-flex items-center gap-2 text-[10px] text-black/70 dark:text-white/90 hover:text-white transition-colors uppercase tracking-[0.2em] font-bold mb-4"
-        >
-          <ArrowLeft className="w-3 h-3" />
-          Back to login
-        </Link>
-        <h2 className="text-3xl font-semibold text-black dark:text-white tracking-tight">
-          Forgot Password
-        </h2>
-        <p className="text-lg text-black/80 dark:text-white/80 font-light leading-relaxed">
-          Enter your email address to receive a password reset link.
-        </p>
-      </div>
+    <div>
+      <Link
+        href="/login"
+        className="mb-8 inline-flex items-center gap-2 text-[14px] text-ink-soft transition-colors hover:text-ink"
+      >
+        <ArrowLeft className="size-4" strokeWidth={1.5} />
+        Back to sign in
+      </Link>
+      <AuthHeading
+        title="Forgot your password?"
+        subtitle="Enter your email and we'll send you a link to reset it."
+      />
 
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        {error && (
-          <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center">
-            {error}
-          </div>
-        )}
-
-        <div className="space-y-3">
-          <label className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em] px-1">
-            Email Address
-          </label>
+      <form className="mt-10 space-y-5" onSubmit={handleSubmit}>
+        {error && <AuthError>{error}</AuthError>}
+        <label className="block">
+          <FieldLabel>Email address</FieldLabel>
           <input
             type="email"
             placeholder="name@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/80 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+            autoComplete="email"
+            className={fieldClass}
           />
-        </div>
-
-        <Button
-          variant="primary"
-          type="submit"
-          className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight"
-          isLoading={isLoading}
-        >
-          Send Reset Link
-        </Button>
+        </label>
+        <SiteButton type="submit" size="lg" arrow loading={isLoading} className="!mt-8 w-full justify-between">
+          Send reset link
+        </SiteButton>
       </form>
     </div>
   );

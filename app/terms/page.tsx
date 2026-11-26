@@ -1,3 +1,4 @@
+import SiteShell from "@/components/site/SiteShell";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 
@@ -8,13 +9,13 @@ export const metadata = {
 
 export default function TermsOfService() {
     return (
-        <main className="relative w-full overflow-hidden min-h-screen">
+        <SiteShell>
             <Navbar />
-            <div className="pt-40 pb-32 px-6 max-w-5xl mx-auto">
-                <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight mb-8">
+            <main className="mx-auto max-w-[760px] px-5 pb-28 pt-36 sm:px-8 md:pt-48">
+                <h1 className="mb-8 font-serif-display text-[48px] leading-[1.02] text-ink md:text-[72px]">
                     Terms of Service
                 </h1>
-                <div className="space-y-8 text-black/70 dark:text-white/90 font-light leading-relaxed">
+                <div className="space-y-12 border-t border-line pt-10 text-[16px] leading-[1.75] text-ink-soft">
                     <section>
                         <p className="mb-4">
                             Last updated: {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
@@ -26,17 +27,17 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             1. Acceptance of Terms
                         </h2>
                         <p>
-                            By accessing and using AutoFill AI ("the Service"), you agree to comply with and be bound by the following Terms of Service.
+                            By accessing and using AutoFill AI (&ldquo;the Service&rdquo;), you agree to comply with and be bound by the following Terms of Service.
                             If you do not agree to these terms, please do not use the Service.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             2. Description of Service
                         </h2>
                         <p>
@@ -47,11 +48,11 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             3. User Conduct and Responsibilities
                         </h2>
                         <p className="mb-4">As a user of our Service, you agree to:</p>
-                        <ul className="list-disc pl-6 space-y-2">
+                        <ul className="list-disc space-y-2 pl-5 marker:text-ink-mute">
                             <li>Provide accurate information when using basic form capabilities if required by the target platform.</li>
                             <li>Not use the Service for any illicit, fraudulent, or malicious activities (e.g., spamming, credential stuffing, scraping).</li>
                             <li>Maintain the security and confidentiality of any credentials associated with your AutoFill AI account/sync.</li>
@@ -59,7 +60,7 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             4. Credit and Payment Terms
                         </h2>
                         <p>
@@ -70,7 +71,7 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             5. Intellectual Property
                         </h2>
                         <p>
@@ -80,18 +81,18 @@ export default function TermsOfService() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             6. Limitation of Liability
                         </h2>
                         <p>
                             AutoFill AI fundamentally automates inputs based on user-provided templates. We are not liable for any consequences
                             arising from incorrect data submission, rejected applications, or account penalties on third-party platforms resulting
-                            from the use of this tool. Use the "Safe Undo" features and confirm your inputs manually when necessary.
+                            from the use of this tool. Use the &ldquo;Safe Undo&rdquo; features and confirm your inputs manually when necessary.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold text-black dark:text-white tracking-tight mb-4">
+                        <h2 className="mb-3 text-[22px] tracking-[-0.02em] text-ink">
                             7. Contact Information
                         </h2>
                         <p>
@@ -99,8 +100,8 @@ export default function TermsOfService() {
                         </p>
                     </section>
                 </div>
-            </div>
+            </main>
             <Footer />
-        </main>
+        </SiteShell>
     );
 }

@@ -1,523 +1,310 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-    DollarSign,
-    CreditCard,
-    TrendingUp,
-    Users,
-    Package,
-    RefreshCcw,
-    ArrowUpRight,
-    ArrowDownRight,
-    Calendar,
-    Coins,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { Coins, CreditCard, DollarSign, RefreshCcw } from "lucide-react";
 import api from "@/lib/api";
+import {
+  Badge,
+  PageHeader,
+  Panel,
+  PanelHeader,
+  Segmented,
+  StatTile,
+  table,
+} from "@/components/app/AppUI";
+import { EASE } from "@/components/site/motion";
 
 interface PaymentAnalytics {
-    overview: {
-        allTime: {
-            totalRevenue: number;
-            totalCredits: number;
-            totalOrders: number;
-        };
-        period: {
-            label: string;
-            revenue: number;
-            credits: number;
-            orders: number;
-        };
-        refunds: {
-            totalRefunded: number;
-            refundCount: number;
-        };
-    };
-    revenueByPack: Array<{
-        _id: string;
-        packName: string;
-        revenue: number;
-        credits: number;
-        orders: number;
-    }>;
-    dailyRevenue: Array<{
-        _id: string;
-        revenue: number;
-        orders: number;
-    }>;
-    usageByOperation: Array<{
-        _id: string;
-        totalUsed: number;
-        count: number;
-    }>;
-    topCustomers: Array<{
-        _id: string;
-        name: string;
-        email: string;
-        totalSpent: number;
-        totalCredits: number;
-        orderCount: number;
-    }>;
-    recentTransactions: Array<{
-        id: string;
-        user: { name: string; email: string } | null;
-        packName: string;
-        amount: number;
-        credits: number;
-        date: string;
-    }>;
+  overview: {
+    allTime: { totalRevenue: number; totalCredits: number; totalOrders: number };
+    period: { label: string; revenue: number; credits: number; orders: number };
+    refunds: { totalRefunded: number; refundCount: number };
+  };
+  revenueByPack: Array<{ _id: string; packName: string; revenue: number; credits: number; orders: number }>;
+  dailyRevenue: Array<{ _id: string; revenue: number; orders: number }>;
+  usageByOperation: Array<{ _id: string; totalUsed: number; count: number }>;
+  topCustomers: Array<{
+    _id: string;
+    name: string;
+    email: string;
+    totalSpent: number;
+    totalCredits: number;
+    orderCount: number;
+  }>;
+  recentTransactions: Array<{
+    id: string;
+    user: { name: string; email: string } | null;
+    packName: string;
+    amount: number;
+    credits: number;
+    date: string;
+  }>;
+}
+
+type Period = "7d" | "30d" | "90d" | "all";
+
+const operationNames: Record<string, string> = {
+  formAnalysis: "Form analysis",
+  textEnhancement: "Text enhancement",
+  cvParsing: "Resume parsing",
+  profileUsage: "Profile usage",
+};
+
+const formatCurrency = (amount: number) =>
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amount || 0);
+const formatNumber = (num: number) => (num || 0).toLocaleString();
+
+function Skeleton({ className = "" }: { className?: string }) {
+  return <span className={`inline-block animate-pulse rounded-md bg-ink/[0.07] ${className}`} />;
 }
 
 export default function PaymentsPage() {
-    const [analytics, setAnalytics] = useState<PaymentAnalytics | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [period, setPeriod] = useState("30d");
+  const [analytics, setAnalytics] = useState<PaymentAnalytics | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [period, setPeriod] = useState<Period>("30d");
 
-    const fetchAnalytics = async () => {
-        setLoading(true);
-        try {
-            const res = await api.get(`/admin/payments/analytics?period=${period}`);
-            setAnalytics(res.data.data);
-        } catch (err) {
-            console.error("Failed to fetch payment analytics:", err);
-        } finally {
-            setLoading(false);
+  const fetchAnalytics = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get(`/admin/payments/analytics?period=${period}`);
+      setAnalytics(res.data.data);
+    } catch (err) {
+      console.error("Failed to fetch payment analytics:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAnalytics();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [period]);
+
+  const v = (s: string) => (loading ? <Skeleton className="h-10 w-24" /> : s);
+  const usageTotal = analytics?.usageByOperation.reduce((sum, o) => sum + o.totalUsed, 0) || 0;
+
+  return (
+    <div>
+      <PageHeader
+        tag="Admin"
+        title="Payments"
+        subtitle="Revenue, orders and how credits are being used."
+        actions={
+          <>
+            <Segmented<Period>
+              id="payments-period"
+              value={period}
+              onChange={setPeriod}
+              options={[
+                { value: "7d", label: "7 days" },
+                { value: "30d", label: "30 days" },
+                { value: "90d", label: "90 days" },
+                { value: "all", label: "All time" },
+              ]}
+            />
+            <button
+              onClick={fetchAnalytics}
+              aria-label="Refresh"
+              className="grid size-10 place-items-center rounded-[10px] bg-white text-ink ring-1 ring-inset ring-line hover:ring-line-strong"
+            >
+              <RefreshCcw className={`size-4 ${loading ? "animate-spin" : ""}`} strokeWidth={1.5} />
+            </button>
+          </>
         }
-    };
+      />
 
-    useEffect(() => {
-        fetchAnalytics();
-    }, [period]);
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+        <StatTile
+          tone="periwinkle"
+          label="Total revenue"
+          icon={<DollarSign />}
+          value={v(formatCurrency(analytics?.overview.allTime.totalRevenue || 0))}
+          hint={`${formatCurrency(analytics?.overview.period.revenue || 0)} this period`}
+        />
+        <StatTile
+          tone="haze"
+          delay={0.05}
+          label="Orders"
+          icon={<CreditCard />}
+          value={v(formatNumber(analytics?.overview.allTime.totalOrders || 0))}
+          hint={`${formatNumber(analytics?.overview.period.orders || 0)} this period`}
+        />
+        <StatTile
+          tone="mist"
+          delay={0.1}
+          label="Credits sold"
+          icon={<Coins />}
+          value={v(formatNumber(analytics?.overview.allTime.totalCredits || 0))}
+          hint={`${formatNumber(analytics?.overview.period.credits || 0)} this period`}
+        />
+        <StatTile
+          tone="warm-soft"
+          delay={0.15}
+          label="Refunds"
+          icon={<RefreshCcw />}
+          value={v(formatNumber(analytics?.overview.refunds.refundCount || 0))}
+          hint={`${formatNumber(analytics?.overview.refunds.totalRefunded || 0)} credits refunded`}
+        />
+      </div>
 
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-        }).format(amount || 0);
-    };
-
-    const formatNumber = (num: number) => (num || 0).toLocaleString();
-
-    const operationNames: Record<string, string> = {
-        formAnalysis: "Form Analysis",
-        textEnhancement: "Text Enhancement",
-        cvParsing: "CV Parsing",
-        profileUsage: "Profile Usage",
-    };
-
-    const MetricCard = ({
-        label,
-        value,
-        subValue,
-        icon: Icon,
-        trend,
-        color = "blue",
-    }: {
-        label: string;
-        value: string;
-        subValue?: string;
-        icon: any;
-        trend?: "up" | "down";
-        color?: string;
-    }) => {
-        const colorClasses: Record<string, string> = {
-            blue: "bg-blue-500/10 border-blue-500/20 text-blue-500",
-            green: "bg-emerald-500/10 border-emerald-500/20 text-emerald-500",
-            purple: "bg-purple-500/10 border-purple-500/20 text-purple-500",
-            orange: "bg-orange-500/10 border-orange-500/20 text-orange-500",
-        };
-
-        return (
-            <div className="glassmorphic p-6 rounded-[24px] group hover:border-white/[0.1] transition-all duration-500">
-                <div className="flex items-start justify-between mb-4">
-                    <div
-                        className={`w-10 h-10 rounded-xl ${colorClasses[color]} border flex items-center justify-center`}
-                    >
-                        <Icon className="w-5 h-5" />
+      <div className="mt-4 grid gap-4 lg:mt-5 lg:grid-cols-2 lg:gap-5">
+        <Panel delay={0.2}>
+          <PanelHeader title="Revenue by pack" />
+          <div className="space-y-2 px-6 pb-6 sm:px-7">
+            {loading ? (
+              Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="block h-16 w-full" />)
+            ) : analytics?.revenueByPack.length ? (
+              analytics.revenueByPack.map((pack) => (
+                <div key={pack._id} className="flex items-center justify-between rounded-xl bg-paper px-4 py-3.5">
+                  <div>
+                    <div className="text-[15px]">{pack.packName || pack._id || "Unknown"}</div>
+                    <div className="text-[13px] text-ink-mute">
+                      {pack.orders} orders · {formatNumber(pack.credits)} credits
                     </div>
-                    {trend && (
-                        <div
-                            className={`flex items-center gap-1 text-xs font-medium ${trend === "up" ? "text-emerald-500" : "text-red-500"
-                                }`}
-                        >
-                            {trend === "up" ? (
-                                <ArrowUpRight className="w-3 h-3" />
-                            ) : (
-                                <ArrowDownRight className="w-3 h-3" />
-                            )}
+                  </div>
+                  <div className="font-serif-display text-[26px] leading-none">{formatCurrency(pack.revenue)}</div>
+                </div>
+              ))
+            ) : (
+              <p className="py-10 text-center text-[14px] text-ink-mute">No sales yet</p>
+            )}
+          </div>
+        </Panel>
+
+        <Panel delay={0.25}>
+          <PanelHeader title="Credit usage by operation" />
+          <div className="space-y-5 px-6 pb-6 sm:px-7">
+            {loading ? (
+              Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="block h-10 w-full" />)
+            ) : analytics?.usageByOperation.length ? (
+              analytics.usageByOperation.map((op) => {
+                const pct = usageTotal > 0 ? (op.totalUsed / usageTotal) * 100 : 0;
+                return (
+                  <div key={op._id}>
+                    <div className="mb-2 flex items-center justify-between text-[14px]">
+                      <span>{operationNames[op._id] || op._id}</span>
+                      <span className="text-ink-mute">
+                        {formatNumber(op.totalUsed)} credits · {op.count} uses
+                      </span>
+                    </div>
+                    <div className="h-2 overflow-hidden rounded-full bg-paper-deep">
+                      <motion.div
+                        className="h-full rounded-full bg-ink"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${pct}%` }}
+                        transition={{ duration: 0.9, ease: EASE }}
+                      />
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <p className="py-10 text-center text-[14px] text-ink-mute">No usage yet</p>
+            )}
+          </div>
+        </Panel>
+      </div>
+
+      <Panel delay={0.3} className="mt-4 lg:mt-5">
+        <PanelHeader title="Top customers" />
+        <div className={table.wrap}>
+          <table className={table.table}>
+            <thead>
+              <tr>
+                <th className={table.th}>Customer</th>
+                <th className={`${table.th} text-right`}>Orders</th>
+                <th className={`${table.th} text-right`}>Credits</th>
+                <th className={`${table.th} text-right`}>Total spent</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <tr key={i}>
+                    <td className={table.td}><Skeleton className="h-4 w-40" /></td>
+                    <td className={`${table.td} text-right`}><Skeleton className="h-4 w-10" /></td>
+                    <td className={`${table.td} text-right`}><Skeleton className="h-4 w-14" /></td>
+                    <td className={`${table.td} text-right`}><Skeleton className="h-4 w-16" /></td>
+                  </tr>
+                ))
+              ) : analytics?.topCustomers.length ? (
+                analytics.topCustomers.map((c, idx) => (
+                  <tr key={c._id} className={table.row}>
+                    <td className={table.td}>
+                      <div className="flex items-center gap-3">
+                        <span className="grid size-8 place-items-center rounded-full bg-tile-1 text-[12.5px]">
+                          {idx + 1}
+                        </span>
+                        <div>
+                          <div>{c.name || "N/A"}</div>
+                          <div className="text-[13px] text-ink-mute">{c.email}</div>
                         </div>
-                    )}
-                </div>
-                <div className="space-y-1">
-                    {loading ? (
-                        <div className="h-8 w-24 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
-                    ) : (
-                        <h3 className="text-2xl font-bold text-black dark:text-white tracking-tight">
-                            {value}
-                        </h3>
-                    )}
-                    <p className="text-xs font-medium text-black/50 dark:text-white/90 uppercase tracking-wider">
-                        {label}
-                    </p>
-                    {subValue && (
-                        <p className="text-xs text-black/40 dark:text-white/40">{subValue}</p>
-                    )}
-                </div>
-            </div>
-        );
-    };
-
-    return (
-        <div className="space-y-8">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-emerald-500 text-xs font-bold uppercase tracking-[0.3em]">
-                        <DollarSign className="w-4 h-4" />
-                        Payment Analytics
-                    </div>
-                    <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tighter">
-                        Revenue Overview
-                    </h1>
-                </div>
-
-                <div className="flex items-center gap-2">
-                    <select
-                        value={period}
-                        onChange={(e) => setPeriod(e.target.value)}
-                        className="px-4 py-2 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-sm font-medium text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-                    >
-                        <option value="7d">Last 7 days</option>
-                        <option value="30d">Last 30 days</option>
-                        <option value="90d">Last 90 days</option>
-                        <option value="all">All time</option>
-                    </select>
-                    <button
-                        onClick={fetchAnalytics}
-                        className="p-2 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
-                    >
-                        <RefreshCcw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-                    </button>
-                </div>
-            </div>
-
-            {/* Overview Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <MetricCard
-                    label="Total Revenue"
-                    value={formatCurrency(analytics?.overview.allTime.totalRevenue || 0)}
-                    subValue={`${formatCurrency(analytics?.overview.period.revenue || 0)} this period`}
-                    icon={DollarSign}
-                    color="green"
-                />
-                <MetricCard
-                    label="Total Orders"
-                    value={formatNumber(analytics?.overview.allTime.totalOrders || 0)}
-                    subValue={`${formatNumber(analytics?.overview.period.orders || 0)} this period`}
-                    icon={CreditCard}
-                    color="blue"
-                />
-                <MetricCard
-                    label="Credits Sold"
-                    value={formatNumber(analytics?.overview.allTime.totalCredits || 0)}
-                    subValue={`${formatNumber(analytics?.overview.period.credits || 0)} this period`}
-                    icon={Coins}
-                    color="purple"
-                />
-                <MetricCard
-                    label="Refunds"
-                    value={formatNumber(analytics?.overview.refunds.refundCount || 0)}
-                    subValue={`${formatNumber(analytics?.overview.refunds.totalRefunded || 0)} credits refunded`}
-                    icon={RefreshCcw}
-                    color="orange"
-                />
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Revenue by Pack */}
-                <div className="glassmorphic p-6 rounded-[24px]">
-                    <h2 className="text-lg font-bold text-black dark:text-white mb-4 flex items-center gap-2">
-                        <Package className="w-5 h-5 text-purple-500" />
-                        Revenue by Pack
-                    </h2>
-                    <div className="space-y-3">
-                        {loading ? (
-                            Array(3)
-                                .fill(0)
-                                .map((_, i) => (
-                                    <div
-                                        key={i}
-                                        className="h-16 bg-black/5 dark:bg-white/5 rounded-xl animate-pulse"
-                                    />
-                                ))
-                        ) : analytics?.revenueByPack.length ? (
-                            analytics.revenueByPack.map((pack) => (
-                                <div
-                                    key={pack._id}
-                                    className="flex items-center justify-between p-4 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5"
-                                >
-                                    <div>
-                                        <p className="font-semibold text-black dark:text-white">
-                                            {pack.packName || pack._id || "Unknown"}
-                                        </p>
-                                        <p className="text-xs text-black/50 dark:text-white/90">
-                                            {pack.orders} orders · {formatNumber(pack.credits)} credits
-                                        </p>
-                                    </div>
-                                    <p className="text-lg font-bold text-emerald-500">
-                                        {formatCurrency(pack.revenue)}
-                                    </p>
-                                </div>
-                            ))
-                        ) : (
-                            <p className="text-center text-black/50 dark:text-white/90 py-8">
-                                No sales data yet
-                            </p>
-                        )}
-                    </div>
-                </div>
-
-                {/* Credit Usage by Operation */}
-                <div className="glassmorphic p-6 rounded-[24px]">
-                    <h2 className="text-lg font-bold text-black dark:text-white mb-4 flex items-center gap-2">
-                        <TrendingUp className="w-5 h-5 text-blue-500" />
-                        Credit Usage by Operation
-                    </h2>
-                    <div className="space-y-3">
-                        {loading ? (
-                            Array(4)
-                                .fill(0)
-                                .map((_, i) => (
-                                    <div
-                                        key={i}
-                                        className="h-12 bg-black/5 dark:bg-white/5 rounded-xl animate-pulse"
-                                    />
-                                ))
-                        ) : analytics?.usageByOperation.length ? (
-                            analytics.usageByOperation.map((op) => {
-                                const total = analytics.usageByOperation.reduce(
-                                    (sum, o) => sum + o.totalUsed,
-                                    0
-                                );
-                                const percentage = total > 0 ? (op.totalUsed / total) * 100 : 0;
-                                return (
-                                    <div key={op._id} className="space-y-2">
-                                        <div className="flex items-center justify-between">
-                                            <p className="text-sm font-medium text-black dark:text-white">
-                                                {operationNames[op._id] || op._id}
-                                            </p>
-                                            <p className="text-sm text-black/70 dark:text-white/90">
-                                                {formatNumber(op.totalUsed)} credits ({op.count} uses)
-                                            </p>
-                                        </div>
-                                        <div className="h-2 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
-                                            <div
-                                                className="h-full bg-blue-500 rounded-full transition-all duration-500"
-                                                style={{ width: `${percentage}%` }}
-                                            />
-                                        </div>
-                                    </div>
-                                );
-                            })
-                        ) : (
-                            <p className="text-center text-black/50 dark:text-white/90 py-8">
-                                No usage data yet
-                            </p>
-                        )}
-                    </div>
-                </div>
-            </div>
-
-            {/* Top Customers */}
-            <div className="glassmorphic p-6 rounded-[24px]">
-                <h2 className="text-lg font-bold text-black dark:text-white mb-4 flex items-center gap-2">
-                    <Users className="w-5 h-5 text-orange-500" />
-                    Top Customers
-                </h2>
-                <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead>
-                            <tr className="border-b border-black/5 dark:border-white/5">
-                                <th className="px-4 py-3 text-left text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
-                                    Customer
-                                </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
-                                    Orders
-                                </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
-                                    Credits
-                                </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
-                                    Total Spent
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {loading ? (
-                                Array(5)
-                                    .fill(0)
-                                    .map((_, i) => (
-                                        <tr
-                                            key={i}
-                                            className="border-b border-black/5 dark:border-white/5"
-                                        >
-                                            <td className="px-4 py-3">
-                                                <div className="h-4 w-32 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <div className="h-4 w-12 bg-black/10 dark:bg-white/10 rounded animate-pulse ml-auto" />
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <div className="h-4 w-16 bg-black/10 dark:bg-white/10 rounded animate-pulse ml-auto" />
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <div className="h-4 w-20 bg-black/10 dark:bg-white/10 rounded animate-pulse ml-auto" />
-                                            </td>
-                                        </tr>
-                                    ))
-                            ) : analytics?.topCustomers.length ? (
-                                analytics.topCustomers.map((customer, idx) => (
-                                    <tr
-                                        key={customer._id}
-                                        className="border-b border-black/5 dark:border-white/5 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors"
-                                    >
-                                        <td className="px-4 py-3">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold">
-                                                    {idx + 1}
-                                                </div>
-                                                <div>
-                                                    <p className="font-medium text-black dark:text-white">
-                                                        {customer.name || "N/A"}
-                                                    </p>
-                                                    <p className="text-xs text-black/50 dark:text-white/90">
-                                                        {customer.email}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-3 text-right text-sm text-black/70 dark:text-white/90">
-                                            {customer.orderCount}
-                                        </td>
-                                        <td className="px-4 py-3 text-right text-sm text-black/70 dark:text-white/90">
-                                            {formatNumber(customer.totalCredits)}
-                                        </td>
-                                        <td className="px-4 py-3 text-right font-semibold text-emerald-500">
-                                            {formatCurrency(customer.totalSpent)}
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td
-                                        colSpan={4}
-                                        className="px-4 py-8 text-center text-black/50 dark:text-white/90"
-                                    >
-                                        No customers yet
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            {/* Recent Transactions */}
-            <div className="glassmorphic p-6 rounded-[24px]">
-                <h2 className="text-lg font-bold text-black dark:text-white mb-4 flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-blue-500" />
-                    Recent Transactions
-                </h2>
-                <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead>
-                            <tr className="border-b border-black/5 dark:border-white/5">
-                                <th className="px-4 py-3 text-left text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
-                                    Customer
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
-                                    Pack
-                                </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
-                                    Credits
-                                </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
-                                    Amount
-                                </th>
-                                <th className="px-4 py-3 text-right text-xs font-bold text-black/50 dark:text-white/90 uppercase tracking-wider">
-                                    Date
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {loading ? (
-                                Array(5)
-                                    .fill(0)
-                                    .map((_, i) => (
-                                        <tr
-                                            key={i}
-                                            className="border-b border-black/5 dark:border-white/5"
-                                        >
-                                            <td className="px-4 py-3">
-                                                <div className="h-4 w-32 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <div className="h-4 w-20 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <div className="h-4 w-12 bg-black/10 dark:bg-white/10 rounded animate-pulse ml-auto" />
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <div className="h-4 w-16 bg-black/10 dark:bg-white/10 rounded animate-pulse ml-auto" />
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <div className="h-4 w-24 bg-black/10 dark:bg-white/10 rounded animate-pulse ml-auto" />
-                                            </td>
-                                        </tr>
-                                    ))
-                            ) : analytics?.recentTransactions.length ? (
-                                analytics.recentTransactions.map((tx) => (
-                                    <tr
-                                        key={tx.id}
-                                        className="border-b border-black/5 dark:border-white/5 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors"
-                                    >
-                                        <td className="px-4 py-3">
-                                            <p className="font-medium text-black dark:text-white">
-                                                {tx.user?.name || "N/A"}
-                                            </p>
-                                            <p className="text-xs text-black/50 dark:text-white/90">
-                                                {tx.user?.email || "Unknown"}
-                                            </p>
-                                        </td>
-                                        <td className="px-4 py-3">
-                                            <span className="px-2 py-1 rounded-lg bg-purple-500/10 text-purple-500 text-xs font-medium">
-                                                {tx.packName || "N/A"}
-                                            </span>
-                                        </td>
-                                        <td className="px-4 py-3 text-right text-sm text-black/70 dark:text-white/90">
-                                            +{formatNumber(tx.credits)}
-                                        </td>
-                                        <td className="px-4 py-3 text-right font-semibold text-emerald-500">
-                                            {formatCurrency(tx.amount)}
-                                        </td>
-                                        <td className="px-4 py-3 text-right text-sm text-black/50 dark:text-white/90">
-                                            {new Date(tx.date).toLocaleDateString()}
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td
-                                        colSpan={5}
-                                        className="px-4 py-8 text-center text-black/50 dark:text-white/90"
-                                    >
-                                        No transactions yet
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                      </div>
+                    </td>
+                    <td className={`${table.td} text-right tabular-nums text-ink-soft`}>{c.orderCount}</td>
+                    <td className={`${table.td} text-right tabular-nums text-ink-soft`}>{formatNumber(c.totalCredits)}</td>
+                    <td className={`${table.td} text-right tabular-nums`}>{formatCurrency(c.totalSpent)}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={4} className="px-7 py-12 text-center text-ink-mute">No customers yet</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
-    );
+      </Panel>
+
+      <Panel delay={0.35} className="mt-4 lg:mt-5">
+        <PanelHeader title="Recent transactions" />
+        <div className={table.wrap}>
+          <table className={table.table}>
+            <thead>
+              <tr>
+                <th className={table.th}>Customer</th>
+                <th className={table.th}>Pack</th>
+                <th className={`${table.th} text-right`}>Credits</th>
+                <th className={`${table.th} text-right`}>Amount</th>
+                <th className={`${table.th} text-right`}>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <tr key={i}>
+                    <td className={table.td}><Skeleton className="h-4 w-40" /></td>
+                    <td className={table.td}><Skeleton className="h-4 w-20" /></td>
+                    <td className={`${table.td} text-right`}><Skeleton className="h-4 w-12" /></td>
+                    <td className={`${table.td} text-right`}><Skeleton className="h-4 w-16" /></td>
+                    <td className={`${table.td} text-right`}><Skeleton className="h-4 w-20" /></td>
+                  </tr>
+                ))
+              ) : analytics?.recentTransactions.length ? (
+                analytics.recentTransactions.map((tx) => (
+                  <tr key={tx.id} className={table.row}>
+                    <td className={table.td}>
+                      <div>{tx.user?.name || "N/A"}</div>
+                      <div className="text-[13px] text-ink-mute">{tx.user?.email || "Unknown"}</div>
+                    </td>
+                    <td className={table.td}>
+                      <Badge tone="info">{tx.packName || "N/A"}</Badge>
+                    </td>
+                    <td className={`${table.td} text-right tabular-nums text-ink-soft`}>+{formatNumber(tx.credits)}</td>
+                    <td className={`${table.td} text-right tabular-nums`}>{formatCurrency(tx.amount)}</td>
+                    <td className={`${table.td} text-right text-ink-soft`}>{new Date(tx.date).toLocaleDateString()}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} className="px-7 py-12 text-center text-ink-mute">No transactions yet</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Panel>
+    </div>
+  );
 }

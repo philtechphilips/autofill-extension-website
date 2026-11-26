@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import AuthInput from "@/components/auth/AuthInput";
-import Button from "@/components/ui/Button";
+import { toast } from "sonner";
 import api from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
-import { toast } from "sonner";
+import SiteButton from "@/components/site/SiteButton";
+import { fieldClass, FieldLabel } from "@/components/site/Field";
+import { AuthError, AuthHeading } from "@/components/auth/AuthUI";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -37,7 +37,7 @@ export default function LoginPage() {
       const response = await api.post("/auth/login", { email, password });
       const { user, accessToken } = response.data.data;
       setAuth(user, accessToken);
-      if (user.role === 'admin') {
+      if (user.role === "admin") {
         router.push("/admin/dashboard");
       } else {
         router.push("/dashboard");
@@ -51,85 +51,54 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="space-y-12">
-      <div className="space-y-4 text-center">
-        <h2 className="text-3xl font-semibold text-black dark:text-white tracking-tight">
-          Sign in to your account
-        </h2>
-        <p className="text-lg text-black/80 dark:text-white/80 font-light">
-          Enter your credentials to continue.
-        </p>
-      </div>
+    <div>
+      <AuthHeading title="Welcome back" subtitle="Sign in to your account to continue." />
 
-      <form className="space-y-8" onSubmit={handleSubmit}>
-        {error && (
-          <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center">
-            {error}
-          </div>
-        )}
-        <div className="space-y-3">
-          <div className="flex justify-between items-center px-1">
-            <label className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em]">
-              Email Address
-            </label>
-          </div>
+      <form className="mt-10 space-y-5" onSubmit={handleSubmit}>
+        {error && <AuthError>{error}</AuthError>}
+
+        <label className="block">
+          <FieldLabel>Email address</FieldLabel>
           <input
             type="email"
             placeholder="name@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/80 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+            autoComplete="email"
+            className={fieldClass}
           />
-        </div>
+        </label>
 
-        <div className="space-y-2">
-          <div className="space-y-3">
-            <div className="flex justify-between items-center px-1">
-              <label className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em]">
-                Password
-              </label>
-            </div>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/80 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
-            />
-          </div>
-          <div className="flex justify-end px-1">
-            <Link
-              href="/forgot-password"
-              className="text-[11px] text-black/70 dark:text-white/90 hover:text-white transition-colors uppercase tracking-[0.2em] font-bold"
-            >
+        <label className="block">
+          <span className="mb-2 flex items-center justify-between text-[14px] text-ink">
+            Password
+            <Link href="/forgot-password" className="text-ink-soft underline-offset-4 hover:underline">
               Forgot password?
             </Link>
-          </div>
-        </div>
+          </span>
+          <input
+            type="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            autoComplete="current-password"
+            className={fieldClass}
+          />
+        </label>
 
-        <Button
-          variant="primary"
-          type="submit"
-          className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight shadow-xl shadow-white/5"
-          isLoading={isLoading}
-        >
-          Sign In
-        </Button>
+        <SiteButton type="submit" size="lg" arrow loading={isLoading} className="!mt-8 w-full justify-between">
+          Sign in
+        </SiteButton>
       </form>
 
-      <div className="pt-8 border-t border-black/[0.05] dark:border-white/[0.05] text-center">
-        <p className="text-sm text-black/80 dark:text-white/80 font-light">
-          Don't have an account?{" "}
-          <Link
-            href="/register"
-            className="text-black dark:text-white hover:text-brand-accent transition-colors font-medium"
-          >
-            Create an account
-          </Link>
-        </p>
-      </div>
+      <p className="mt-8 border-t border-line pt-6 text-[14.5px] text-ink-soft">
+        Don&apos;t have an account?{" "}
+        <Link href="/register" className="text-ink underline underline-offset-4 hover:opacity-70">
+          Create one
+        </Link>
+      </p>
     </div>
   );
 }

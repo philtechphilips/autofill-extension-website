@@ -1,33 +1,32 @@
+import SiteShell from "@/components/site/SiteShell";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
+import FormTypes from "@/components/landing/FormTypes";
+import Statement from "@/components/landing/Statement";
 import Problem from "@/components/landing/Problem";
-import Features from "@/components/landing/Features";
 import HowItWorks from "@/components/landing/HowItWorks";
-import Shortcuts from "@/components/landing/Shortcuts";
-import Pricing from "@/components/landing/Pricing";
+import Features from "@/components/landing/Features";
 import Security from "@/components/landing/Security";
-import Testimonials from "@/components/landing/Testimonials";
-import Demo from "@/components/landing/Demo";
+import Pricing from "@/components/landing/Pricing";
 import FAQ from "@/components/landing/FAQ";
-import FinalCTA from "@/components/landing/FinalCTA";
 import Footer from "@/components/landing/Footer";
 
 export default function Home() {
   return (
-    <main className="relative w-full overflow-hidden">
+    <SiteShell>
       <Navbar />
-      <Hero />
-      <Demo />
-      <Problem />
-      <Features />
-      <HowItWorks />
-      <Shortcuts />
-      <Pricing />
-      <Security />
-      {/* <Testimonials /> */}
-      <FAQ />
-      <FinalCTA />
+      <main>
+        <Hero />
+        <FormTypes />
+        <Statement />
+        <Problem />
+        <HowItWorks />
+        <Features />
+        <Security />
+        <Pricing />
+        <FAQ />
+      </main>
       <Footer />
-    </main>
+    </SiteShell>
   );
 }

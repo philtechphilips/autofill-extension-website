@@ -1,17 +1,41 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+import { ArrowLeft, Check } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
+import SiteShell from "@/components/site/SiteShell";
+import { TileReveal } from "@/components/site/Reveal";
+import { Container, Wordmark } from "@/components/site/Primitives";
+import { EASE } from "@/components/site/motion";
 
-export default function AuthLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const perks = [
+  "Free credits when you sign up",
+  "Works on Chrome and Microsoft Edge",
+  "Encrypted before it leaves your browser",
+];
+
+function FieldStack() {
+  const widths = [78, 92, 64];
+  return (
+    <div className="space-y-3">
+      {widths.map((w, i) => (
+        <div key={i} className="h-11 rounded-lg border-[1.5px] border-ink/80 p-1.5">
+          <motion.div
+            className="h-full rounded-[5px] bg-white"
+            initial={{ width: "0%" }}
+            animate={{ width: `${w}%` }}
+            transition={{ duration: 1.2, ease: EASE, delay: 0.8 + i * 0.25 }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, hasHydrated } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
@@ -23,65 +47,68 @@ export default function AuthLayout({
     }
   }, [isAuthenticated, hasHydrated, router, pathname]);
 
-  if (!hasHydrated || (isAuthenticated && !pathname.includes("verify-email"))) {
-    return (
-      <div className="min-h-screen bg-white dark:bg-onyx flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-black/20 dark:border-white/20 border-t-white rounded-full animate-spin" />
-      </div>
-    );
-  }
+  const waiting = !hasHydrated || (isAuthenticated && !pathname.includes("verify-email"));
 
   return (
-    <div className="min-h-screen bg-white dark:bg-onyx relative flex flex-col items-center py-20 px-6 overflow-y-auto overflow-x-hidden">
-      {/* Background Elements - Consistent with Hero */}
-      <div className="absolute inset-0 grid-pattern opacity-40 pt-20 pointer-events-none" />
-      <div className="absolute inset-0 gradient-mesh opacity-100 pointer-events-none" />
-
-      {/* Decorative Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-accent/5 blur-[120px] rounded-full pointer-events-none" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-[600px] mx-auto my-auto flex flex-col"
-      >
-        {/* Logo Section */}
-        <div className="flex flex-col items-center mb-8 md:mb-12">
-          <Link href="/" className="group mb-6 md:mb-8">
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden transition-transform group-hover:scale-110 shadow-2xl shadow-white/10">
-              <Image
-                src="/logo.png"
-                alt="AutoFill AI"
-                width={80}
-                height={80}
-                className="w-full h-full object-cover"
-              />
-            </div>
+    <SiteShell>
+      <div className="flex min-h-screen flex-col pb-4 lg:pb-9">
+        <Container className="flex h-[72px] shrink-0 items-center justify-between md:h-[84px]">
+          <Link href="/" aria-label="AutoFill AI home">
+            <Wordmark />
           </Link>
-          <div className="text-center space-y-2 md:space-y-4">
-            <h1 className="text-3xl md:text-5xl font-bold text-black dark:text-white tracking-tighter leading-tight">
-              AutoFill AI
-            </h1>
-            <p className="text-black/80 dark:text-white/80 text-base md:text-xl font-light tracking-tight mx-auto px-4">
-              Stop filling forms. Start moving faster.
-            </p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-[15px] text-ink transition-opacity hover:opacity-70"
+          >
+            <ArrowLeft className="size-4" strokeWidth={1.5} />
+            Back to site
+          </Link>
+        </Container>
+
+        <Container className="flex flex-1">
+          <div className="grid w-full gap-4 lg:grid-cols-[45fr_55fr] lg:gap-5">
+            <TileReveal
+              trigger="mount"
+              className="hidden flex-col justify-between gap-12 rounded-2xl bg-tile-1 p-11 lg:flex"
+            >
+              <h2 className="font-serif-display text-[56px] leading-[1] text-ink xl:text-[68px]">
+                Every form,
+                <br />
+                filled for you.
+              </h2>
+              <div className="space-y-10">
+                <FieldStack />
+                <ul className="space-y-3">
+                  {perks.map((p) => (
+                    <li key={p} className="flex items-center gap-3 text-[15px] text-ink">
+                      <span className="grid size-5 place-items-center rounded-[5px] bg-ink text-white">
+                        <Check className="size-3" strokeWidth={2.75} />
+                      </span>
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </TileReveal>
+
+            <TileReveal
+              trigger="mount"
+              delay={0.1}
+              className="flex items-center justify-center rounded-2xl bg-tile-3 px-5 py-12 sm:px-12 sm:py-16"
+            >
+              <div className="w-full max-w-[440px]">
+                {waiting ? (
+                  <div className="flex justify-center py-16">
+                    <span className="size-7 animate-spin rounded-full border-2 border-ink/15 border-t-ink" />
+                  </div>
+                ) : (
+                  children
+                )}
+              </div>
+            </TileReveal>
           </div>
-        </div>
-
-        {/* Auth Card */}
-        <div className="glassmorphic p-8 md:p-12 lg:p-16 rounded-[40px] shadow-2xl relative overflow-hidden group">
-          {/* Subtle Inner Glow */}
-          <div className="absolute -inset-px bg-gradient-to-b from-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-          {children}
-        </div>
-
-        {/* Footer Link */}
-        <div className="mt-8 md:mt-12 text-center text-[10px] font-mono tracking-[0.2em] text-black/60 dark:text-white/80 uppercase italic">
-          Built for the technical elite.
-        </div>
-      </motion.div>
-    </div>
+        </Container>
+      </div>
+    </SiteShell>
   );
 }

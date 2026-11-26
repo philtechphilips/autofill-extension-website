@@ -1,6 +1,21 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Geist, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+  display: "swap",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  variable: "--font-newsreader",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "AutoFill AI – Smart Chrome Extension for Instant Form Filling",
@@ -16,10 +31,6 @@ export const metadata: Metadata = {
     "AI",
   ],
   authors: [{ name: "AutoFill AI Team" }],
-  icons: {
-    icon: "/favicon.png",
-    apple: "/logo.png",
-  },
   openGraph: {
     title: "AutoFill AI – Stop Filling Forms, Start Moving Faster",
     description:
@@ -35,8 +46,12 @@ export const metadata: Metadata = {
       "Automatically fill online forms in seconds. Save time on job applications, signups, and checkout forms.",
     images: ["/logo.png"],
   },
-  viewport: "width=device-width, initial-scale=1",
-  themeColor: "#1560BD",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#fbfaf7",
 };
 
 export default function RootLayout({
@@ -45,9 +60,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html
+      lang="en"
+      className={`scroll-smooth ${geist.variable} ${newsreader.variable}`}
+    >
       <body className="antialiased">
-        <Toaster richColors position="top-center" theme="dark" />
+        <Toaster richColors position="top-center" theme="light" />
         {children}
       </body>
     </html>

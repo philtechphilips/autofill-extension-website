@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import AuthInput from "@/components/auth/AuthInput";
-import Button from "@/components/ui/Button";
 import api from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
+import SiteButton from "@/components/site/SiteButton";
+import { fieldClass, FieldLabel } from "@/components/site/Field";
+import { AuthError, AuthHeading } from "@/components/auth/AuthUI";
 
 export default function RegisterPage() {
   const [firstName, setFirstName] = useState("");
@@ -43,116 +43,86 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="space-y-12">
-      <div className="space-y-4 text-center">
-        <h2 className="text-3xl font-semibold text-black dark:text-white tracking-tight">
-          Create your account
-        </h2>
-        <p className="text-lg text-black/80 dark:text-white/80 font-light">
-          Join thousands of professionals saving time.
-        </p>
-        <div className="flex items-center justify-center gap-3 pt-2">
-          <span className="text-xs text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full">
-            500 free credit
-          </span>
-          <span className="text-xs text-black/50 dark:text-white/90">No credit card required</span>
-        </div>
-      </div>
+    <div>
+      <AuthHeading
+        title="Create your account"
+        subtitle="Start with free credits. No card needed."
+      />
 
-      <form className="space-y-8" onSubmit={handleSubmit}>
-        {error && (
-          <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center">
-            {error}
-          </div>
-        )}
-        <div className="grid grid-cols-2 gap-6">
-          <div className="space-y-3">
-            <label className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em] px-1">
-              First name
-            </label>
+      <form className="mt-10 space-y-5" onSubmit={handleSubmit}>
+        {error && <AuthError>{error}</AuthError>}
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <label className="block">
+            <FieldLabel>First name</FieldLabel>
             <input
               type="text"
               placeholder="Alex"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               required
-              className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/80 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+              autoComplete="given-name"
+              className={fieldClass}
             />
-          </div>
-          <div className="space-y-3">
-            <label className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em] px-1">
-              Last name
-            </label>
+          </label>
+          <label className="block">
+            <FieldLabel>Last name</FieldLabel>
             <input
               type="text"
               placeholder="Sterling"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               required
-              className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/80 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+              autoComplete="family-name"
+              className={fieldClass}
             />
-          </div>
-        </div>
-        <div className="space-y-3">
-          <label className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em] px-1">
-            Email Address
           </label>
+        </div>
+
+        <label className="block">
+          <FieldLabel>Email address</FieldLabel>
           <input
             type="email"
             placeholder="name@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/80 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+            autoComplete="email"
+            className={fieldClass}
           />
-        </div>
-        <div className="space-y-3">
-          <label className="text-[11px] font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.25em] px-1">
-            Password
-          </label>
+        </label>
+
+        <label className="block">
+          <FieldLabel>Password</FieldLabel>
           <input
             type="password"
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl px-6 py-4 text-base text-black dark:text-white placeholder:text-white/80 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300"
+            autoComplete="new-password"
+            className={fieldClass}
           />
-        </div>
+        </label>
 
-        <div className="space-y-6">
-          <Button
-            variant="primary"
-            type="submit"
-            className="w-full h-16 rounded-2xl text-lg font-bold tracking-tight"
-            isLoading={isLoading}
-          >
-            Create Account
-          </Button>
-          <p className="text-[11px] text-black/70 dark:text-white/90 leading-relaxed uppercase tracking-[0.2em] text-center">
-            By signing up, you agree to our{" "}
-            <Link
-              href="/terms"
-              className="underline hover:text-white transition-colors"
-            >
-              terms of service
-            </Link>
-            .
-          </p>
-        </div>
+        <SiteButton type="submit" size="lg" arrow loading={isLoading} className="!mt-8 w-full justify-between">
+          Create account
+        </SiteButton>
+        <p className="text-[13px] text-ink-soft">
+          By signing up, you agree to our{" "}
+          <Link href="/terms" className="text-ink underline underline-offset-4">
+            terms of service
+          </Link>
+          .
+        </p>
       </form>
 
-      <div className="pt-8 border-t border-black/[0.05] dark:border-white/[0.05] text-center">
-        <p className="text-sm text-black/80 dark:text-white/80 font-light">
-          Already have an account?{" "}
-          <Link
-            href="/login"
-            className="text-black dark:text-white hover:text-brand-accent transition-colors font-medium"
-          >
-            Sign in
-          </Link>
-        </p>
-      </div>
+      <p className="mt-8 border-t border-line pt-6 text-[14.5px] text-ink-soft">
+        Already have an account?{" "}
+        <Link href="/login" className="text-ink underline underline-offset-4 hover:opacity-70">
+          Sign in
+        </Link>
+      </p>
     </div>
   );
 }

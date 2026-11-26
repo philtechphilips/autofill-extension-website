@@ -19,19 +19,24 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const setAuth = useAuthStore((state) => state.setAuth);
 
+  const expired = Boolean(searchParams.get("expired"));
+  const [expiredDismissed, setExpiredDismissed] = useState(false);
+  const shownError =
+    error ?? (expired && !expiredDismissed ? "Your session has expired. Please sign in again." : null);
+
   useEffect(() => {
-    if (searchParams.get("expired")) {
+    if (expired) {
       toast.error("Session Expired", {
         description: "Please sign in again to continue.",
       });
-      setError("Your session has expired. Please sign in again.");
     }
-  }, [searchParams]);
+  }, [expired]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+    setExpiredDismissed(true);
 
     try {
       const response = await api.post("/auth/login", { email, password });
@@ -55,7 +60,7 @@ export default function LoginPage() {
       <AuthHeading title="Welcome back" subtitle="Sign in to your account to continue." />
 
       <form className="mt-10 space-y-5" onSubmit={handleSubmit}>
-        {error && <AuthError>{error}</AuthError>}
+        {shownError && <AuthError>{shownError}</AuthError>}
 
         <label className="block">
           <FieldLabel>Email address</FieldLabel>

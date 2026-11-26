@@ -58,14 +58,13 @@ export default function BillingPage() {
     detectRegion();
   }, []);
 
-  const fetchData = async () => {
+  const loadData = async () => {
     try {
-      setLoadingData(true);
-      setError(null);
       const [creditsData, pricingData] = await Promise.all([getCredits(), getPricing()]);
       setCredits(creditsData.credits);
       setStats(creditsData.stats);
       setPacks(pricingData.packs.filter((p) => p.isActive && p.priceUSD > 0));
+      setError(null);
     } catch {
       setError("Failed to load billing data");
     } finally {
@@ -73,8 +72,30 @@ export default function BillingPage() {
     }
   };
 
+  const fetchData = () => {
+    setLoadingData(true);
+    setError(null);
+    loadData();
+  };
+
   useEffect(() => {
-    fetchData();
+    let ignore = false;
+    (async () => {
+      try {
+        const [creditsData, pricingData] = await Promise.all([getCredits(), getPricing()]);
+        if (ignore) return;
+        setCredits(creditsData.credits);
+        setStats(creditsData.stats);
+        setPacks(pricingData.packs.filter((p) => p.isActive && p.priceUSD > 0));
+      } catch {
+        if (!ignore) setError("Failed to load billing data");
+      } finally {
+        if (!ignore) setLoadingData(false);
+      }
+    })();
+    return () => {
+      ignore = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

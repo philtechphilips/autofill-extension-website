@@ -1,6 +1,6 @@
 "use client";
 
-import { DependencyList, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const PAGE_SIZE = 10;
 
@@ -12,73 +12,79 @@ export type PageResult<T> = {
   total?: number;
 };
 
+type ListState<T> = {
+  key: string;
+  items: T[];
+  page: number;
+  total: number | null;
+  hasMore: boolean;
+};
+
 /**
  * Loads a list 10 items at a time and fetches the next page automatically
  * when the sentinel element scrolls into view.
  *
- * `deps` resets the list (e.g. when a filter changes).
+ * `resetKey` restarts the list from page 1 whenever it changes (e.g. a filter).
  */
 export function useInfiniteList<T>(
   fetchPage: (page: number, limit: number) => Promise<PageResult<T>>,
-  deps: DependencyList = [],
+  resetKey: string = "",
   limit: number = PAGE_SIZE,
 ) {
-  const [items, setItems] = useState<T[]>([]);
-  const [page, setPage] = useState(0);
-  const [total, setTotal] = useState<number | null>(null);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [state, setState] = useState<ListState<T> | null>(null);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [error, setError] = useState(false);
+  const [errorKey, setErrorKey] = useState<string | null>(null);
+
+  const fetchRef = useRef(fetchPage);
+  useEffect(() => {
+    fetchRef.current = fetchPage;
+  });
 
   const busy = useRef(false);
-  const generation = useRef(0);
-  const fetchRef = useRef(fetchPage);
-  fetchRef.current = fetchPage;
+  const currentKey = useRef(resetKey);
 
   const load = useCallback(
-    async (nextPage: number) => {
-      if (busy.current) return;
+    async (page: number, key: string) => {
       busy.current = true;
-      const gen = generation.current;
-      if (nextPage === 1) setLoading(true);
-      else setLoadingMore(true);
-      setError(false);
-
       try {
-        const res = await fetchRef.current(nextPage, limit);
-        if (gen !== generation.current) return; // a reset happened meanwhile
-        setItems((prev) => (nextPage === 1 ? res.items : [...prev, ...res.items]));
-        setPage(nextPage);
-        if (res.total !== undefined) setTotal(res.total);
-        const more =
-          res.pages !== undefined ? nextPage < res.pages : res.items.length === limit;
-        setHasMore(more);
+        const res = await fetchRef.current(page, limit);
+        if (key !== currentKey.current) return; // filter changed meanwhile
+        setState((prev) => ({
+          key,
+          items: page === 1 || !prev || prev.key !== key ? res.items : [...prev.items, ...res.items],
+          page,
+          total: res.total ?? prev?.total ?? null,
+          hasMore: res.pages !== undefined ? page < res.pages : res.items.length === limit,
+        }));
+        setErrorKey(null);
       } catch (err) {
         console.error("Failed to load list:", err);
-        if (gen === generation.current) setError(true);
+        if (key === currentKey.current) setErrorKey(key);
       } finally {
-        if (gen === generation.current) {
-          setLoading(false);
-          setLoadingMore(false);
-        }
         busy.current = false;
+        setLoadingMore(false);
       }
     },
     [limit],
   );
 
-  // Reset and load the first page whenever deps change.
+  // First page, and again whenever the reset key changes.
   useEffect(() => {
-    generation.current += 1;
-    busy.current = false;
-    setItems([]);
-    setPage(0);
-    setTotal(null);
-    setHasMore(true);
-    load(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+    currentKey.current = resetKey;
+    load(1, resetKey);
+  }, [resetKey, load]);
+
+  const ready = state !== null && state.key === resetKey;
+  const items = ready ? state.items : [];
+  const hasMore = ready ? state.hasMore : true;
+  const error = errorKey === resetKey;
+  const loading = !ready && !error;
+
+  const loadNext = useCallback(() => {
+    if (busy.current || !ready || !hasMore) return;
+    setLoadingMore(true);
+    load((state?.page ?? 0) + 1, resetKey);
+  }, [ready, hasMore, load, state, resetKey]);
 
   // Observe the sentinel and fetch the next page as it approaches the viewport.
   const observer = useRef<IntersectionObserver | null>(null);
@@ -88,27 +94,29 @@ export function useInfiniteList<T>(
       if (!node) return;
       observer.current = new IntersectionObserver(
         (entries) => {
-          if (entries[0]?.isIntersecting && hasMore && !loading && !loadingMore && !error) {
-            load(page + 1);
-          }
+          if (entries[0]?.isIntersecting && !error) loadNext();
         },
         { rootMargin: "320px 0px" },
       );
       observer.current.observe(node);
     },
-    [hasMore, loading, loadingMore, error, load, page],
+    [loadNext, error],
   );
 
   useEffect(() => () => observer.current?.disconnect(), []);
 
   return {
     items,
-    total,
+    total: ready ? state.total : null,
     hasMore,
     loading,
     loadingMore,
     error,
     sentinelRef,
-    retry: () => load(page + 1 || 1),
+    retry: () => {
+      setErrorKey(null);
+      if (ready) loadNext();
+      else load(1, resetKey);
+    },
   };
 }

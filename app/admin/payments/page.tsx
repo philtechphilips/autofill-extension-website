@@ -75,10 +75,9 @@ export default function PaymentsPage() {
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState<Period>("30d");
 
-  const fetchAnalytics = async () => {
-    setLoading(true);
+  const loadAnalytics = async (forPeriod: Period) => {
     try {
-      const res = await api.get(`/admin/payments/analytics?period=${period}`);
+      const res = await api.get(`/admin/payments/analytics?period=${forPeriod}`);
       setAnalytics(res.data.data);
     } catch (err) {
       console.error("Failed to fetch payment analytics:", err);
@@ -87,10 +86,33 @@ export default function PaymentsPage() {
     }
   };
 
+  const fetchAnalytics = () => {
+    setLoading(true);
+    loadAnalytics(period);
+  };
+
+  const changePeriod = (p: Period) => {
+    setPeriod(p);
+    setLoading(true);
+    loadAnalytics(p);
+  };
+
   useEffect(() => {
-    fetchAnalytics();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [period]);
+    let ignore = false;
+    (async () => {
+      try {
+        const res = await api.get(`/admin/payments/analytics?period=30d`);
+        if (!ignore) setAnalytics(res.data.data);
+      } catch (err) {
+        console.error("Failed to fetch payment analytics:", err);
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    })();
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   const {
     items: transactions,
@@ -132,7 +154,7 @@ export default function PaymentsPage() {
             <Segmented<Period>
               id="payments-period"
               value={period}
-              onChange={setPeriod}
+              onChange={changePeriod}
               options={[
                 { value: "7d", label: "7 days" },
                 { value: "30d", label: "30 days" },

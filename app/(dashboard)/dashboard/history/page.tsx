@@ -93,7 +93,7 @@ export default function HistoryPage() {
       const pagination: Pagination | undefined = data.pagination;
       return { items: data.events || [], pages: pagination?.pages, total: pagination?.total };
     },
-    [filter],
+    filter,
   );
 
   return (

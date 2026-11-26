@@ -1,145 +1,162 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { Github, Twitter } from "lucide-react";
+import BrowserCtas from "@/components/site/BrowserCtas";
+import { TileReveal } from "@/components/site/Reveal";
+import { Container, Wordmark } from "@/components/site/Primitives";
+import { EASE, GITHUB_URL, X_URL } from "@/components/site/motion";
+
+const columns = {
+  Product: [
+    { name: "How it works", href: "/#how" },
+    { name: "Features", href: "/#features" },
+    { name: "Pricing", href: "/#pricing" },
+    { name: "FAQ", href: "/#faq" },
+  ],
+  Company: [
+    { name: "Contact", href: "/contact" },
+    { name: "Security", href: "/#security" },
+    { name: "Sign in", href: "/login" },
+    { name: "Create account", href: "/register" },
+  ],
+};
+
+const socials = [
+  { name: "X", href: X_URL, icon: Twitter },
+  { name: "GitHub", href: GITHUB_URL, icon: Github },
+];
+
+/** Field outlines that draw themselves in, then fill. */
+function FieldArt() {
+  const rows = [
+    { y: 34, w: 250 },
+    { y: 92, w: 320 },
+    { y: 150, w: 210 },
+    { y: 208, w: 290 },
+  ];
+  return (
+    <svg viewBox="0 0 440 276" className="h-full w-full text-ink" preserveAspectRatio="xMidYMid meet" aria-hidden>
+      {rows.map((r, i) => (
+        <g key={r.y}>
+          <motion.rect
+            x={60}
+            y={r.y}
+            width={r.w}
+            height={34}
+            rx={8}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.5}
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.4, ease: EASE, delay: i * 0.15 }}
+          />
+          <motion.rect
+            x={68}
+            y={r.y + 13}
+            height={8}
+            rx={4}
+            fill="currentColor"
+            initial={{ width: 0 }}
+            whileInView={{ width: r.w * 0.55 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, ease: EASE, delay: 1.3 + i * 0.2 }}
+          />
+        </g>
+      ))}
+    </svg>
+  );
+}
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
-  const footerLinks = {
-    Product: [
-      { name: "Features", href: "/#features" },
-      { name: "Pricing", href: "/#pricing" },
-      { name: "Demo", href: "/#demo" },
-      { name: "FAQ", href: "/#faq" },
-    ],
-    Company: [
-      { name: "About", href: "/#about" },
-      { name: "Blog", href: "/#blog" },
-      { name: "Careers", href: "/#careers" },
-      { name: "Contact", href: "/contact" },
-    ],
-    Legal: [
-      { name: "Privacy Policy", href: "/privacy" },
-      { name: "Terms of Service", href: "/terms" },
-      { name: "Security", href: "/#security" },
-    ],
-  };
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-deep-navy pt-24 pb-12 px-6 overflow-hidden">
-      {/* Match the same texture as the rest of the page */}
-      <div className="absolute inset-0 grid-pattern opacity-40" />
-      <div className="absolute inset-0 gradient-mesh opacity-50" />
-      {/* Top border */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 mb-16">
-          <div className="col-span-2 lg:col-span-3">
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="flex flex-col gap-6"
-            >
-              <h3 className="text-lg font-bold text-white tracking-tight flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full overflow-hidden">
-                  <Image
-                    src="/logo.png"
-                    alt="AutoFill AI"
-                    width={32}
-                    height={32}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                AutoFill AI
-              </h3>
-              <p className="text-sm text-white/90 font-light leading-relaxed max-w-4xs">
-                The standard for precision-driven form automation. Built by
-                engineers, for everyone.
+    <footer className="pb-6 pt-16 md:pt-24">
+      <Container>
+        <div className="grid gap-4 lg:grid-cols-[58fr_42fr] lg:gap-5">
+          {/* Closing CTA */}
+          <div className="flex flex-col gap-4 lg:gap-5">
+            <TileReveal className="flex flex-1 flex-col justify-between gap-16 rounded-2xl bg-tile-2 p-8 sm:p-11">
+              <h2 className="font-serif-display text-[48px] leading-[1.02] text-ink sm:text-[72px]">
+                Your next form
+                <br />
+                fills itself.
+              </h2>
+              <p className="max-w-[420px] text-[15px] leading-[1.55] text-ink">
+                Install in under a minute and start with free credits. No card needed, no
+                subscription, and your credits never expire.
               </p>
-              <div className="flex gap-3">
-                {[
-                  {
-                    name: "X",
-                    href: "https://x.com/ai_autofill",
-                    icon: <Twitter className="w-4 h-4" />
-                  },
-                  {
-                    name: "GitHub",
-                    href: "https://github.com/philtechphilips/autofill-chrome-extension",
-                    icon: <Github className="w-4 h-4" />
-                  }
-                ].map((social, i) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="w-9 h-9 rounded-full border border-white/10 bg-white/4 flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 hover:bg-white/8 transition-all duration-300 group"
-                  >
-                    <span className="sr-only">{social.name}</span>
-                    <div className="transition-transform group-hover:scale-110">
-                      {social.icon}
-                    </div>
-                  </motion.a>
+            </TileReveal>
+            <TileReveal delay={0.1}>
+              <BrowserCtas />
+            </TileReveal>
+          </div>
+
+          {/* Art + links */}
+          <div className="flex flex-col gap-4 lg:gap-5">
+            <TileReveal delay={0.15} className="h-[220px] overflow-hidden rounded-2xl bg-tile-warm sm:h-[270px]">
+              <FieldArt />
+            </TileReveal>
+            <TileReveal delay={0.25} className="flex-1 rounded-2xl bg-tile-1 p-8 sm:p-10">
+              <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+                {Object.entries(columns).map(([title, links]) => (
+                  <div key={title}>
+                    <h4 className="text-[14px] text-ink-soft">{title}</h4>
+                    <ul className="mt-4 space-y-2.5">
+                      {links.map((l) => (
+                        <li key={l.name}>
+                          <a href={l.href} className="text-[15px] text-ink transition-opacity hover:opacity-60">
+                            {l.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
+                <div>
+                  <h4 className="text-[14px] text-ink-soft">Social</h4>
+                  <ul className="mt-4 space-y-2.5">
+                    {socials.map(({ name, href, icon: Icon }) => (
+                      <li key={name}>
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-[15px] text-ink transition-opacity hover:opacity-60"
+                        >
+                          <Icon className="size-4" strokeWidth={1.5} />
+                          {name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </motion.div>
-          </div>
-
-          {Object.entries(footerLinks).map(([category, links], i) => (
-            <motion.div
-              key={category}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 + i * 0.1 }}
-            >
-              <h4 className="text-[10px] font-bold text-white/80 uppercase tracking-[0.25em] mb-6">
-                {category}
-              </h4>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.name}>
-                    <a
-                      href={link.href}
-                      className="text-sm text-white/90 hover:text-white transition-all duration-300 font-light hover:translate-x-0.5 inline-block"
-                    >
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="pt-8 border-t border-white/[0.07] flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6">
-            <p className="text-[11px] font-mono text-white/80 tracking-[0.2em] uppercase">
-              © {currentYear} AutoFill Labs Inc.
-            </p>
-            <div className="h-3 w-px bg-white/10 hidden md:block" />
-            <p className="text-[11px] font-mono text-white/40 tracking-[0.2em] uppercase italic">
-              Built for speed.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <p className="text-[10px] text-white/80 font-medium tracking-[0.15em] uppercase">
-              Systems status: <span className="text-emerald-400">Nominal</span>
-            </p>
+              <div className="mt-12">
+                <Link href="/" aria-label="AutoFill AI home">
+                  <Wordmark size={30} />
+                </Link>
+              </div>
+            </TileReveal>
           </div>
         </div>
-      </div>
+
+        <div className="mt-6 flex flex-col gap-3 px-1 text-[13px] text-ink-soft sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex gap-6">
+            <Link href="/privacy" className="hover:text-ink">
+              Privacy policy
+            </Link>
+            <Link href="/terms" className="hover:text-ink">
+              Terms of service
+            </Link>
+          </div>
+          <p>© {year} AutoFill Labs Inc. All rights reserved.</p>
+        </div>
+      </Container>
     </footer>
   );
 }

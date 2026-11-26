@@ -6,6 +6,7 @@ import { Coins, CreditCard, DollarSign, RefreshCcw } from "lucide-react";
 import api from "@/lib/api";
 import {
   Badge,
+  InfiniteFooter,
   PageHeader,
   Panel,
   PanelHeader,
@@ -14,6 +15,7 @@ import {
   table,
 } from "@/components/app/AppUI";
 import { EASE } from "@/components/site/motion";
+import { useInfiniteList } from "@/hooks/useInfiniteList";
 
 interface PaymentAnalytics {
   overview: {
@@ -55,6 +57,15 @@ const formatCurrency = (amount: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amount || 0);
 const formatNumber = (num: number) => (num || 0).toLocaleString();
 
+type TxRow = {
+  id: string;
+  user: { name: string; email: string } | null;
+  packName?: string;
+  amount?: number;
+  credits: number;
+  date: string;
+};
+
 function Skeleton({ className = "" }: { className?: string }) {
   return <span className={`inline-block animate-pulse rounded-md bg-ink/[0.07] ${className}`} />;
 }
@@ -64,10 +75,9 @@ export default function PaymentsPage() {
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState<Period>("30d");
 
-  const fetchAnalytics = async () => {
-    setLoading(true);
+  const loadAnalytics = async (forPeriod: Period) => {
     try {
-      const res = await api.get(`/admin/payments/analytics?period=${period}`);
+      const res = await api.get(`/admin/payments/analytics?period=${forPeriod}`);
       setAnalytics(res.data.data);
     } catch (err) {
       console.error("Failed to fetch payment analytics:", err);
@@ -76,10 +86,59 @@ export default function PaymentsPage() {
     }
   };
 
+  const fetchAnalytics = () => {
+    setLoading(true);
+    loadAnalytics(period);
+  };
+
+  const changePeriod = (p: Period) => {
+    setPeriod(p);
+    setLoading(true);
+    loadAnalytics(p);
+  };
+
   useEffect(() => {
-    fetchAnalytics();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [period]);
+    let ignore = false;
+    (async () => {
+      try {
+        const res = await api.get(`/admin/payments/analytics?period=30d`);
+        if (!ignore) setAnalytics(res.data.data);
+      } catch (err) {
+        console.error("Failed to fetch payment analytics:", err);
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    })();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  const {
+    items: transactions,
+    total: txTotal,
+    loading: txLoading,
+    loadingMore,
+    hasMore,
+    error: txError,
+    sentinelRef,
+    retry,
+  } = useInfiniteList<TxRow>(async (page, limit) => {
+    const res = await api.get(`/admin/payments/transactions?type=purchase&page=${page}&limit=${limit}`);
+    const data = res.data.data;
+    return {
+      items: (data.transactions || []).map((t: any) => ({
+        id: t.id,
+        user: t.user,
+        packName: t.metadata?.packName,
+        amount: t.metadata?.priceUSD,
+        credits: t.amount,
+        date: t.createdAt,
+      })),
+      pages: data.pagination?.pages,
+      total: data.pagination?.total,
+    };
+  });
 
   const v = (s: string) => (loading ? <Skeleton className="h-10 w-24" /> : s);
   const usageTotal = analytics?.usageByOperation.reduce((sum, o) => sum + o.totalUsed, 0) || 0;
@@ -95,7 +154,7 @@ export default function PaymentsPage() {
             <Segmented<Period>
               id="payments-period"
               value={period}
-              onChange={setPeriod}
+              onChange={changePeriod}
               options={[
                 { value: "7d", label: "7 days" },
                 { value: "30d", label: "30 days" },
@@ -258,7 +317,7 @@ export default function PaymentsPage() {
       </Panel>
 
       <Panel delay={0.35} className="mt-4 lg:mt-5">
-        <PanelHeader title="Recent transactions" />
+        <PanelHeader title="Transactions" subtitle={txTotal !== null ? `${txTotal.toLocaleString()} purchases` : undefined} />
         <div className={table.wrap}>
           <table className={table.table}>
             <thead>
@@ -271,7 +330,7 @@ export default function PaymentsPage() {
               </tr>
             </thead>
             <tbody>
-              {loading ? (
+              {txLoading ? (
                 Array.from({ length: 4 }).map((_, i) => (
                   <tr key={i}>
                     <td className={table.td}><Skeleton className="h-4 w-40" /></td>
@@ -281,8 +340,8 @@ export default function PaymentsPage() {
                     <td className={`${table.td} text-right`}><Skeleton className="h-4 w-20" /></td>
                   </tr>
                 ))
-              ) : analytics?.recentTransactions.length ? (
-                analytics.recentTransactions.map((tx) => (
+              ) : transactions.length ? (
+                transactions.map((tx) => (
                   <tr key={tx.id} className={table.row}>
                     <td className={table.td}>
                       <div>{tx.user?.name || "N/A"}</div>
@@ -292,7 +351,7 @@ export default function PaymentsPage() {
                       <Badge tone="info">{tx.packName || "N/A"}</Badge>
                     </td>
                     <td className={`${table.td} text-right tabular-nums text-ink-soft`}>+{formatNumber(tx.credits)}</td>
-                    <td className={`${table.td} text-right tabular-nums`}>{formatCurrency(tx.amount)}</td>
+                    <td className={`${table.td} text-right tabular-nums`}>{formatCurrency(tx.amount || 0)}</td>
                     <td className={`${table.td} text-right text-ink-soft`}>{new Date(tx.date).toLocaleDateString()}</td>
                   </tr>
                 ))
@@ -304,6 +363,16 @@ export default function PaymentsPage() {
             </tbody>
           </table>
         </div>
+        <InfiniteFooter
+          sentinelRef={sentinelRef}
+          loadingMore={loadingMore}
+          hasMore={hasMore}
+          error={txError}
+          count={transactions.length}
+          total={txTotal}
+          onRetry={retry}
+          noun="transactions"
+        />
       </Panel>
     </div>
   );

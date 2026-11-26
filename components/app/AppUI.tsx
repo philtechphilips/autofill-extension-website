@@ -232,57 +232,48 @@ export function Segmented<T extends string>({
   );
 }
 
-/** Numbered pager with a 5-page window. */
-export function Pager({
-  page,
-  pages,
+/** Sits under an infinite list: watches for scroll, shows loading / end / retry. */
+export function InfiniteFooter({
+  sentinelRef,
+  loadingMore,
+  hasMore,
+  error,
+  count,
   total,
-  limit,
-  onPage,
+  onRetry,
+  noun = "items",
 }: {
-  page: number;
-  pages: number;
-  total: number;
-  limit: number;
-  onPage: (p: number) => void;
+  sentinelRef: (node: HTMLElement | null) => void;
+  loadingMore: boolean;
+  hasMore: boolean;
+  error: boolean;
+  count: number;
+  total: number | null;
+  onRetry: () => void;
+  noun?: string;
 }) {
-  if (pages <= 1) return null;
-  const windowStart = pages <= 5 ? 1 : page <= 3 ? 1 : page >= pages - 2 ? pages - 4 : page - 2;
-  const nums = Array.from({ length: Math.min(5, pages) }, (_, i) => windowStart + i);
-  const btn =
-    "grid size-9 place-items-center rounded-lg text-[13.5px] transition-colors disabled:cursor-not-allowed disabled:opacity-30";
+  if (count === 0) return null;
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 sm:px-7">
-      <div className="text-[13px] text-ink-mute">
-        Showing {(page - 1) * limit + 1}–{Math.min(page * limit, total)} of {total}
-      </div>
-      <div className="flex items-center gap-1">
-        <button
-          aria-label="Previous page"
-          onClick={() => onPage(Math.max(1, page - 1))}
-          disabled={page === 1}
-          className={`${btn} text-ink hover:bg-ink/[0.05]`}
-        >
-          ‹
-        </button>
-        {nums.map((n) => (
-          <button
-            key={n}
-            onClick={() => onPage(n)}
-            className={`${btn} ${page === n ? "bg-ink text-white" : "text-ink hover:bg-ink/[0.05]"}`}
-          >
-            {n}
+    <div ref={sentinelRef} className="flex items-center justify-center gap-3 px-6 py-5 text-[13px] text-ink-mute sm:px-7">
+      {error ? (
+        <>
+          Couldn&apos;t load more.
+          <button onClick={onRetry} className="text-ink underline underline-offset-4 hover:opacity-70">
+            Try again
           </button>
-        ))}
-        <button
-          aria-label="Next page"
-          onClick={() => onPage(Math.min(pages, page + 1))}
-          disabled={page === pages}
-          className={`${btn} text-ink hover:bg-ink/[0.05]`}
-        >
-          ›
-        </button>
-      </div>
+        </>
+      ) : loadingMore ? (
+        <>
+          <span className="size-4 animate-spin rounded-full border-2 border-ink/15 border-t-ink" />
+          Loading more
+        </>
+      ) : hasMore ? (
+        <span className="h-4" />
+      ) : (
+        <>
+          {total !== null ? `All ${total} ${noun} loaded` : "You’ve reached the end"}
+        </>
+      )}
     </div>
   );
 }

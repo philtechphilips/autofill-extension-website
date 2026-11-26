@@ -1,28 +1,18 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  Zap,
-  ShieldCheck,
-  History,
-  ArrowRight,
-  Globe,
-  CheckCircle2,
-  Lock,
-  Loader2,
-  RefreshCw,
-  AlertCircle,
-  Clock,
-} from "lucide-react";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { AlertCircle, Check, Lock, RefreshCw, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
-import Button from "@/components/ui/Button";
 import usePayment, { Pack, CreditStats } from "@/hooks/usePayment";
+import { EmptyState, PageHeader, Panel, Segmented, Spinner } from "@/components/app/AppUI";
+import SiteButton from "@/components/site/SiteButton";
+
+type Region = "Global" | "Nigeria";
 
 export default function BillingPage() {
   const searchParams = useSearchParams();
-  const [region, setRegion] = useState<"Global" | "Nigeria">("Global");
+  const [region, setRegion] = useState<Region>("Global");
   const [credits, setCredits] = useState<number>(0);
   const [stats, setStats] = useState<CreditStats | null>(null);
   const [packs, setPacks] = useState<Pack[]>([]);
@@ -38,9 +28,10 @@ export default function BillingPage() {
 
     if (success === "true") {
       toast.success("Payment successful!", {
-        description: method === "paystack"
-          ? "Naira payment confirmed! Your credits have been added."
-          : "Your credits have been added to your account.",
+        description:
+          method === "paystack"
+            ? "Naira payment confirmed! Your credits have been added."
+            : "Your credits have been added to your account.",
       });
       window.history.replaceState({}, "", "/dashboard/billing");
     } else if (canceled === "true") {
@@ -62,7 +53,7 @@ export default function BillingPage() {
         const res = await fetch("https://ipapi.co/json/");
         const data = await res.json();
         if (data.country === "NG") setRegion("Nigeria");
-      } catch (err) { }
+      } catch {}
     };
     detectRegion();
   }, []);
@@ -71,16 +62,11 @@ export default function BillingPage() {
     try {
       setLoadingData(true);
       setError(null);
-
-      const [creditsData, pricingData] = await Promise.all([
-        getCredits(),
-        getPricing(),
-      ]);
-
+      const [creditsData, pricingData] = await Promise.all([getCredits(), getPricing()]);
       setCredits(creditsData.credits);
       setStats(creditsData.stats);
       setPacks(pricingData.packs.filter((p) => p.isActive && p.priceUSD > 0));
-    } catch (err: any) {
+    } catch {
       setError("Failed to load billing data");
     } finally {
       setLoadingData(false);
@@ -89,6 +75,7 @@ export default function BillingPage() {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCheckout = async (packId: string) => {
@@ -98,28 +85,24 @@ export default function BillingPage() {
       } else {
         await createCheckout(packId);
       }
-    } catch (err) {
+    } catch {
       // Error already handled in hook
     }
   };
 
-  const getPackFeatures = (pack: Pack) => {
-    return [
-      `${pack.tokens} AI Actions`,
-      "Resume to Profile",
-      "Text Enhancement",
-      "Valid Forever",
-    ];
-  };
+  const getPackFeatures = (pack: Pack) => [
+    `${pack.tokens} AI actions`,
+    "Resume to profile",
+    "Text enhancement",
+    "Credits never expire",
+  ];
 
   if (loadingData) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="grid min-h-[400px] place-items-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 animate-spin text-brand-accent" />
-          <p className="text-sm text-black/60 dark:text-white/80">
-            Loading billing information...
-          </p>
+          <Spinner />
+          <p className="text-[14px] text-ink-soft">Loading billing information…</p>
         </div>
       </div>
     );
@@ -127,248 +110,137 @@ export default function BillingPage() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <AlertCircle className="w-12 h-12 text-red-500/60" />
-          <p className="text-black/60 dark:text-white/80">{error}</p>
-          <Button variant="secondary" onClick={fetchData}>
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Try Again
-          </Button>
-        </div>
-      </div>
+      <Panel className="mt-10">
+        <EmptyState
+          icon={<AlertCircle />}
+          title={error}
+          action={
+            <SiteButton variant="secondary" onClick={fetchData} icon={<RefreshCw />}>
+              Try again
+            </SiteButton>
+          }
+        />
+      </Panel>
     );
   }
 
   return (
-    <div className="mx-auto space-y-12">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold text-black dark:text-white tracking-tight">
-            Credits & Billing
-          </h1>
-          <p className="text-black/60 dark:text-white/80 font-light">
-            Manage your balance and upgrade your AI capabilities.
-          </p>
-        </div>
+    <div>
+      <PageHeader
+        title="Credits"
+        subtitle="Check your balance and top up whenever you need more."
+        actions={
+          <Segmented<Region>
+            id="billing-region"
+            value={region}
+            onChange={setRegion}
+            options={[
+              { value: "Global", label: "Pay in USD" },
+              { value: "Nigeria", label: "Pay in Naira" },
+            ]}
+          />
+        }
+      />
 
-        {/* Region Toggle */}
-        <div className="inline-flex items-center p-1 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full">
-          <button
-            onClick={() => setRegion("Global")}
-            className={`flex items-center gap-2 px-6 py-2 rounded-full text-[10px] font-bold transition-all ${region === "Global"
-              ? "bg-white dark:bg-black text-black dark:text-white shrink-0 shadow-lg"
-              : "text-black/60 dark:text-white/80 hover:text-black dark:hover:text-white"
-              }`}
-          >
-            <Globe className="w-3 h-3" />
-            GLOBAL (USD)
-          </button>
-          <button
-            onClick={() => setRegion("Nigeria")}
-            className={`flex items-center gap-2 px-6 py-2 rounded-full text-[10px] font-bold transition-all ${region === "Nigeria"
-              ? "bg-white dark:bg-black text-black dark:text-white shrink-0 shadow-lg"
-              : "text-black/60 dark:text-white/80 hover:text-black dark:hover:text-white"
-              }`}
-          >
-            <Zap className="w-3 h-3" />
-            NIGERIA (NGN)
-          </button>
-        </div>
+      {/* Balance */}
+      <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr_1fr] lg:gap-5">
+        <Panel tone="periwinkle" className="flex flex-col justify-between p-7 sm:p-9">
+          <div className="text-[14px] text-ink-soft">Available balance</div>
+          <div className="mt-8 flex items-baseline gap-3">
+            <span className="font-serif-display text-[80px] leading-none">{credits}</span>
+            <span className="text-[16px] text-ink-soft">credits</span>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {credits > 0 && (
+              <span className="rounded-md bg-white px-2.5 py-1 text-[13px]">Active</span>
+            )}
+            <span className="rounded-md bg-white px-2.5 py-1 text-[13px]">Never expires</span>
+          </div>
+        </Panel>
+        <Panel tone="haze" delay={0.05} className="flex flex-col justify-between p-7">
+          <div className="text-[14px] text-ink-soft">Total purchased</div>
+          <div className="mt-8 font-serif-display text-[48px] leading-none">{stats?.totalPurchased || 0}</div>
+        </Panel>
+        <Panel tone="warm-soft" delay={0.1} className="flex flex-col justify-between p-7">
+          <div className="text-[14px] text-ink-soft">Credits used</div>
+          <div className="mt-8 font-serif-display text-[48px] leading-none">{stats?.totalUsed || 0}</div>
+        </Panel>
       </div>
 
-      {/* Current Balance Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden group"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-        <div className="relative bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-10">
-          <div className="space-y-6 text-center md:text-left">
-            <div className="space-y-1">
-              <span className="text-[11px] font-bold text-black/50 dark:text-white/90 uppercase tracking-[0.2em]">
-                Available Balance
-              </span>
-              <div className="flex items-center justify-center md:justify-start gap-4">
-                <span className="text-6xl font-black text-black dark:text-white tracking-tighter">
-                  {credits}
-                </span>
-                <span className="text-xl font-medium text-black/40 dark:text-white/40 mb-2">
-                  Credits
-                </span>
-              </div>
-            </div>
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-              {credits > 0 && (
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-brand-accent/10 border border-brand-accent/20 rounded-full">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-accent" />
-                  <span className="text-[10px] font-bold text-black/80 dark:text-white/80 uppercase tracking-widest">
-                    Active
+      {/* Packs */}
+      <h2 className="mb-5 mt-12 text-[22px] tracking-[-0.02em] text-ink">Buy more credits</h2>
+      {packs.length === 0 ? (
+        <Panel>
+          <EmptyState title="No credit packs available right now">
+            Please check back soon.
+          </EmptyState>
+        </Panel>
+      ) : (
+        <div
+          className={`grid gap-4 md:grid-cols-2 lg:gap-5 ${packs.length >= 3 ? "lg:grid-cols-3" : ""}`}
+        >
+          {packs.map((pack, i) => {
+            const featured = pack.packId === "pro";
+            const isLoading = checkoutLoading === pack.packId;
+            const price =
+              region === "Nigeria" ? `₦${pack.priceNGN.toLocaleString()}` : `$${pack.priceUSD.toFixed(2)}`;
+            const tone = featured ? "ink" : i % 2 === 0 ? "haze" : "mist";
+
+            return (
+              <Panel key={pack.packId} tone={tone} delay={0.15 + i * 0.05} className="flex flex-col p-7 sm:p-8">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="text-[20px] tracking-[-0.02em]">{pack.name}</h3>
+                  {featured && (
+                    <span className="rounded-md bg-white/12 px-2.5 py-1 text-[12.5px]">Best value</span>
+                  )}
+                </div>
+                <div className="mt-8 flex items-baseline gap-2">
+                  <span className="font-serif-display text-[52px] leading-none">{price}</span>
+                  <span className={`text-[14px] ${featured ? "text-white/65" : "text-ink-soft"}`}>
+                    / {pack.tokens} credits
                   </span>
                 </div>
-              )}
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full">
-                <History className="w-3.5 h-3.5 text-black/40 dark:text-white/40" />
-                <span className="text-[10px] font-bold text-black/80 dark:text-white/80 uppercase tracking-widest">
-                  Never Expires
-                </span>
-              </div>
-            </div>
-          </div>
 
-          <div className="w-full md:w-auto grid grid-cols-2 gap-4">
-            <div className="bg-black/5 dark:bg-white/5 rounded-2xl p-4 border border-black/5 dark:border-white/5 text-center">
-              <div className="text-xl font-bold text-black dark:text-white tracking-tight">
-                {stats?.totalPurchased || 0}
-              </div>
-              <div className="text-[10px] font-medium text-black/40 dark:text-white/40 uppercase tracking-widest">
-                Total Purchased
-              </div>
-            </div>
-            <div className="bg-black/5 dark:bg-white/5 rounded-2xl p-4 border border-black/5 dark:border-white/5 text-center">
-              <div className="text-xl font-bold text-black dark:text-white tracking-tight">
-                {stats?.totalUsed || 0}
-              </div>
-              <div className="text-[10px] font-medium text-black/40 dark:text-white/40 uppercase tracking-widest">
-                Credits Used
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Credit Packs */}
-      <div className="space-y-8">
-        <div className="flex items-center gap-4">
-          <h2 className="text-sm font-bold text-black/80 dark:text-white/80 uppercase tracking-[0.2em]">
-            Purchase More Credits
-          </h2>
-          <div className="h-px flex-1 bg-black/[0.05] dark:bg-white/[0.05]" />
-        </div>
-
-        {packs.length === 0 ? (
-          <div className="text-center py-12 text-black/60 dark:text-white/80">
-            <p>No credit packs available at the moment.</p>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {packs.map((pack, i) => {
-              const isRecommended = pack.packId === "pro";
-              const isLoading = checkoutLoading === pack.packId;
-              const price =
-                region === "Nigeria"
-                  ? `₦${pack.priceNGN.toLocaleString()}`
-                  : `$${pack.priceUSD.toFixed(2)}`;
-
-              return (
-                <motion.div
-                  key={pack.packId}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className={`relative group p-8 rounded-3xl border transition-all duration-300 ${isRecommended
-                    ? "bg-white/[0.04] dark:bg-white/[0.04] border-black/20 dark:border-white/20 shadow-2xl"
-                    : "bg-transparent border-black/[0.08] dark:border-white/[0.08] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] hover:border-black/20 dark:hover:border-white/20"
-                    }`}
-                >
-                  {isRecommended && (
-                    <div className="absolute -top-3 left-6 bg-brand-accent text-black text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg shadow-brand-accent/20">
-                      Best Value
-                    </div>
-                  )}
-
-                  <div className="flex flex-col gap-8">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <h3 className="text-lg font-bold text-black dark:text-white tracking-tight">
-                          {pack.name}
-                        </h3>
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-3xl font-black text-black dark:text-white tracking-tighter">
-                            {price}
-                          </span>
-                          <span className="text-black/40 dark:text-white/40 text-[11px] font-medium uppercase tracking-widest ml-1">
-                            / {pack.tokens} credits
-                          </span>
-                        </div>
-                      </div>
-                      <div
-                        className={`p-3 rounded-2xl ${isRecommended
-                          ? "bg-brand-accent/10 border border-brand-accent/20"
-                          : "bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10"
-                          }`}
+                <ul className="mt-8 space-y-3">
+                  {getPackFeatures(pack).map((f) => (
+                    <li key={f} className="flex items-center gap-3 text-[15px]">
+                      <span
+                        className={`grid size-5 shrink-0 place-items-center rounded-[5px] ${
+                          featured ? "bg-white text-ink" : "bg-ink text-white"
+                        }`}
                       >
-                        <Zap
-                          className={`w-6 h-6 ${isRecommended
-                            ? "text-brand-accent"
-                            : "text-black/40 dark:text-white/40"
-                            }`}
-                        />
-                      </div>
-                    </div>
+                        <Check className="size-3" strokeWidth={2.75} />
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
 
-                    <ul className="space-y-4">
-                      {getPackFeatures(pack).map((feature, j) => (
-                        <li
-                          key={j}
-                          className="flex items-center gap-3 text-sm text-black/60 dark:text-white/80 font-light group-hover:text-black/80 dark:group-hover:text-white/80 transition-colors"
-                        >
-                          <CheckCircle2 className="w-4 h-4 text-emerald-500/60" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <Button
-                      variant={isRecommended ? "primary" : "secondary"}
-                      className="w-full h-14 rounded-2xl font-bold tracking-tight mt-2 flex items-center justify-center gap-2 group"
-                      onClick={() => handleCheckout(pack.packId)}
-                      disabled={isLoading || checkoutLoading !== null}
-                    >
-                      {isLoading ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          Processing...
-                        </>
-                      ) : region === "Nigeria" ? (
-                        <>
-                          Buy in Naira
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </>
-                      ) : (
-                        <>
-                          Get Credits
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      {/* Security/Trust Footer */}
-      <div className="pt-12 border-t border-black/[0.05] dark:border-white/[0.05] flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2 text-black/40 dark:text-white/40">
-            <ShieldCheck className="w-4 h-4" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-black/50 dark:text-white/90">
-              Secure checkout — Naira · USD
-            </span>
-          </div>
-          <div className="flex items-center gap-2 text-black/40 dark:text-white/40 border-l border-black/10 dark:border-white/10 pl-6">
-            <Lock className="w-4 h-4" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-black/50 dark:text-white/90">
-              256-bit AES Encryption
-            </span>
-          </div>
+                <div className="mt-auto pt-9">
+                  <SiteButton
+                    variant={featured ? "light" : "primary"}
+                    className="w-full justify-between"
+                    arrow={!isLoading}
+                    loading={isLoading}
+                    disabled={checkoutLoading !== null}
+                    onClick={() => handleCheckout(pack.packId)}
+                  >
+                    {isLoading ? "Processing…" : region === "Nigeria" ? "Buy in Naira" : "Get credits"}
+                  </SiteButton>
+                </div>
+              </Panel>
+            );
+          })}
         </div>
+      )}
 
+      <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-[14px] text-ink-soft">
+        <span className="inline-flex items-center gap-2">
+          <ShieldCheck className="size-4" strokeWidth={1.5} /> Secure checkout in Naira or USD
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <Lock className="size-4" strokeWidth={1.5} /> 256-bit AES encryption
+        </span>
       </div>
     </div>
   );

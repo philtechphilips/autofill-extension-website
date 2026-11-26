@@ -30,20 +30,18 @@ export default function Button({
   isLoading = false,
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center gap-2 font-semibold rounded-md transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100";
+    "inline-flex items-center justify-center gap-2 font-normal rounded-[10px] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed";
 
   const variantStyles = {
-    primary:
-      "bg-white text-black hover:bg-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.1)]",
-    secondary:
-      "bg-white/[0.03] text-white/90 hover:bg-white/[0.08] border border-white/[0.05] backdrop-blur-sm",
-    ghost: "text-white/80 hover:text-white transition-colors",
+    primary: "bg-ink text-white hover:bg-ink-hover",
+    secondary: "bg-white text-ink ring-1 ring-inset ring-line hover:ring-line-strong",
+    ghost: "text-ink hover:bg-ink/[0.05]",
   };
 
   const sizeStyles = {
-    sm: "px-3 h-8 text-[11px] tracking-wider uppercase",
-    md: "px-5 h-11 text-sm tracking-tight",
-    lg: "px-8 h-14 text-sm tracking-tight",
+    sm: "px-3.5 h-9 text-[14px]",
+    md: "px-5 h-11 text-[15px]",
+    lg: "px-6 h-13 text-[15px]",
   };
 
   const classes = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
@@ -71,7 +69,6 @@ export default function Button({
       <motion.a
         href={href}
         className={classes}
-        whileHover={!disabled ? { scale: 1.02 } : {}}
         whileTap={!disabled ? { scale: 0.98 } : {}}
       >
         {content}
@@ -85,7 +82,6 @@ export default function Button({
       onClick={onClick}
       disabled={disabled || isLoading}
       className={classes}
-      whileHover={!(disabled || isLoading) ? { scale: 1.02 } : {}}
       whileTap={!(disabled || isLoading) ? { scale: 0.98 } : {}}
     >
       {content}

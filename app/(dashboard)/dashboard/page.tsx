@@ -1,26 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Zap,
-  ShieldCheck,
-  History,
-  CreditCard,
-  MousePointer2,
-  Clock,
-  Globe,
-  TrendingUp,
+  ArrowRight,
   CheckCircle2,
-  ChevronRight,
-  Sparkles,
+  Clock,
   FileText,
+  MousePointer2,
+  Sparkles,
   Wand2,
   XCircle,
-  ArrowRight,
+  Zap,
 } from "lucide-react";
 import api from "@/lib/api";
-import Link from "next/link";
+import { useAuthStore } from "@/store/authStore";
+import { EmptyState, PageHeader, Panel, PanelHeader, StatTile } from "@/components/app/AppUI";
+import { EASE } from "@/components/site/motion";
 
 interface Stats {
   totalFills: number;
@@ -49,137 +46,72 @@ interface RecentEvent {
   createdAt: string;
 }
 
-interface MetricCardProps {
-  label: string;
-  value: string;
-  description: string;
-  icon: any;
-  trend?: string;
-  loading?: boolean;
-}
-
-const MetricCard = ({
-  label,
-  value,
-  description,
-  icon: Icon,
-  trend,
-  loading,
-}: MetricCardProps) => (
-  <div className="glassmorphic p-8 rounded-[32px] group hover:border-white/[0.1] transition-all duration-500 overflow-hidden relative">
-    <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity translate-x-4 -translate-y-4 group-hover:translate-x-2 group-hover:-translate-y-2 duration-700">
-      <Icon className="w-24 h-24" />
-    </div>
-
-    <div className="relative z-10">
-      <div className="w-12 h-12 rounded-2xl bg-brand-accent/6 border border-brand-accent/12 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-brand-accent/15 group-hover:border-brand-accent/30 transition-all duration-500">
-        <Icon className="w-6 h-6 text-white/80 group-hover:text-brand-accent transition-colors duration-300" />
-      </div>
-
-      <div className="space-y-1 mb-4">
-        <div className="flex items-end gap-3">
-          {loading ? (
-            <div className="h-10 w-20 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
-          ) : (
-            <h3 className="text-4xl font-bold text-black dark:text-white tracking-tighter leading-none">
-              {value}
-            </h3>
-          )}
-          {trend && !loading && (
-            <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-400 uppercase tracking-widest pb-1">
-              <TrendingUp className="w-3 h-3" />
-              {trend}
-            </div>
-          )}
-        </div>
-        <p className="text-xs font-bold text-black/70 dark:text-white/90 uppercase tracking-[0.2em]">
-          {label}
-        </p>
-      </div>
-
-      <p className="text-sm text-black/80 dark:text-white/80 font-light leading-relaxed max-w-[200px]">
-        {description}
-      </p>
-    </div>
-  </div>
-);
-
-const ActivityItem = ({ event }: { event: RecentEvent }) => {
-  const getTimeAgo = (dateStr: string) => {
-    const seconds = Math.floor(
-      (Date.now() - new Date(dateStr).getTime()) / 1000,
-    );
-    if (seconds < 60) return "just now";
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return `${minutes}m ago`;
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours}h ago`;
-    const days = Math.floor(hours / 24);
-    return `${days}d ago`;
-  };
-
-  const getEventTitle = (event: RecentEvent) => {
-    if (event.type === "cv_parse") return "CV Parsed";
-    if (event.type === "text_enhance") return "Text Enhanced";
-    return event.pageTitle || "Form Fill";
-  };
-
-  const getEventIcon = () => {
-    if (event.type === "cv_parse") return FileText;
-    if (event.type === "text_enhance") return Wand2;
-    return event.success ? CheckCircle2 : XCircle;
-  };
-
-  const EventIcon = getEventIcon();
-
-  return (
-    <div className="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/[0.02] transition-colors group cursor-pointer border border-transparent hover:border-white/[0.05]">
-      <div
-        className={`w-10 h-10 rounded-xl flex items-center justify-center ${event.success ? "bg-emerald-500/10 text-emerald-500" : "bg-red-500/10 text-red-500"}`}
-      >
-        <EventIcon className="w-5 h-5" />
-      </div>
-
-      <div className="flex-1 overflow-hidden">
-        <div className="text-sm font-semibold text-black dark:text-white truncate">
-          {getEventTitle(event)}
-        </div>
-        <div className="text-[11px] text-black/70 dark:text-white/90 flex items-center gap-2">
-          <Globe className="w-3 h-3" />
-          {event.domain || "Local"}
-        </div>
-      </div>
-
-      <div className="text-right">
-        <div className="text-xs font-bold text-black/80 dark:text-white/80 uppercase tracking-tighter">
-          {getTimeAgo(event.createdAt)}
-        </div>
-        {event.type === "form_fill" && event.fieldCount > 0 && (
-          <div className="text-[10px] text-black/60 dark:text-white/80 mt-0.5">
-            {event.fieldCount} fields
-          </div>
-        )}
-      </div>
-
-      <ChevronRight className="w-4 h-4 text-black/5 dark:text-white/5 group-hover:text-white/90 transition-colors" />
-    </div>
-  );
-};
-
-const formatNumber = (num: number): string => {
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1) + "k";
-  }
-  return num.toLocaleString();
-};
-
 interface LastPack {
   packId: string;
   packName: string;
   purchasedAt: string;
 }
 
+const formatNumber = (num: number): string => {
+  if (num >= 1000) return (num / 1000).toFixed(1) + "k";
+  return num.toLocaleString();
+};
+
+const timeAgo = (dateStr: string) => {
+  const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+  if (seconds < 60) return "just now";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  return `${Math.floor(hours / 24)}d ago`;
+};
+
+function ActivityRow({ event }: { event: RecentEvent }) {
+  const title =
+    event.type === "cv_parse"
+      ? "Resume parsed"
+      : event.type === "text_enhance"
+        ? "Text enhanced"
+        : event.pageTitle || "Form fill";
+  const Icon =
+    event.type === "cv_parse"
+      ? FileText
+      : event.type === "text_enhance"
+        ? Wand2
+        : event.success
+          ? CheckCircle2
+          : XCircle;
+
+  return (
+    <div className="flex items-center gap-4 border-b border-line px-6 py-4 last:border-b-0 sm:px-7">
+      <span
+        className={`grid size-10 shrink-0 place-items-center rounded-[10px] ${
+          event.success ? "bg-tile-3 text-ink" : "bg-red-50 text-red-700"
+        }`}
+      >
+        <Icon className="size-[18px]" strokeWidth={1.5} />
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-[14.5px] text-ink">{title}</div>
+        <div className="truncate text-[13px] text-ink-mute">{event.domain || "Local"}</div>
+      </div>
+      <div className="text-right text-[13px]">
+        <div className="text-ink-soft">{timeAgo(event.createdAt)}</div>
+        {event.type === "form_fill" && event.fieldCount > 0 && (
+          <div className="text-ink-mute">{event.fieldCount} fields</div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Skeleton({ className = "" }: { className?: string }) {
+  return <span className={`inline-block animate-pulse rounded-md bg-ink/[0.07] ${className}`} />;
+}
+
 export default function DashboardPage() {
+  const user = useAuthStore((s) => s.user);
   const [stats, setStats] = useState<Stats | null>(null);
   const [dailyData, setDailyData] = useState<DailyData[]>([]);
   const [recentEvents, setRecentEvents] = useState<RecentEvent[]>([]);
@@ -199,9 +131,7 @@ export default function DashboardPage() {
 
         setStats(statsRes.data.data?.stats || statsRes.data.stats);
         setDailyData(dailyRes.data.data?.daily || dailyRes.data.daily || []);
-        setRecentEvents(
-          recentRes.data.data?.events || recentRes.data.events || [],
-        );
+        setRecentEvents(recentRes.data.data?.events || recentRes.data.events || []);
         setCredits(creditsRes.data.data?.credits || 0);
         setLastPack(creditsRes.data.data?.lastPack || null);
       } catch (err) {
@@ -215,223 +145,147 @@ export default function DashboardPage() {
   }, []);
 
   const maxDailyCount = Math.max(...dailyData.map((d) => d.count), 1);
-  const chartData =
+  const chartData: { count: number; date?: string }[] =
     dailyData.length > 0 ? dailyData : Array(30).fill({ count: 0 });
 
-  const getDateRange = () => {
-    if (dailyData.length === 0) return { start: "", end: "" };
-    const startDate = new Date(dailyData[0]?.date);
-    const endDate = new Date(dailyData[dailyData.length - 1]?.date);
-    const format = (d: Date) =>
-      d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-    return { start: format(startDate), end: format(endDate) };
-  };
+  const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const dateRange =
+    dailyData.length === 0
+      ? { start: "", end: "" }
+      : {
+          start: fmt(new Date(dailyData[0]?.date)),
+          end: fmt(new Date(dailyData[dailyData.length - 1]?.date)),
+        };
 
-  const dateRange = getDateRange();
+  const firstName = user?.name?.split(" ")[0];
+  const value = (v: string) => (loading ? <Skeleton className="h-10 w-20" /> : v);
 
   return (
-    <div className="space-y-12">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 text-brand-accent text-xs font-bold uppercase tracking-[0.3em]">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-50" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-            </span>
-            System Online
-          </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white tracking-tighter leading-none">
-            Overview<span className="text-black/70 dark:text-white/90">.</span>
-          </h1>
-          <p className="text-xl text-black/80 dark:text-white/80 font-light max-w-4xl">
-            Monitor your automated precision and efficiency gains across the
-            digital landscape.
-          </p>
-        </div>
+    <div>
+      <PageHeader
+        title={firstName ? `Welcome back, ${firstName}` : "Overview"}
+        subtitle="Here’s what AutoFill has done for you so far."
+      />
 
-        {/* Credits Callout */}
-        <Link href="/dashboard/billing">
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="glassmorphic p-6 px-10 rounded-[32px] flex items-center justify-between gap-10 border-black/5 dark:border-white/5 hover:border-white/20 transition-all group cursor-pointer overflow-hidden relative"
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+        <StatTile
+          tone="haze"
+          label="Forms filled"
+          icon={<Zap />}
+          value={value(formatNumber(stats?.totalFills || 0))}
+          hint="Forms read and filled for you"
+        />
+        <StatTile
+          tone="mist"
+          delay={0.05}
+          label="Fields filled"
+          icon={<MousePointer2 />}
+          value={value(formatNumber(stats?.totalFieldsFilled || 0))}
+          hint="Individual answers entered"
+        />
+        <StatTile
+          tone="warm-soft"
+          delay={0.1}
+          label="Time saved"
+          icon={<Clock />}
+          value={value(`${stats?.timeSavedHours?.toFixed(1) || "0"} h`)}
+          hint="Estimated typing you skipped"
+        />
+        <StatTile
+          tone="periwinkle"
+          delay={0.15}
+          label="Success rate"
+          icon={<Sparkles />}
+          value={value(`${stats?.successRate?.toFixed(1) || "100"}%`)}
+          hint="Fills completed without errors"
+        />
+      </div>
+
+      <div className="mt-4 grid gap-4 lg:mt-5 lg:grid-cols-3 lg:gap-5">
+        {/* Chart */}
+        <Panel delay={0.2} className="lg:col-span-2">
+          <PanelHeader title="Activity" subtitle="Forms filled over the last 30 days" />
+          <div className="px-6 pb-6 sm:px-7">
+            <div className="flex h-56 items-end gap-[3px]">
+              {chartData.map((day, i) => {
+                const height = (day.count / maxDailyCount) * 100;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ height: 0 }}
+                    animate={{ height: `${Math.max(height, 2)}%` }}
+                    transition={{ delay: 0.3 + i * 0.015, duration: 0.8, ease: EASE }}
+                    className="group/bar relative flex-1 rounded-t-[4px] bg-tile-1 transition-colors hover:bg-ink"
+                  >
+                    <span className="pointer-events-none absolute -top-9 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-2 py-1 text-[11px] text-white opacity-0 transition-opacity group-hover/bar:opacity-100">
+                      {day.count} fills
+                    </span>
+                  </motion.div>
+                );
+              })}
+            </div>
+            <div className="mt-3 flex justify-between text-[12.5px] text-ink-mute">
+              <span>{dateRange.start}</span>
+              <span>{dateRange.end}</span>
+            </div>
+          </div>
+        </Panel>
+
+        {/* Credits */}
+        <Panel tone="ink" delay={0.25} className="flex flex-col justify-between p-7">
+          <div>
+            <div className="text-[14px] text-white/70">Available credits</div>
+            <div className="mt-4 font-serif-display text-[64px] leading-none">
+              {loading ? <Skeleton className="h-14 w-28 bg-white/10" /> : formatNumber(credits)}
+            </div>
+            <div className="mt-3 text-[13.5px] text-white/60">
+              {loading ? "" : lastPack ? `Last pack: ${lastPack.packName}` : "Free tier"}
+            </div>
+          </div>
+          <Link
+            href="/dashboard/billing"
+            className="group mt-10 flex items-center justify-between rounded-[10px] bg-white px-5 py-4 text-[15px] text-ink transition-colors hover:bg-paper"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="flex items-center gap-6 relative z-10">
-              <div className="w-12 h-12 bg-brand-accent/10 rounded-2xl flex items-center justify-center border border-brand-accent/20">
-                <Zap className="w-6 h-6 text-brand-accent px-0" />
-              </div>
-              <div>
-                <div className="text-[10px] font-bold text-black/40 dark:text-white/40 uppercase tracking-[0.2em] mb-1">
-                  Available Credits
-                </div>
-                <div className="text-3xl font-black text-black dark:text-white tracking-tighter">
-                  {loading ? (
-                    <span className="inline-block h-8 w-16 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
-                  ) : (
-                    formatNumber(credits)
-                  )}{" "}
-                  <span className="text-sm font-light text-black/40 dark:text-white/40 ml-1 italic tracking-normal">
-                    Credits left
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col items-end gap-1 relative z-10">
-              {loading ? (
-                <span className="inline-block h-4 w-24 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
-              ) : lastPack ? (
-                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
-                  Last Pack: {lastPack.packName}
-                </span>
-              ) : (
-                <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest">
-                  Free Tier
-                </span>
-              )}
-              <div className="flex items-center gap-2 text-black/60 dark:text-white/80 group-hover:text-white transition-colors">
-                <span className="text-xs font-medium">{lastPack ? "Add more credits" : "Get credits"}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </motion.div>
-        </Link>
+            {lastPack ? "Add more credits" : "Get credits"}
+            <ArrowRight className="size-[18px] transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+          </Link>
+        </Panel>
       </div>
 
-      {/* Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <MetricCard
-          label="Autofills"
-          value={formatNumber(stats?.totalFills || 0)}
-          description="Total forms analyzed and successfully populated by AI."
-          icon={Zap}
-          loading={loading}
-        />
-        <MetricCard
-          label="Fields Filled"
-          value={formatNumber(stats?.totalFieldsFilled || 0)}
-          description="Granular data points precisely mapped to remote schemas."
-          icon={MousePointer2}
-          loading={loading}
-        />
-        <MetricCard
-          label="Time Saved"
-          value={`${stats?.timeSavedHours?.toFixed(1) || "0"} h`}
-          description="Estimated manual effort eliminated through automation."
-          icon={Clock}
-          loading={loading}
-        />
-        <MetricCard
-          label="Success Rate"
-          value={`${stats?.successRate?.toFixed(1) || "100"}%`}
-          description="AI precision rating across diverse form architectures."
-          icon={Sparkles}
-          loading={loading}
-        />
-      </div>
-
-      {/* Main Sections */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Usage Chart */}
-        <div className="lg:col-span-2 glassmorphic p-10 rounded-[40px] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-10">
-            <Sparkles className="w-8 h-8 text-black/5 dark:text-white/5 animate-slow-pulse" />
-          </div>
-
-          <div className="flex items-center justify-between mb-12">
-            <div className="space-y-1">
-              <h2 className="text-2xl font-bold text-black dark:text-white tracking-tight">
-                Usage Intensity
-              </h2>
-              <p className="text-sm text-black/80 dark:text-white/80 font-light italic">
-                Frequency of automated interactions over 30 days.
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-brand-accent shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
-              <span className="text-[10px] font-bold text-black/80 dark:text-white/80 uppercase tracking-widest pb-px">
-                Live Data
-              </span>
-            </div>
-          </div>
-
-          <div className="h-64 w-full flex items-end gap-1 px-2 relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-accent/5 to-transparent rounded-3xl" />
-            {chartData.map((day, i) => {
-              const height =
-                maxDailyCount > 0 ? (day.count / maxDailyCount) * 100 : 0;
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ height: 0 }}
-                  animate={{ height: `${Math.max(height, 2)}%` }}
-                  transition={{
-                    delay: i * 0.02,
-                    duration: 0.8,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="flex-1 bg-brand-accent/15 hover:bg-brand-accent/35 rounded-t-lg transition-all relative group/bar cursor-pointer"
-                >
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap shadow-xl z-10">
-                    {day.count} fills
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          <div className="flex justify-between mt-8 px-2 text-[10px] font-bold text-black/60 dark:text-white/80 uppercase tracking-[0.2em]">
-            <span>{dateRange.start}</span>
-            <span>{dateRange.end}</span>
-          </div>
-        </div>
-
-        {/* Activity Log */}
-        <div className="glassmorphic p-8 rounded-[40px] flex flex-col">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-bold text-black dark:text-white tracking-tight">
-              Recent Stream
-            </h2>
+      {/* Recent activity */}
+      <Panel delay={0.3} className="mt-4 lg:mt-5">
+        <PanelHeader
+          title="Recent activity"
+          action={
             <Link
               href="/dashboard/history"
-              className="text-[10px] font-bold text-black/70 dark:text-white/90 hover:text-white transition-colors uppercase tracking-widest border border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] px-3 py-1.5 rounded-full"
+              className="inline-flex items-center gap-1.5 text-[14px] text-ink hover:opacity-70"
             >
-              View all
+              View all <ArrowRight className="size-4" strokeWidth={1.5} />
             </Link>
-          </div>
-
-          <div className="flex-1 space-y-2">
-            {loading ? (
-              Array(6)
-                .fill(0)
-                .map((_, i) => (
-                  <div key={i} className="flex items-center gap-4 p-4">
-                    <div className="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 animate-pulse" />
-                    <div className="flex-1 space-y-2">
-                      <div className="h-4 w-32 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
-                      <div className="h-3 w-24 bg-black/5 dark:bg-white/5 rounded animate-pulse" />
-                    </div>
-                  </div>
-                ))
-            ) : recentEvents.length > 0 ? (
-              recentEvents.map((event) => (
-                <ActivityItem key={event.id} event={event} />
-              ))
-            ) : (
-              <div className="flex-1 flex items-center justify-center text-black/50 dark:text-white/90 text-sm">
-                No activity yet. Start filling forms!
+          }
+        />
+        <div className="border-t border-line">
+          {loading ? (
+            Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-4 border-b border-line px-6 py-4 last:border-b-0 sm:px-7">
+                <Skeleton className="size-10 rounded-[10px]" />
+                <div className="flex-1 space-y-2">
+                  <Skeleton className="block h-4 w-40" />
+                  <Skeleton className="block h-3 w-24" />
+                </div>
               </div>
-            )}
-          </div>
-
-          <div className="mt-8 pt-6 border-t border-black/[0.05] dark:border-white/[0.05] text-center">
-            <p className="text-[10px] font-bold text-black/60 dark:text-white/80 uppercase tracking-[0.3em]">
-              Autofill Engine
-              <span className="text-emerald-500/40 ml-2">ONLINE</span>
-            </p>
-          </div>
+            ))
+          ) : recentEvents.length > 0 ? (
+            recentEvents.map((event) => <ActivityRow key={event.id} event={event} />)
+          ) : (
+            <EmptyState icon={<Zap />} title="No activity yet">
+              Open any form with the extension installed and press Fill. Your activity will show
+              up here.
+            </EmptyState>
+          )}
         </div>
-      </div>
-    </div >
+      </Panel>
+    </div>
   );
 }

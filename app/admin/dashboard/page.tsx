@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { Activity, Database, FileText, Users } from "lucide-react";
 import api from "@/lib/api";
-import { Badge, PageHeader, Panel, PanelHeader, StatTile, table } from "@/components/app/AppUI";
+import { Badge, InfiniteFooter, PageHeader, Panel, PanelHeader, StatTile, table } from "@/components/app/AppUI";
+import { useInfiniteList } from "@/hooks/useInfiniteList";
 
 interface AdminStats {
   totalUsers: number;
@@ -25,26 +26,38 @@ function Skeleton({ className = "" }: { className?: string }) {
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<AdminStats | null>(null);
-  const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchStats = async () => {
       try {
-        const [statsRes, usersRes] = await Promise.all([
-          api.get("/admin/dashboard-stats"),
-          api.get("/admin/users"),
-        ]);
+        const statsRes = await api.get("/admin/dashboard-stats");
         setStats(statsRes.data.data);
-        setUsers(usersRes.data.data || []);
       } catch (err) {
         console.error("Failed to fetch admin dashboard:", err);
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
+    fetchStats();
   }, []);
+
+  const {
+    items: users,
+    total: totalUsers,
+    loading: usersLoading,
+    loadingMore,
+    hasMore,
+    error,
+    sentinelRef,
+    retry,
+  } = useInfiniteList<any>(async (page, limit) => {
+    const res = await api.get(`/admin/users?page=${page}&limit=${limit}`);
+    const data = res.data.data;
+    // Older API versions return a plain array
+    if (Array.isArray(data)) return { items: data, pages: 1, total: data.length };
+    return { items: data.users || [], pages: data.pagination?.pages, total: data.pagination?.total };
+  });
 
   const value = (n: number) => (loading ? <Skeleton className="h-10 w-20" /> : formatNumber(n));
 
@@ -64,7 +77,7 @@ export default function AdminDashboardPage() {
       </div>
 
       <Panel delay={0.2} className="mt-4 lg:mt-5">
-        <PanelHeader title="Users" subtitle={loading ? undefined : `${users.length} accounts`} />
+        <PanelHeader title="Users" subtitle={totalUsers !== null ? `${totalUsers.toLocaleString()} accounts` : undefined} />
         <div className={table.wrap}>
           <table className={table.table}>
             <thead>
@@ -76,7 +89,7 @@ export default function AdminDashboardPage() {
               </tr>
             </thead>
             <tbody>
-              {loading ? (
+              {usersLoading ? (
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i}>
                     <td className={table.td}><Skeleton className="h-4 w-40" /></td>
@@ -118,6 +131,16 @@ export default function AdminDashboardPage() {
             </tbody>
           </table>
         </div>
+        <InfiniteFooter
+          sentinelRef={sentinelRef}
+          loadingMore={loadingMore}
+          hasMore={hasMore}
+          error={error}
+          count={users.length}
+          total={totalUsers}
+          onRetry={retry}
+          noun="users"
+        />
       </Panel>
     </div>
   );

@@ -1,17 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, FileText, Wand2, XCircle, Zap } from "lucide-react";
 import api from "@/lib/api";
 import {
   Badge,
   EmptyState,
+  InfiniteFooter,
   PageHeader,
-  Pager,
   Panel,
   Segmented,
 } from "@/components/app/AppUI";
+import { useInfiniteList } from "@/hooks/useInfiniteList";
 import { EASE } from "@/components/site/motion";
 
 interface UsageEvent {
@@ -72,38 +73,28 @@ function EventIcon({ type, success }: { type: string; success: boolean }) {
 }
 
 export default function HistoryPage() {
-  const [events, setEvents] = useState<UsageEvent[]>([]);
-  const [pagination, setPagination] = useState<Pagination | null>(null);
-  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>("all");
-  const [page, setPage] = useState(1);
 
-  const fetchEvents = async (pageNum: number, typeFilter: string) => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams({ page: pageNum.toString(), limit: "15" });
-      if (typeFilter !== "all") params.append("type", typeFilter);
-
+  const {
+    items: events,
+    total,
+    loading,
+    loadingMore,
+    hasMore,
+    error,
+    sentinelRef,
+    retry,
+  } = useInfiniteList<UsageEvent>(
+    async (page, limit) => {
+      const params = new URLSearchParams({ page: String(page), limit: String(limit) });
+      if (filter !== "all") params.append("type", filter);
       const response = await api.get(`/analytics/events?${params}`);
       const data = response.data.data || response.data;
-      setEvents(data.events || []);
-      setPagination(data.pagination || null);
-    } catch (err) {
-      console.error("Failed to fetch events:", err);
-      setEvents([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchEvents(page, filter);
-  }, [page, filter]);
-
-  const handleFilterChange = (newFilter: Filter) => {
-    setFilter(newFilter);
-    setPage(1);
-  };
+      const pagination: Pagination | undefined = data.pagination;
+      return { items: data.events || [], pages: pagination?.pages, total: pagination?.total };
+    },
+    [filter],
+  );
 
   return (
     <div>
@@ -114,7 +105,7 @@ export default function HistoryPage() {
           <Segmented<Filter>
             id="history-filter"
             value={filter}
-            onChange={handleFilterChange}
+            onChange={setFilter}
             options={[
               { value: "all", label: "All" },
               { value: "form_fill", label: "Form fills" },
@@ -149,7 +140,7 @@ export default function HistoryPage() {
                 key={event.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: EASE, delay: index * 0.03 }}
+                transition={{ duration: 0.5, ease: EASE, delay: (index % 10) * 0.03 }}
                 className="flex items-center gap-4 border-b border-line px-6 py-5 transition-colors hover:bg-paper sm:px-7"
               >
                 <span
@@ -194,15 +185,16 @@ export default function HistoryPage() {
           </div>
         )}
 
-        {pagination && (
-          <Pager
-            page={pagination.page}
-            pages={pagination.pages}
-            total={pagination.total}
-            limit={pagination.limit}
-            onPage={setPage}
-          />
-        )}
+        <InfiniteFooter
+          sentinelRef={sentinelRef}
+          loadingMore={loadingMore}
+          hasMore={hasMore}
+          error={error}
+          count={events.length}
+          total={total}
+          onRetry={retry}
+          noun="events"
+        />
       </Panel>
     </div>
   );
